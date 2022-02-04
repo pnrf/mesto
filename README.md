@@ -25,4 +25,6 @@
 * скачал дизайн-макет, импортировал в Figma на своем компе;
 * скачал шрифты Inter (400, 500, 900): [официальный сайт](https://rsms.me/inter/), [репозиторий на github](https://github.com/rsms/inter);
 * добавил файл - fonts.css;
-
+* добавил файл - index.html. Прописал основную структуру страницы, в т.ч. <head>;
+* добавил и подключил файлы - index.css && index.js;
+* в index.css подключил normalize.css && fonts.css;
