@@ -24,3 +24,5 @@
 * добавил новые файлы: .nojekyll, .editorconfig, .gitignore, normalize.css;
 * скачал дизайн-макет, импортировал в Figma на своем компе;
 * скачал шрифты Inter (400, 500, 900): [официальный сайт](https://rsms.me/inter/), [репозиторий на github](https://github.com/rsms/inter);
+* добавил файл - fonts.css;
+
