@@ -8,3 +8,11 @@
 /* page */
 @import url(../blocks/page/page.css);
 
+/* content */
+@import url(../blocks/content/content.css);
+
+/* header */
+@import url(../blocks/header/header.css);
+
+/* footer */
+@import url(../blocks/footer/footer.css);
