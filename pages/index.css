@@ -1,5 +1,10 @@
 /* общие стили */
-
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
+
+/* root */
+@import url(../blocks/root/root.css);
+
+/* page */
+@import url(../blocks/page/page.css);
 
