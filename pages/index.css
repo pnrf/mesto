@@ -24,5 +24,14 @@
 @import url(../blocks/profile/__subtitle/profile__subtitle.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 
+/* places */
+@import url(../blocks/places/places.css);
+@import url(../blocks/places/__list/places__list.css);
+@import url(../blocks/places/__card/places__card.css);
+@import url(../blocks/places/__card-image/places__card-image.css);
+@import url(../blocks/places/__title-wrapper/places__title-wrapper.css);
+@import url(../blocks/places/__card-title/places__card-title.css);
+@import url(../blocks/places/__heart-button/places__heart-button.css);
+
 /* footer */
 @import url(../blocks/footer/footer.css);

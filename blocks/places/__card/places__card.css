@@ -1,0 +1,11 @@
+.places__card {
+  margin: 0 auto 20px;
+  width: 282px;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.places__card:last-child {
+  margin-bottom: 0;
+}
