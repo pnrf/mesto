@@ -1,0 +1,7 @@
+.profile__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  max-width: 282px;
+}

@@ -1,0 +1,11 @@
+.profile__title {
+  margin: 26px auto 0;
+  padding-left: 28px;
+  box-sizing: border-box;
+  max-width: calc(100% - 28px);
+  overflow: hidden;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 33px;
+  text-align: center;
+}

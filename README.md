@@ -10,7 +10,7 @@
 * html, css, javascript;
 * методология БЭМ (Nested);
 * дизайн-макет из Figma;
-* оптимизация картинок через онлайн-сервис [tinypng.com](https://tinypng.com/);
+* оптимизация картинок через онлайн-сервис [tinypng.com](https://tinypng.com/) и [svgomg](https://jakearchibald.github.io/svgomg/);
 * адаптивная верстка (mobile first);
 * git/github - терминал, работа с ветками, корректные названия коммитов ([онлайн-сервис](https://commitlint.io));
 * готовый проект необходимо опубликовать на github pages.
@@ -43,3 +43,4 @@
 
 * добавил базовую структуру по БЭМ;
 * добавил header. У логотипа при 320dpi непонятный размер картинки, поэтому я установил min-height для всего блока header;
+* добавил section 'profile';
