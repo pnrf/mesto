@@ -46,3 +46,8 @@
 * добавил section 'profile' (для мобильных -- 320px);
 * добавил section 'places' (для мобильных -- 320px);
 * добавил section 'footer' (для мобильных -- 320px);
+
+**12.02.2022**
+
+* изменил 'header' (для screen min-width - 1280px);
+*

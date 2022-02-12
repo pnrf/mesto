@@ -6,3 +6,10 @@
   line-height: 17px;
   text-align: center;
 }
+
+@media screen and (min-width: 1280px) {
+  .profile__subtitle {
+    margin: 16px 0 0;
+    text-align: left;
+  }
+}

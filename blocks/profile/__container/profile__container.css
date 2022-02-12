@@ -1,16 +1,13 @@
-.profile {
+.profile__container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  margin: 42px auto 0;
-  width: 282px;
+  gap: 26px;
 }
 
 @media screen and (min-width: 1280px) {
-  .profile {
+  .profile__container {
     flex-direction: row;
-    margin: 40px auto 0;
-    width: 880px;
+    gap: 30px;
   }
 }

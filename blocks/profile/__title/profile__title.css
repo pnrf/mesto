@@ -1,5 +1,5 @@
 .profile__title {
-  margin: 26px auto 0;
+  margin: 0;
   padding-left: 28px;
   box-sizing: border-box;
   max-width: calc(100% - 28px);
@@ -8,4 +8,10 @@
   font-weight: 500;
   line-height: 33px;
   text-align: center;
+}
+
+@media screen and (min-width: 1280px) {
+  .profile__title {
+    padding-left: 0;
+  }
 }
