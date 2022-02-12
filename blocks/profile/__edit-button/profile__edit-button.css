@@ -6,6 +6,14 @@
   background-image: url(../../../images/edit-button.png);
   background-repeat: no-repeat;
   background-color: transparent;
+  background-size: cover;
   width: 18px;
   height: 18px;
+}
+
+@media screen and (min-width: 1280px) {
+  .profile__edit-button {
+    width: 24px;
+    height: 24px;
+  }
 }

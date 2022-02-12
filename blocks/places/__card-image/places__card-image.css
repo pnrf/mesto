@@ -1,4 +1,4 @@
 .places__card-image {
-  max-height: 282px;
-  object-fit: cover;
+  width: 282px;
+  height: 282px;
 }

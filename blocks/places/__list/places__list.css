@@ -7,9 +7,9 @@
 @media screen and (min-width: 1280px) {
   .places__list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    /* gap: 20px 17px; */
+    grid-template-columns: repeat(3, 282px);
+    grid-template-rows: repeat(2, 361px);
+    gap: 20px 17px;
     align-items: start;
   }
 }

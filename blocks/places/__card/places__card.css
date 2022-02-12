@@ -4,6 +4,7 @@
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
+  max-height: 361px;
 }
 
 .places__card:last-child {

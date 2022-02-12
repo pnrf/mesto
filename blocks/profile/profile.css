@@ -4,13 +4,14 @@
   align-items: center;
   justify-content: space-between;
   margin: 42px auto 0;
-  width: 282px;
+  min-width: 282px;
 }
 
 @media screen and (min-width: 1280px) {
   .profile {
     flex-direction: row;
     margin: 40px auto 0;
-    width: 880px;
+    max-width: 880px;
+    min-height: 120px;
   }
 }

@@ -1,11 +1,12 @@
 .header__logo {
   margin-left: 27px;
-  min-width: 103px;
+  width: 104px;
 }
 
 @media screen and (min-width: 1280px) {
   .header__logo {
     margin-left: 0;
-    min-width: 142px;
+    width: 142px;
+    height: 33px;
   }
 }
