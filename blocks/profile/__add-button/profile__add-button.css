@@ -14,6 +14,10 @@
   height: 50px;
 }
 
+.profile__add-button:hover {
+  opacity: .6;
+}
+
 @media screen and (min-width: 768px) {
   .profile__add-button {
     background-size: 22px 22px;

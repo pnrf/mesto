@@ -4,6 +4,8 @@
   box-sizing: border-box;
   max-width: calc(100% - 44px);
   max-height: 29px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
   color: #000;
   font-size: 24px;
