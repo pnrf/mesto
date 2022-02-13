@@ -5,7 +5,7 @@
   gap: 26px;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 768px) {
   .profile__container {
     flex-direction: row;
     gap: 30px;

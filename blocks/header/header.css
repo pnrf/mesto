@@ -5,10 +5,16 @@
   border-bottom: 1px solid #545454;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 768px) {
   .header {
     margin: 45px auto 0;
     min-height: 73px;
+    max-width: 581px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header {
     max-width: 880px;
   }
 }

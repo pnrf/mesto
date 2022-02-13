@@ -1,12 +1,8 @@
 .places__card {
-  margin: 0 auto 20px;
+  margin: 0 auto;
   width: 282px;
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
   max-height: 361px;
-}
-
-.places__card:last-child {
-  margin-bottom: 0;
 }

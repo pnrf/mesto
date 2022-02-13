@@ -52,3 +52,7 @@
 * изменил 'header' (для screen min-width - 1280px);
 * добавил остальные блоки (для screen min-width - 1280px);
 * исправил код под pixel perfect (для screen min-width - 320px);
+
+**13.02.2022**
+
+* адаптировал верстку (для screen min-widt - 320px, 768px, 1024px, 1280px);

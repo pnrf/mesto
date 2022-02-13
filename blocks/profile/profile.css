@@ -7,11 +7,16 @@
   min-width: 282px;
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 768px) {
   .profile {
     flex-direction: row;
     margin: 40px auto 0;
+    max-width: 581px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .profile {
     max-width: 880px;
-    min-height: 120px;
   }
 }
