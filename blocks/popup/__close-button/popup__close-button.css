@@ -1,0 +1,26 @@
+.popup__close-button {
+  position: inherit;
+  top: -36px;
+  right: 8px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-image: url(../../../images/popup-close-btn.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .popup__close-button {
+    top: -40px;
+    right: -40px;
+    width: 32px;
+    height: 32px;
+  }
+}
