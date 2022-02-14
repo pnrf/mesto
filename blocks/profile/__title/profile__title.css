@@ -3,6 +3,8 @@
   padding-left: 28px;
   box-sizing: border-box;
   max-width: calc(100% - 28px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
   font-size: 27px;
   font-weight: 500;
