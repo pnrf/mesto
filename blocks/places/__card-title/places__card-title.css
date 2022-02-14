@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   max-width: calc(100% - 44px);
-  max-height: 29px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
