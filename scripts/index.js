@@ -1,12 +1,10 @@
 //ставим лайк на карточке (для черного сердечка на 5-ый спринт)
 //пока работает только на 1-ой карточке
-const likeButtonElement = document.querySelector('.places__heart-button');
-
-const toggleLikeButton = function() {
-  likeButtonElement.classList.toggle('places__heart-button_active');
-};
-
-likeButtonElement.addEventListener('click', toggleLikeButton);
+// const likeButtonElement = document.querySelector('.places__heart-button');
+// const toggleLikeButton = function() {
+//   likeButtonElement.classList.toggle('places__heart-button_active');
+// };
+// likeButtonElement.addEventListener('click', toggleLikeButton);
 
 
 //кнопки
@@ -48,11 +46,7 @@ popupCloseButtonElement.addEventListener('click', closePopup);
 
 
 //редактирование профиля (кнопка сохранить)
-
 const editPopup = function() {
-  // profileNameElement.innerHTML = `<h1 class="profile__title">${popupNameElement.value}</h1>`;
-  // profileAboutElement.innerHTML = `<p class="profile__subtitle">${popupAboutElement.value}</p>`;
-
   profileNameElement.textContent = popupNameElement.value;
   profileAboutElement.textContent = popupAboutElement.value;
   popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
