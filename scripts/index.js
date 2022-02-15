@@ -7,11 +7,13 @@
 // likeButtonElement.addEventListener('click', toggleLikeButton);
 
 
-//кнопки
+//1) объявляю переменные:
+
+//попап и кнопки
 const popupElement = document.querySelector('.popup');
-const popupEditButtonElement = document.querySelector('.profile__edit-button');
-const popupCloseButtonElement = popupElement.querySelector('.popup__close-button');
-const popupSaveButtonElement = popupElement.querySelector('.popup__save-button');
+const EditBtnElement = document.querySelector('.profile__edit-button');
+const popupCloseBtnElement = popupElement.querySelector('.popup__close-button');
+const popupSaveBtnElement = popupElement.querySelector('.popup__save-button');
 
 //профиль 'name' и 'about'
 let profileNameElement = document.querySelector('.profile__title');
@@ -22,28 +24,27 @@ let popupNameElement = popupElement.querySelector('.popup__input-text_type_name'
 let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
 
 
-//добавили полям формы атрибут 'value' со значением по умолчанию
-popupNameElement.setAttribute('value', profileNameElement.textContent);
-popupAboutElement.setAttribute('value', profileAboutElement.textContent);
+//2)реализую функционал:
 
+//добавляю атрибут 'value' и его значение по умолчанию (при первом открытии формы)
+  popupNameElement.setAttribute('value', profileNameElement.textContent);
+  popupAboutElement.setAttribute('value', profileAboutElement.textContent);
 
 //открытие popup (кнопка редактировать)
 const openPopup = function() {
+  popupNameElement.value = profileNameElement.textContent;
+  popupAboutElement.value = profileAboutElement.textContent;
   popupElement.classList.add('popup_opened');
 };
 
-popupEditButtonElement.addEventListener('click', openPopup);
-
+EditBtnElement.addEventListener('click', openPopup); //обработчик события
 
 //закрытие popup (крестик)
 const closePopup = function() {
-  popupNameElement.setAttribute('value', document.querySelector('.profile__title').textContent);
-  popupAboutElement.setAttribute('value', document.querySelector('.profile__subtitle').textContent);
   popupElement.classList.remove('popup_opened');
 };
 
-popupCloseButtonElement.addEventListener('click', closePopup);
-
+popupCloseBtnElement.addEventListener('click', closePopup); //обработчик события
 
 //редактирование профиля (кнопка сохранить)
 const editPopup = function() {
@@ -52,4 +53,4 @@ const editPopup = function() {
   popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
 };
 
-popupSaveButtonElement.addEventListener('click', editPopup);
+popupSaveBtnElement.addEventListener('click', editPopup); //обработчик события
