@@ -9,6 +9,7 @@
   background-size: cover;
   width: 18px;
   height: 18px;
+  margin-right: 5px;
 }
 
 .profile__edit-button:hover {
