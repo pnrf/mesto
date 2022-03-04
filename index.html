@@ -31,50 +31,7 @@
         <button class="profile__add-button" type="button"></button>
       </section>
       <section class="places">
-        <ul class="places__list">
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Karachaevsk.jpg" alt="фото Карачаевска">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Карачаевск</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Elbrus.png" alt="фото горы Эльбрус">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Гора Эльбрус</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Dombai.png" alt="фото Домбая">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Домбай</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Sochi.jpg" alt="фото Сочи">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Сочи</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Baikal.jpg" alt="фото Байкала">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Байкал</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-          <li class="places__card">
-            <img class="places__card-image" src="./images/places/Kamchatka.jpg" alt="фото Камчатки">
-            <div class="places__title-wrapper">
-              <h2 class="places__card-title">Ключевая сопка на Камчатке</h2>
-              <button class="places__heart-button" type="button"></button>
-            </div>
-          </li>
-        </ul>
+        <ul class="places__list"></ul>
       </section>
     </main>
     <footer class="footer">
@@ -95,6 +52,17 @@
       </div>
     </section>
   </div>
+
+  <template class="item-template">
+    <li class="places__card">
+      <img class="places__card-image" src="" alt="">
+      <div class="places__title-wrapper">
+        <h2 class="places__card-title"></h2>
+        <button class="places__heart-button" type="button"></button>
+      </div>
+    </li>
+  </template>
+
   <script src="./scripts/index.js"></script>
 </body>
 </html>

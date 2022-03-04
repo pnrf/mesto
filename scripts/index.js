@@ -7,7 +7,7 @@
 // likeButtonElement.addEventListener('click', toggleLikeButton);
 
 
-//1) объявляю переменные:
+// (1) объявляю переменные:
 
 //попап и кнопки
 const popupElement = document.querySelector('.popup');
@@ -24,7 +24,59 @@ let popupNameElement = popupElement.querySelector('.popup__input-text_type_name'
 let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
 
 
-//2)реализую функционал:
+// (2) при загрузке на странице должно быть 6 карточек, которые добавит javascript
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const itemTemplateContent = document.querySelector('.item-template'); // нашел темплейт
+const listElement = document.querySelector('.places__list'); // нашел, куда его нужно будет вставить
+
+initialCards.forEach(function(item) {
+  const nameElement = item.name; // взял из объекта массива название
+  const srcElement = item.link; // взял из объекта массива ссылку на картинку
+
+  const itemElement = itemTemplateContent.content.cloneNode(true); // склонировал темлейт
+
+  itemElement.querySelector('.places__card-title').textContent = nameElement; // наполнил содержимым
+  itemElement.querySelector('.places__card-image').src = srcElement;
+
+  listElement.appendChild(itemElement); // вывел на страницу
+});
+
+
+
+
+
+
+
+
+
+// (3)реализую функционал:
 
 //добавляю атрибут 'value' и его значение по умолчанию (при первом открытии формы)
   popupNameElement.setAttribute('value', profileNameElement.textContent);
