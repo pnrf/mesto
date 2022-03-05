@@ -57,43 +57,58 @@ const profileInitialData = [
   'Исследователь океана'
 ]; // массив со значениями полей профиля по умолчанию
 
-let profileNameElement = document.querySelector('.profile__title');
-let profileAboutElement = document.querySelector('.profile__subtitle');
+let profileNameElement = document.querySelector('.profile__title'); // ссылка на имя
+let profileAboutElement = document.querySelector('.profile__subtitle'); // ссылка на описание
 
-profileNameElement.textContent = profileInitialData[0];
-profileAboutElement.textContent = profileInitialData[1];
+profileNameElement.textContent = profileInitialData[0]; // подставляем имя из массива
+profileAboutElement.textContent = profileInitialData[1]; // подставляем описание из массива
 
-/*
-// (3) POPUP 1 и 2 - пустая форма
+
+// (3) POPUP - основной функционал (закрыть)
+
 const popupElement = document.querySelector('.popup'); // ссылка на popup
+const popupCloseBtnElement = popupElement.querySelector('.popup__close-button'); // крестик в popup
 
-//профиль 'name' и 'about'
-// let profileNameElement = document.querySelector('.profile__title');
-// let profileAboutElement = document.querySelector('.profile__subtitle');
+const closePopup = function() {
+  popupElement.classList.remove('popup_opened');
+};
+
+popupCloseBtnElement.addEventListener('click', closePopup); //обработчик события
 
 
+// (4) Редактирование профиля
 
-// (3) Редактирование профиля
+// (4.1) открыть попап при клике на кнопку "редактировать"
 const EditBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать"
 
+let popupNameElement = popupElement.querySelector('.popup__input-text_type_name'); // поле "имя" в попапе
+let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about'); // поле "описание" в попапе
 
-
-//поля формы
-let popupNameElement = popupElement.querySelector('.popup__input-text_type_name');
-let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
+const openPopupEditor = function() {
+  popupNameElement.value = profileNameElement.textContent;
+  popupAboutElement.value = profileAboutElement.textContent;
+  popupElement.classList.add('popup_opened');
+};
 
 EditBtnElement.addEventListener('click', openPopupEditor); //обработчик события на кнопке "редактировть"
 
-const openPopupEditor = function() {
-  popupNameElement.value = profileInitialData[0];
-  popupAboutElement.value = profileInitialData[1];
-  popupElement.classList.add('popup_opened');
-  console.log('УРА!!');
+// (4.2) изменить данные на странице (кнопка сохранить)
+const popupSaveBtnElement = popupElement.querySelector('.popup__save-button'); // ссылка на кнопку "сохранить"
+
+const editPopup = function() {
+  profileNameElement.textContent = popupNameElement.value;
+  profileAboutElement.textContent = popupAboutElement.value;
+  popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
 };
+
+popupSaveBtnElement.addEventListener('click', editPopup); //обработчик события
+
+
+
 
 // (4) Добавление новой карточки
 
-*/
+
 
 /*
 // (2) Форма редактирования профиля, popup 1
