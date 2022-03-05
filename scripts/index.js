@@ -50,6 +50,52 @@ initialCards.forEach(function(item) {
 });
 
 
+// (2) Данные профиля по умолчанию (отображение на странице)
+
+const profileInitialData = [
+  'Жак-Ив Кусто',
+  'Исследователь океана'
+]; // массив со значениями полей профиля по умолчанию
+
+let profileNameElement = document.querySelector('.profile__title');
+let profileAboutElement = document.querySelector('.profile__subtitle');
+
+profileNameElement.textContent = profileInitialData[0];
+profileAboutElement.textContent = profileInitialData[1];
+
+/*
+// (3) POPUP 1 и 2 - пустая форма
+const popupElement = document.querySelector('.popup'); // ссылка на popup
+
+//профиль 'name' и 'about'
+// let profileNameElement = document.querySelector('.profile__title');
+// let profileAboutElement = document.querySelector('.profile__subtitle');
+
+
+
+// (3) Редактирование профиля
+const EditBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать"
+
+
+
+//поля формы
+let popupNameElement = popupElement.querySelector('.popup__input-text_type_name');
+let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
+
+EditBtnElement.addEventListener('click', openPopupEditor); //обработчик события на кнопке "редактировть"
+
+const openPopupEditor = function() {
+  popupNameElement.value = profileInitialData[0];
+  popupAboutElement.value = profileInitialData[1];
+  popupElement.classList.add('popup_opened');
+  console.log('УРА!!');
+};
+
+// (4) Добавление новой карточки
+
+*/
+
+/*
 // (2) Форма редактирования профиля, popup 1
 
 //попап и кнопки
@@ -97,4 +143,4 @@ popupSaveBtnElement.addEventListener('click', editPopup); //обработчик
 
 
 // (3) Форма добавления новой карточки, popup 2
-
+*/
