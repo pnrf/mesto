@@ -39,6 +39,7 @@ const initialCards = [
 const itemTemplateContent = document.querySelector('.item-template'); // ссылка на темплейт
 const listElement = document.querySelector('.places__list'); // ссылка на родителя
 
+
 initialCards.forEach(function(item) {
   const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
 
@@ -47,7 +48,7 @@ initialCards.forEach(function(item) {
   itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
 
   listElement.appendChild(itemElement); // вставил на страницу
-});
+  });
 
 
 // (2) Данные профиля по умолчанию (отображение на странице)
@@ -79,7 +80,7 @@ popupCloseBtnElement.addEventListener('click', closePopup); //обработчи
 // (4) Редактирование профиля
 
 // (4.1) открыть попап при клике на кнопку "редактировать", подставить тексты
-const EditBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать"
+const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать"
 
 let popupTitle = popupElement.querySelector('.popup__title'); // заголовок в попапе
 let popupSaveBtnElement = popupElement.querySelector('.popup__save-button'); // кнопка в попапе
@@ -89,12 +90,13 @@ let popupAboutElement = popupElement.querySelector('.popup__input-text_type_abou
 const openPopupEditor = function() {
   popupTitle.textContent = 'Редактировать профиль';
   popupSaveBtnElement.textContent = 'Сохранить';
+  popupSaveBtnElement.setAttribute('type', 'button');
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
   popupElement.classList.add('popup_opened');
 };
 
-EditBtnElement.addEventListener('click', openPopupEditor); //обработчик события на кнопке "редактировть"
+editBtnElement.addEventListener('click', openPopupEditor); // обработчик события на кнопке "редактировать"
 
 // (4.2) изменить данные на странице (кнопка сохранить)
 const editPopup = function() {
@@ -103,71 +105,59 @@ const editPopup = function() {
   popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
 };
 
-popupSaveBtnElement.addEventListener('click', editPopup); //обработчик события
-
+// обработчик события перенесен в п.5.2., т.к. клик по кнопке влечет разные последствия
 
 // (5) Добавление новой карточки
-const AddBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить"
+const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить"
 
+// (5.1) открытие попапа при клике на кнопку "добавить"
 const openPopupAddCard = function() {
   popupTitle.textContent = 'Новое место';
   popupSaveBtnElement.textContent = 'Создать';
   popupNameElement.setAttribute('placeholder', 'Название');
   popupAboutElement.setAttribute('placeholder', 'Ссылка на картинку');
-
-  popupNameElement.value = ''; // чтобы не перебивало placeholder
-  popupAboutElement.value = ''; // чтобы не перебивало placeholder
+  popupSaveBtnElement.setAttribute('type', 'submit');
+  popupNameElement.value = ''; // чтобы value не перебивало placeholder
+  popupAboutElement.value = ''; // чтобы value не перебивало placeholder
   popupElement.classList.add('popup_opened');
 };
 
-AddBtnElement.addEventListener('click', openPopupAddCard); //обработчик события на кнопке "добавить"
+addBtnElement.addEventListener('click', openPopupAddCard); //обработчик события на кнопке "добавить"
 
-/*
-// (2) Форма редактирования профиля, popup 1
+// (5.2) добавление в массив новой карточки (кнопка попапа "создать")
 
-//попап и кнопки
-const popupElement = document.querySelector('.popup');
-const EditBtnElement = document.querySelector('.profile__edit-button');
-const popupCloseBtnElement = popupElement.querySelector('.popup__close-button');
-const popupSaveBtnElement = popupElement.querySelector('.popup__save-button');
+const addCard = function() {
+  let item = {
+    name: popupNameElement.value,
+    link: popupAboutElement.value
+  };
 
-//профиль 'name' и 'about'
-let profileNameElement = document.querySelector('.profile__title');
-let profileAboutElement = document.querySelector('.profile__subtitle');
+  initialCards.unshift(item);
 
-//поля формы
-let popupNameElement = popupElement.querySelector('.popup__input-text_type_name');
-let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
+  function addCards() {
+    const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
 
-//добавил атрибут 'value' и его значение по умолчанию (при первом открытии формы)
-  popupNameElement.setAttribute('value', profileNameElement.textContent);
-  popupAboutElement.setAttribute('value', profileAboutElement.textContent);
+    itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
+    itemElement.querySelector('.places__card-image').src = item.link;
+    itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
 
-//открытие popup (кнопка редактировать)
-const openPopup = function() {
-  popupNameElement.value = profileNameElement.textContent;
-  popupAboutElement.value = profileAboutElement.textContent;
-  popupElement.classList.add('popup_opened');
+    listElement.prepend(itemElement); // вставил на страницу в начало списка
+  };
+
+  addCards();
+
+  popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "создать" попап закрывается
 };
 
-EditBtnElement.addEventListener('click', openPopup); //обработчик события
+function setEventHandler() {
+  if (popupTitle.textContent === 'Новое место') {
+    addCard(); //функция для добавления новой карточки
+  } else if (popupTitle.textContent === 'Редактировать профиль') {
+    editPopup(); //функция для редактирования данных профиля
+  } else {
+    popupElement.classList.remove('popup_opened');
+  };
+}; // эта функция разграничивает последствия, т.к. попап (и кнопка в нем) один для редактирования профиля и добавления карточек
 
-//закрытие popup (крестик)
-const closePopup = function() {
-  popupElement.classList.remove('popup_opened');
-};
+popupSaveBtnElement.addEventListener('click', setEventHandler); // обработчик события при клике на кнопку попапа
 
-popupCloseBtnElement.addEventListener('click', closePopup); //обработчик события
-
-//редактирование профиля (кнопка сохранить)
-const editPopup = function() {
-  profileNameElement.textContent = popupNameElement.value;
-  profileAboutElement.textContent = popupAboutElement.value;
-  popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
-};
-
-popupSaveBtnElement.addEventListener('click', editPopup); //обработчик события
-
-
-// (3) Форма добавления новой карточки, popup 2
-*/
