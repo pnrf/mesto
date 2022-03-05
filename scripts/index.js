@@ -1,12 +1,3 @@
-//ставим лайк на карточке (для черного сердечка на 5-ый спринт)
-//пока работает только на 1-ой карточке
-// const likeButtonElement = document.querySelector('.places__heart-button');
-// const toggleLikeButton = function() {
-//   likeButtonElement.classList.toggle('places__heart-button_active');
-// };
-// likeButtonElement.addEventListener('click', toggleLikeButton);
-
-
 // (1) при загрузке на странице должно быть 6 карточек, которые добавит javascript
 
 const initialCards = [
@@ -46,6 +37,9 @@ initialCards.forEach(function(item) {
   itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
   itemElement.querySelector('.places__card-image').src = item.link;
   itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
+  itemElement.querySelector('.places__heart-button').addEventListener('click', function (event) {
+    event.target.classList.toggle('places__heart-button_active');
+  }); // лайк/дизлайк
 
   listElement.appendChild(itemElement); // вставил на страницу
   });
@@ -107,7 +101,9 @@ const editPopup = function() {
 
 // обработчик события перенесен в п.5.2., т.к. клик по кнопке влечет разные последствия
 
+
 // (5) Добавление новой карточки
+
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить"
 
 // (5.1) открытие попапа при клике на кнопку "добавить"
@@ -125,7 +121,6 @@ const openPopupAddCard = function() {
 addBtnElement.addEventListener('click', openPopupAddCard); //обработчик события на кнопке "добавить"
 
 // (5.2) добавление в массив новой карточки (кнопка попапа "создать")
-
 const addCard = function() {
   let item = {
     name: popupNameElement.value,
@@ -140,6 +135,9 @@ const addCard = function() {
     itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
     itemElement.querySelector('.places__card-image').src = item.link;
     itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
+    itemElement.querySelector('.places__heart-button').addEventListener('click', function (event) {
+      event.target.classList.toggle('places__heart-button_active');
+    }); // лайк/дизлайк
 
     listElement.prepend(itemElement); // вставил на страницу в начало списка
   };
@@ -161,3 +159,5 @@ function setEventHandler() {
 
 popupSaveBtnElement.addEventListener('click', setEventHandler); // обработчик события при клике на кнопку попапа
 
+
+// (6) Удаление карточки
