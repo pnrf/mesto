@@ -7,24 +7,7 @@
 // likeButtonElement.addEventListener('click', toggleLikeButton);
 
 
-// (1) объявляю переменные:
-
-//попап и кнопки
-const popupElement = document.querySelector('.popup');
-const EditBtnElement = document.querySelector('.profile__edit-button');
-const popupCloseBtnElement = popupElement.querySelector('.popup__close-button');
-const popupSaveBtnElement = popupElement.querySelector('.popup__save-button');
-
-//профиль 'name' и 'about'
-let profileNameElement = document.querySelector('.profile__title');
-let profileAboutElement = document.querySelector('.profile__subtitle');
-
-//поля формы
-let popupNameElement = popupElement.querySelector('.popup__input-text_type_name');
-let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
-
-
-// (2) при загрузке на странице должно быть 6 карточек, которые добавит javascript
+// (1) при загрузке на странице должно быть 6 карточек, которые добавит javascript
 
 const initialCards = [
   {
@@ -53,32 +36,37 @@ const initialCards = [
   }
 ];
 
-const itemTemplateContent = document.querySelector('.item-template'); // нашел темплейт
-const listElement = document.querySelector('.places__list'); // нашел, куда его нужно будет вставить
+const itemTemplateContent = document.querySelector('.item-template'); // ссылка на темплейт
+const listElement = document.querySelector('.places__list'); // ссылка на родителя
 
 initialCards.forEach(function(item) {
-  const nameElement = item.name; // взял из объекта массива название
-  const srcElement = item.link; // взял из объекта массива ссылку на картинку
+  const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
 
-  const itemElement = itemTemplateContent.content.cloneNode(true); // склонировал темлейт
+  itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
+  itemElement.querySelector('.places__card-image').src = item.link;
+  itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
 
-  itemElement.querySelector('.places__card-title').textContent = nameElement; // наполнил содержимым
-  itemElement.querySelector('.places__card-image').src = srcElement;
-
-  listElement.appendChild(itemElement); // вывел на страницу
+  listElement.appendChild(itemElement); // вставил на страницу
 });
 
 
+// (2) Форма редактирования профиля, popup 1
 
+//попап и кнопки
+const popupElement = document.querySelector('.popup');
+const EditBtnElement = document.querySelector('.profile__edit-button');
+const popupCloseBtnElement = popupElement.querySelector('.popup__close-button');
+const popupSaveBtnElement = popupElement.querySelector('.popup__save-button');
 
+//профиль 'name' и 'about'
+let profileNameElement = document.querySelector('.profile__title');
+let profileAboutElement = document.querySelector('.profile__subtitle');
 
+//поля формы
+let popupNameElement = popupElement.querySelector('.popup__input-text_type_name');
+let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about');
 
-
-
-
-// (3)реализую функционал:
-
-//добавляю атрибут 'value' и его значение по умолчанию (при первом открытии формы)
+//добавил атрибут 'value' и его значение по умолчанию (при первом открытии формы)
   popupNameElement.setAttribute('value', profileNameElement.textContent);
   popupAboutElement.setAttribute('value', profileAboutElement.textContent);
 
@@ -106,3 +94,7 @@ const editPopup = function() {
 };
 
 popupSaveBtnElement.addEventListener('click', editPopup); //обработчик события
+
+
+// (3) Форма добавления новой карточки, popup 2
+
