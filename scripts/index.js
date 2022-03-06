@@ -41,6 +41,12 @@ initialCards.forEach(function(item) {
     event.target.classList.toggle('places__heart-button_active');
   }); // лайк/дизлайк
 
+  const delBtn = itemElement.querySelector('.places__basket'); // удаление карточки (кнопка корзина)
+  delBtn.addEventListener('click', function (event) {
+    const delItem = delBtn.closest('.places__card');
+    delItem.remove();
+    });
+
   listElement.appendChild(itemElement); // вставил на страницу
   });
 
@@ -59,8 +65,9 @@ profileNameElement.textContent = profileInitialData[0]; // подставляе�
 profileAboutElement.textContent = profileInitialData[1]; // подставляем описание из массива
 
 
-// (3) POPUP - основной функционал (закрыть)
+// (3) POPUP - общий функционал
 
+// (3.1) закрыть попап
 const popupElement = document.querySelector('.popup'); // ссылка на popup
 const popupCloseBtnElement = popupElement.querySelector('.popup__close-button'); // крестик в popup
 
@@ -120,7 +127,7 @@ const openPopupAddCard = function() {
 
 addBtnElement.addEventListener('click', openPopupAddCard); //обработчик события на кнопке "добавить"
 
-// (5.2) добавление в массив новой карточки (кнопка попапа "создать")
+// (5.2) добавление новой карточки в массив (кнопка попапа "создать")
 const addCard = function() {
   let item = {
     name: popupNameElement.value,
@@ -129,6 +136,7 @@ const addCard = function() {
 
   initialCards.unshift(item);
 
+// (5.3) добавление новой карточки на страницу (кнопка попапа "создать")
   function addCards() {
     const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
 
@@ -139,6 +147,12 @@ const addCard = function() {
       event.target.classList.toggle('places__heart-button_active');
     }); // лайк/дизлайк
 
+    const delBtn = itemElement.querySelector('.places__basket'); // удаление карточки (кнопка корзина)
+    delBtn.addEventListener('click', function (event) {
+      const delItem = delBtn.closest('.places__card');
+      delItem.remove();
+    });
+
     listElement.prepend(itemElement); // вставил на страницу в начало списка
   };
 
@@ -147,6 +161,7 @@ const addCard = function() {
   popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "создать" попап закрывается
 };
 
+// (5.4) обработчик события при добавлении новой карточки (корреляция с редактированием профиля)
 function setEventHandler() {
   if (popupTitle.textContent === 'Новое место') {
     addCard(); //функция для добавления новой карточки
@@ -161,3 +176,5 @@ popupSaveBtnElement.addEventListener('click', setEventHandler); // обрабо�
 
 
 // (6) Удаление карточки
+//  const popupDeleteBtnElement = document.querySelector('.places__basket').addEventListener('click', function (event) {
+//    event.target.classList.toggle('places__heart-button_active'); // ссылка на кнопку "корзина"

@@ -4,6 +4,7 @@
   background-color: #000;
   color: #fff;
   font-family: 'Inter', Arial, sans-serif;
+  cursor: auto;
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

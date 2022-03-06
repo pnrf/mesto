@@ -8,6 +8,7 @@
   background-color: transparent;
   width: 22px;
   height: 19px;
+  cursor: pointer;
 }
 
 .places__heart-button:hover {

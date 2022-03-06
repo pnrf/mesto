@@ -10,6 +10,7 @@
   background-color: #000;
   width: 238px;
   height: 46px;
+  cursor: pointer;
 }
 
 .popup__save-button:hover {
