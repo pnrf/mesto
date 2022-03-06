@@ -1,0 +1,23 @@
+.popup-img__picwrapper {
+  position: absolute;
+  top: calc(50% - 150px);
+  left: calc(50% - 120px);
+  margin: 0 auto;
+  padding: 0;
+  width: 240px;
+}
+
+@media screen and (min-width: 768px) {
+  .popup-img__picwrapper {
+  top: calc(50% - 270px);
+  left: calc(50% - 217px);
+  width: 433px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .popup-img__picwrapper {
+  left: calc(50% - 408px);
+  width: 816px;
+  }
+}
