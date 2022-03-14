@@ -51,6 +51,7 @@
 
 /* popup image */
 @import url(../blocks/popup-img/popup-img.css);
+@import url(../blocks/popup-img/_opened/popup-img_opened.css);
 @import url(../blocks/popup-img/__picwrapper/popup-img__picwrapper.css);
 @import url(../blocks/popup-img/__image/popup-img__image.css);
 @import url(../blocks/popup-img/__text/popup-img__text.css);

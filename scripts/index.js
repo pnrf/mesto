@@ -1,5 +1,65 @@
-// (1) при загрузке на странице должно быть 6 карточек, которые добавит javascript
+// (1) Данные профиля по умолчанию (Жак-Ив Кусто, исследователь океана), отображение на странице
 
+const profileInitialData = [
+  'Жак-Ив Кусто',
+  'Исследователь океана'
+]; // массив со значениями полей профиля по умолчанию
+
+let profileNameElement = document.querySelector('.profile__title'); // ссылка на имя
+let profileAboutElement = document.querySelector('.profile__subtitle'); // ссылка на описание
+
+profileNameElement.textContent = profileInitialData[0]; // подставляем имя из массива
+profileAboutElement.textContent = profileInitialData[1]; // подставляем описание из массива
+
+
+// (2) POPUP-IMG -- для просмотра картинок
+const popupImgElement = document.querySelector('.popup-img'); // ссылка на popup-img
+const popupImgCloseBtnElement = popupImgElement.querySelector('.popup__close-button'); // крестик в popup-img
+
+// (2.1) закрытие попапа
+const closePopupImg = function() {
+  popupImgElement.classList.remove('popup-img_opened');
+};
+
+popupImgCloseBtnElement.addEventListener('click', closePopupImg); //обработчик события
+
+
+// (3) при загрузке на странице должно быть 6 карточек, которые добавит javascript
+
+// (3.1) функция отрисовки карточек на странице:
+const itemTemplateContent = document.querySelector('.item-template'); // ссылка на темплейт
+const listElement = document.querySelector('.places__list'); // ссылка на родителя
+
+function renderCards(item) {
+    // клонировал темлейт из html в DOM:
+    const itemElement = itemTemplateContent.content.cloneNode(true);
+    // наполнил темплейт содержимым:
+    itemElement.querySelector('.places__card-title').textContent = item.name;
+    itemElement.querySelector('.places__card-image').src = item.link;
+    itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
+    // слушатель на картинке:
+    itemElement.querySelector('.places__card-image').addEventListener('click', function(event) {
+      popupImgElement.classList.add('popup-img_opened');
+      popupImgElement.querySelector('.popup-img__text').textContent = item.name;
+      popupImgElement.querySelector('.popup-img__image').src = item.link;
+      popupImgElement.querySelector('.popup-img__image').alt = `${item.name}. Фотография`;
+    });
+    // функция лайк/дизлайк:
+    itemElement.querySelector('.places__heart-button').addEventListener('click', function (event) {
+      event.target.classList.toggle('places__heart-button_active');
+    });
+    // функция удаления карточки (кнопка корзина):
+    const delBtn = itemElement.querySelector('.places__basket'); // ссылка на значок корзины в попапе
+
+    delBtn.addEventListener('click', function (event) {
+      const delItem = delBtn.closest('.places__card');
+      delItem.remove();
+    });
+    // отрисовал карточку вначале списка:
+    listElement.prepend(itemElement);
+};
+
+// (3.2) исходный массив объектов для отрисовки карточек на странице
 const initialCards = [
   {
     name: 'Архыз',
@@ -27,49 +87,18 @@ const initialCards = [
   }
 ];
 
-const itemTemplateContent = document.querySelector('.item-template'); // ссылка на темплейт
-const listElement = document.querySelector('.places__list'); // ссылка на родителя
+// (3.3) развернул исходный массив, перебрал его и отрисовывал карточки на странице:
+const arrayReversed = initialCards.reverse();
+arrayReversed.forEach(function(item) {
+  renderCards(item);
+});
 
 
-initialCards.forEach(function(item) {
-  const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
+// (4) POPUP - для добавления карточек и редактирования профиля
 
-  itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
-  itemElement.querySelector('.places__card-image').src = item.link;
-  itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
-  itemElement.querySelector('.places__heart-button').addEventListener('click', function (event) {
-    event.target.classList.toggle('places__heart-button_active');
-  }); // лайк/дизлайк
-
-  const delBtn = itemElement.querySelector('.places__basket'); // удаление карточки (кнопка корзина)
-  delBtn.addEventListener('click', function (event) {
-    const delItem = delBtn.closest('.places__card');
-    delItem.remove();
-    });
-
-  listElement.appendChild(itemElement); // вставил на страницу
-  });
-
-
-// (2) Данные профиля по умолчанию (отображение на странице)
-
-const profileInitialData = [
-  'Жак-Ив Кусто',
-  'Исследователь океана'
-]; // массив со значениями полей профиля по умолчанию
-
-let profileNameElement = document.querySelector('.profile__title'); // ссылка на имя
-let profileAboutElement = document.querySelector('.profile__subtitle'); // ссылка на описание
-
-profileNameElement.textContent = profileInitialData[0]; // подставляем имя из массива
-profileAboutElement.textContent = profileInitialData[1]; // подставляем описание из массива
-
-
-// (3) POPUP - общий функционал
-
-// (3.1) закрыть попап
+// (4.1) закрыть попап нажатием на крестик
 const popupElement = document.querySelector('.popup'); // ссылка на popup
-const popupCloseBtnElement = popupElement.querySelector('.popup__close-button'); // крестик в popup
+const popupCloseBtnElement = popupElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 
 const closePopup = function() {
   popupElement.classList.remove('popup_opened');
@@ -78,15 +107,15 @@ const closePopup = function() {
 popupCloseBtnElement.addEventListener('click', closePopup); //обработчик события
 
 
-// (4) Редактирование профиля
+// (4.2) редактировать профиль (Жак-Ив Кусто, исследователь океана)
 
-// (4.1) открыть попап при клике на кнопку "редактировать", подставить тексты
+// (4.2.1) открыть попап при клике на кнопку "редактировать", подставить в попап значения
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать"
 
-let popupTitle = popupElement.querySelector('.popup__title'); // заголовок в попапе
-let popupSaveBtnElement = popupElement.querySelector('.popup__save-button'); // кнопка в попапе
-let popupNameElement = popupElement.querySelector('.popup__input-text_type_name'); // поле "имя" в попапе
-let popupAboutElement = popupElement.querySelector('.popup__input-text_type_about'); // поле "описание" в попапе
+const popupTitle = popupElement.querySelector('.popup__title'); // ссылка на заголовок "Редактировать профиль" в попапе
+const popupSaveBtnElement = popupElement.querySelector('.popup__save-button'); // ссылка на кнопку "сохранить" в попапе
+const popupNameElement = popupElement.querySelector('.popup__input-text_type_name'); // ссылка на поле "имя" в попапе
+const popupAboutElement = popupElement.querySelector('.popup__input-text_type_about'); // ссылка на поле "описание" в попапе
 
 const openPopupEditor = function() {
   popupTitle.textContent = 'Редактировать профиль';
@@ -99,21 +128,21 @@ const openPopupEditor = function() {
 
 editBtnElement.addEventListener('click', openPopupEditor); // обработчик события на кнопке "редактировать"
 
-// (4.2) изменить данные на странице (кнопка сохранить)
+// (4.2.2) изменить данные профиля на странице (кнопка сохранить)
 const editPopup = function() {
   profileNameElement.textContent = popupNameElement.value;
   profileAboutElement.textContent = popupAboutElement.value;
   popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "сохранить" попап закрывается
 };
 
-// обработчик события перенесен в п.5.2., т.к. клик по кнопке влечет разные последствия
+// обработчик события перенесен в п.4.4., т.к. клик по кнопке влечет разные последствия
 
 
-// (5) Добавление новой карточки
+// (4.3) Добавление новой карточки
 
+// (4.3.1) открыть попап при клике на кнопку "добавить", подставить в попап значения
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить"
 
-// (5.1) открытие попапа при клике на кнопку "добавить"
 const openPopupAddCard = function() {
   popupTitle.textContent = 'Новое место';
   popupSaveBtnElement.textContent = 'Создать';
@@ -127,7 +156,7 @@ const openPopupAddCard = function() {
 
 addBtnElement.addEventListener('click', openPopupAddCard); //обработчик события на кнопке "добавить"
 
-// (5.2) добавление новой карточки в массив (кнопка попапа "создать")
+// (4.3.2) добавить новую карточку в массив и на страницу (кнопка попапа "создать")
 const addCard = function() {
   let item = {
     name: popupNameElement.value,
@@ -136,32 +165,14 @@ const addCard = function() {
 
   initialCards.unshift(item);
 
-// (5.3) добавление новой карточки на страницу (кнопка попапа "создать")
-  function addCards() {
-    const itemElement = itemTemplateContent.content.cloneNode(true); // клонировал темлейт
+renderCards(item); // функция отрисовки карточки на странице
 
-    itemElement.querySelector('.places__card-title').textContent = item.name; // наполнил содержимым
-    itemElement.querySelector('.places__card-image').src = item.link;
-    itemElement.querySelector('.places__card-image').alt = `${item.name}. Фотография`;
-    itemElement.querySelector('.places__heart-button').addEventListener('click', function (event) {
-      event.target.classList.toggle('places__heart-button_active');
-    }); // лайк/дизлайк
-
-    const delBtn = itemElement.querySelector('.places__basket'); // удаление карточки (кнопка корзина)
-    delBtn.addEventListener('click', function (event) {
-      const delItem = delBtn.closest('.places__card');
-      delItem.remove();
-    });
-
-    listElement.prepend(itemElement); // вставил на страницу в начало списка
-  };
-
-  addCards();
-
-  popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "создать" попап закрывается
+popupElement.classList.remove('popup_opened'); //при нажатии на кнопку "создать" попап закрывается
 };
 
-// (5.4) обработчик события при добавлении новой карточки (корреляция с редактированием профиля)
+
+// (4.4) обработчик события при добавлении новой карточки и при редактировании профиля
+// эта функция разграничивает последствия, т.к. попап один и тот же для редактирования профиля и для добавления карточек
 function setEventHandler() {
   if (popupTitle.textContent === 'Новое место') {
     addCard(); //функция для добавления новой карточки
@@ -169,12 +180,10 @@ function setEventHandler() {
     editPopup(); //функция для редактирования данных профиля
   } else {
     popupElement.classList.remove('popup_opened');
-  };
-}; // эта функция разграничивает последствия, т.к. попап (и кнопка в нем) один для редактирования профиля и добавления карточек
+  }; // если что-то не сработает, попап просто закрывается без внесения каких-либо изменений на страницу
+};
 
 popupSaveBtnElement.addEventListener('click', setEventHandler); // обработчик события при клике на кнопку попапа
 
 
-// (6) Удаление карточки
-//  const popupDeleteBtnElement = document.querySelector('.places__basket').addEventListener('click', function (event) {
-//    event.target.classList.toggle('places__heart-button_active'); // ссылка на кнопку "корзина"
+
