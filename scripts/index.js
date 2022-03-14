@@ -14,7 +14,7 @@ profileAboutElement.textContent = profileInitialData[1]; // подставляе
 
 // (2) POPUP-IMG -- для просмотра картинок
 const popupImgElement = document.querySelector('.popup-img'); // ссылка на popup-img
-const popupImgCloseBtnElement = popupImgElement.querySelector('.popup__close-button'); // крестик в popup-img
+const popupImgCloseBtnElement = popupImgElement.querySelector('.popup__closebtn'); // крестик в popup-img
 
 // (2.1) закрытие попапа
 const closePopupImg = function() {
@@ -98,7 +98,7 @@ arrayReversed.forEach(function(item) {
 
 // (4.1) закрыть попап нажатием на крестик
 const popupElement = document.querySelector('.popup'); // ссылка на popup
-const popupCloseBtnElement = popupElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
+const popupCloseBtnElement = popupElement.querySelector('.popup__closebtn'); // ссылка на крестик в popup
 
 const closePopup = function() {
   popupElement.classList.remove('popup_opened');

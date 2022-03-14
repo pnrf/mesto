@@ -1,4 +1,4 @@
-.popup__close-button {
+.popup__closebtn {
   position: inherit;
   top: -36px;
   right: 8px;
@@ -17,12 +17,12 @@
   cursor: pointer;
 }
 
-.popup__close-button:hover {
+.popup__closebtn:hover {
   opacity: .6;
 }
 
 @media screen and (min-width: 768px) {
-  .popup__close-button {
+  .popup__closebtn {
     top: -40px;
     right: -40px;
     width: 32px;
