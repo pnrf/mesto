@@ -1,17 +1,17 @@
-.places {
+.cards {
   margin: 36px auto 0;
   max-width: 282px;
 }
 
 @media screen and (min-width: 768px) {
-  .places {
+  .cards {
     margin: 50px auto 0;
     max-width: 581px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .places {
+  .cards {
     max-width: 880px;
   }
 }

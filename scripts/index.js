@@ -1,3 +1,4 @@
+/*
 // (1) Данные профиля по умолчанию (Жак-Ив Кусто, исследователь океана), отображение на странице
 
 const profileInitialData = [
@@ -10,7 +11,7 @@ let profileAboutElement = document.querySelector('.profile__subtitle'); // сс�
 
 profileNameElement.textContent = profileInitialData[0]; // подставляем имя из массива
 profileAboutElement.textContent = profileInitialData[1]; // подставляем описание из массива
-
+*/
 
 // (2) POPUP-IMG -- для просмотра картинок
 const popupImgElement = document.querySelector('.popup-img'); // ссылка на popup-img

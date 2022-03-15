@@ -1,18 +1,17 @@
-.popup-img__image {
-  /* max-height: 75vh; */
+.popup__image {
   width: 240px;
   max-height: 299px;
 }
 
 @media screen and (min-width: 768px) {
-  .popup-img__image {
+  .popup__image {
     width: 433px;
     max-height: 540px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .popup-img__image {
+  .popup__image {
     width: 816px;
   }
 }

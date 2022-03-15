@@ -1,4 +1,4 @@
-.places__basket {
+.card__del-button {
   padding: 0;
   border: none;
   font: inherit;
@@ -15,6 +15,6 @@
   cursor: pointer;
 }
 
-.places__basket:hover {
+.card__del-button:hover {
   opacity: .6;
 }

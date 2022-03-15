@@ -1,4 +1,4 @@
-.places__heart-button {
+.card__like-button {
   padding: 0;
   border: none;
   font: inherit;
@@ -11,6 +11,6 @@
   cursor: pointer;
 }
 
-.places__heart-button:hover {
+.card__like-button:hover {
   opacity: .5;
 }
