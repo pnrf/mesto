@@ -1,4 +1,5 @@
 .popup__container_type_image {
+  background-color: transparent;
   position: absolute;
   top: calc(50% - 150px);
   left: calc(50% - 120px);

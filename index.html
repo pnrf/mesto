@@ -16,7 +16,7 @@
     <header class="header">
       <img src="./images/logo-white.svg" alt="Логотип" class="header__logo">
     </header>
-    <main class="content">
+    <main>
       <section class="profile">
         <div class="profile__container">
           <img src="./images/img-profile-avatar.jpg" alt="Аватар для профайла" class="profile__avatar">
@@ -33,41 +33,36 @@
       <section class="cards">
         <ul class="cards__list"></ul>
       </section>
-
-      <!-- <section class="places">
-        <ul class="places__list"></ul>
-      </section> -->
-
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
 <!-- POPUP 1: profile editing form -->
-  <section class="popup">
+  <section class="popup popup_type_profile">
     <div class="popup__container">
       <button class="popup__close-button" type="button"></button>
       <div class="popup__content">
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form name="popup-form" class="popup__input-list">
+        <form name="popup-profile-form" class="popup__input-list">
           <input type="text" name="form-name" class="popup__input-text popup__input-text_type_name">
           <input type="text" name="form-about" class="popup__input-text popup__input-text_type_about">
+          <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
-        <button class="popup__save-button" type="submit">Сохранить</button>
       </div>
     </div>
   </section>
 <!-- POPUP 2: card adding form -->
-  <section class="popup">
+  <section class="popup popup_type_cards">
     <div class="popup__container">
       <button class="popup__close-button" type="button"></button>
       <div class="popup__content">
         <h3 class="popup__title">Новое место</h3>
-        <form name="popup-form" class="popup__input-list">
-          <input type="text" name="form-name" required placeholder="Название" class="popup__input-text popup__input-text_type_name">
-          <input type="text" name="form-about" required placeholder="Ссылка на картинку" class="popup__input-text popup__input-text_type_about">
+        <form name="popup-cards-form" class="popup__input-list">
+          <input type="text" name="form-name" placeholder="Название" class="popup__input-text popup__input-text_type_name" required>
+          <input type="text" name="form-about" placeholder="Ссылка на картинку" class="popup__input-text popup__input-text_type_about" required>
+          <button class="popup__save-button" type="submit">Создать</button>
         </form>
-        <button class="popup__save-button" type="submit">Создать</button>
       </div>
     </div>
   </section>
@@ -79,17 +74,6 @@
       <figcaption class="popup__figcaption"></figcaption>
     </figure>
   </section>
-
-  <!-- POPUP image-->
-  <!-- <section class="popup popup-img">
-    <div class="popup-img__picwrapper">
-      <button class="popup__close-button popup__close-button_img_position" type="button"></button>
-      <img src="#" alt="" class="popup-img__image">
-      <p class="popup-img__text"></p>
-    </div>
-  </section> -->
-
-
 <!-- TEMPLATE for cards-->
   <template id="template">
     <li class="card">
@@ -101,7 +85,7 @@
       </div>
     </li>
   </template>
-
-  <!-- <script src="./scripts/index.js"></script> -->
+  <script src="./scripts/initialCards.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

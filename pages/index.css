@@ -15,9 +15,6 @@
 @import url(../blocks/cards/cards.css);
 @import url(../blocks/cards/__list/cards__list.css);
 
-/* content */
-@import url(../blocks/content/content.css);
-
 /* footer */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
