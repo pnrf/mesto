@@ -1,10 +1,10 @@
-// (1) Constants and variables
+/** (1) CONSTANTS and VARIABLES */
 
-// (1.1) кнопки на странице
+/** кнопки на странице */
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
 
-// (1.2) POPUP 1: profile editing form
+/** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
 
 const popupCloseBtnElement = popupProfileElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
@@ -17,7 +17,7 @@ const profileElement = document.querySelector('.profile'); // ссылка на 
 const profileNameElement = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
 const profileAboutElement = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
 
-// (1.3) POPUP 2: card adding form
+/** POPUP 2: card adding form */
 const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
 
 const popupCardsCloseBtnElement = popupCardsElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
@@ -26,107 +26,136 @@ const popupCardsForm = popupCardsElement.querySelector('.popup__input-list'); //
 const popupPlaceElement = popupCardsElement.querySelector('.popup__input-text_type_name'); // ссылка на поле "название места" в попапе
 const popupLinkElement = popupCardsElement.querySelector('.popup__input-text_type_about'); // ссылка на поле "ссылка на картинку" в попапе
 
-// (1.4) POPUP 3: image preview
+/** POPUP 3: image preview */
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
 const popupImgCloseBtnElement = popupImageElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
+const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 
-// (1.5) TEMPLATE for cards
+/** TEMPLATE for cards */
 const itemTemplate = document.querySelector('#template'); // ссылка на темплейт
 const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 
 
+/** (2) FUNCTIONS  */
 
-// (2) Functions
+/** функция: поставить лайк/дизлайк */
+const toggleLikeBtn = event => {
+  event.target.classList.toggle('card__like-button_active');
+};
 
-// (2.1) функция: создать карточку из темлейта:
-const createCard = function(item) {
-  // клонировал темлейт из html в DOM:
+/** функция: удалить карточку со страницы */
+const removeCard = event => {
+  event.target.closest('.card').remove();
+};
+
+/** функция: открыть попап:
+ * данная функция переиспользуется для всех 3 (трех) попапов
+ * поэтому на вход она получает ссылку на соответствующий попап.
+ */
+const openPopup = item => {
+  item.classList.add('popup_opened');
+};
+
+/** функция: закрыть попап:
+ * данная функция переиспользуется для всех 3 (трех) попапов
+ * поэтому на вход она получает ссылку на соответствующий попап.
+ */
+const closePopup = item => {
+  item.classList.remove('popup_opened');
+};
+
+/** функция: сгенерировать карточку из темлейта:
+ * 1) клонировать темплейт из html в DOM;
+ * 2) наполнить темплейт содержимым: название места, ссылка на картинку, alt к картинке;
+ * 3) установить слушатели: на картинку, на кнопку лайк/дизлайк, на кнопку удаления карточки (корзинку);
+ *
+ * на вход функция получает объект, поэтому обращаемся к свойствам объекта через ключ-переменную: item['name'] и item['link'];
+ * данная функция возвращает сгенерированную карточку;
+ * для отрисовки карточки на странице используется функция renderCard();
+*/
+const createCard = (item) => {
+  // клонировал темлейт из html в DOM
   const itemElement = itemTemplate.content.cloneNode(true);
+  // ввел переменные внутри функции
   const cardImgElm = itemElement.querySelector('.card__image');
   const popupImgElm = popupImageElement.querySelector('.popup__image');
-
   // наполнил темплейт содержимым:
-  itemElement.querySelector('.card__title').textContent = item.name;
-  cardImgElm.src = item.link;
-  cardImgElm.alt = `${item.name}. Фотография`;
+  itemElement.querySelector('.card__title').textContent = item['name'];
+  cardImgElm.src = item['link'];
+  cardImgElm.alt = `${item['name']}. Фотография`;
   // слушатель на картинке:
-  itemElement.querySelector('.card__image').addEventListener('click', function() {
+  cardImgElm.addEventListener('click', function() {
+    popupFigcaptionElement.textContent = item['name'];
+    popupImgElm.src = item['link'];
+    popupImgElm.alt = `${item['name']}. Фотография`;
     openPopup(popupImageElement);
-    popupImageElement.querySelector('.popup__figcaption').textContent = item.name;
-    popupImgElm.src = item.link;
-    popupImgElm.alt = `${item.name}. Фотография`;
   });
   // слушатель для лайка/дизлайка:
-  itemElement.querySelector('.card__like-button').addEventListener('click', function (event) {
-    event.target.classList.toggle('card__like-button_active');
-  });
+  itemElement.querySelector('.card__like-button').addEventListener('click', event => {toggleLikeBtn(event)});
   // слушатель для удаления карточки:
-  itemElement.querySelector('.card__del-button').addEventListener('click', function (event) {
-    event.target.closest('.card').remove();
-  });
+  itemElement.querySelector('.card__del-button').addEventListener('click', event => {removeCard(event)});
 
   return itemElement;
 };
 
-// (2.2) функция перебрать массив, отрисовать карточки по порядку
-initialCards.forEach(function(item) {
-  listElement.appendChild(createCard(item)); // отрисовал карточки по порядку
-});
+/** функция: отрисовать карточку на странице (вставить в разметку):
+ * данная функция переиспользуется для отрисовки исходного массива и для добавления новой карточки;
+ * на вход функция получает 2 (два) строчных значения (текст и ссылку), которые пользователь ввел в форму;
+ * эти значения присваиваются ключам-переменным (name, link);
+ * затем ключи-переменные объединяем и в качестве (!)объекта передаем в функцию createCard;
+*/
+const renderCard = (name, link) => {
+  listElement.prepend(createCard({name, link}));
+};
 
-// (2.3) функция отрисовать новую карточку в начале списка:
-const renderCard = function(name, link) {
-  const item = {
-      name,
-      link
-    };
-  listElement.prepend(createCard(item)); // отрисовал карточку в начале списка
+/** функция: обработчик события для добавления новой карточки (при клике на кнопку "создать")
+ * сюда же добавлен функционал обнуления значений попапа, чтобы они не появлялись при новом открытии попапа
+*/
+const addNewCard = evt => {
+  evt.preventDefault();
+  renderCard(popupPlaceElement.value, popupLinkElement.value);
+  closePopup(popupCardsElement);
   popupPlaceElement.value = ''; // чтобы при добавлении новой карточки, прежние значения обнулялись
   popupLinkElement.value = ''; // иначе, они остаются в попапе и перебивают placeholder
 };
 
-// (2.4) функция: открыть попап
-const openPopup = function(item) {
-  item.classList.add('popup_opened');
-};
 
-// (2.5) функция: закрыть попап
-const closePopup = function(item) {
-  item.classList.remove('popup_opened');
-};
+// (3) EVENT HANDLERS
 
+/** перебрать исходный массив, и отрисовать карточки по порядку
+ * поскольку функция renderCard использует метод prepend вместо appendChild, то я вынужден применить reverse(),
+ * иначе карточки отрисуются в обратном порядке, что будет противоречить макету;
+*/
+initialCards.reverse().forEach(item => {
+  renderCard(item.name, item.link);
+});
 
-
-// (3) Event handlers
-
-// (3.1) редактировать профиль (Жак-Ив Кусто, исследователь океана)
-
-editBtnElement.addEventListener('click', function(){
+/** редактировать профиль (Жак-Ив Кусто, исследователь океана)
+ * 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы;
+ * 2) закрыть попап при клике на крестик;
+ * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
+*/
+editBtnElement.addEventListener('click', () => {
   openPopup(popupProfileElement);
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
-}, false); // открыть попап при клике на кнопке "редактировать"
+}); // открыть попап при клике на кнопке "редактировать"
 
-popupCloseBtnElement.addEventListener('click', function(){closePopup(popupProfileElement)}, false); //закрыть попап при клике на крестик
+popupCloseBtnElement.addEventListener('click', () => {closePopup(popupProfileElement)}); //закрыть попап при клике на крестик
 
-popupProfileForm.addEventListener('submit', function(evt){
+popupProfileForm.addEventListener('submit', evt => {
   evt.preventDefault();
   profileNameElement.textContent = popupNameElement.value;
   profileAboutElement.textContent = popupAboutElement.value;
   closePopup(popupProfileElement);
-}, false); // изменить данные профиля на странице при клике на кнопку "сохранить"
+}); // изменить данные профиля на странице при клике на кнопку "сохранить"
 
-// (3.2) добавить новую карточку
+/** добавить новую карточку */
+addBtnElement.addEventListener('click', () => {openPopup(popupCardsElement);}); // открыть попап при клике на кнопке "добавить"
 
-addBtnElement.addEventListener('click', function(){openPopup(popupCardsElement);}, false); // открыть попап при клике на кнопке "добавить"
+popupCardsCloseBtnElement.addEventListener('click', () => {closePopup(popupCardsElement);}); //закрыть попап при клике на крестик
 
-popupCardsCloseBtnElement.addEventListener('click', function(){closePopup(popupCardsElement)}, false); //закрыть попап при клике на крестик
+popupCardsForm.addEventListener('submit', evt => {addNewCard(evt);}); // добавить новую карточку на страницу (при клике на кнопку "создать")
 
-popupCardsForm.addEventListener('submit', function(evt){
-  evt.preventDefault();
-  renderCard(popupPlaceElement.value, popupLinkElement.value);
-  closePopup(popupCardsElement);
-}); // отрисовать новую карточку на странице в начале списка
-
-// (3.3) закрыть попап с картинкой
-
-popupImgCloseBtnElement.addEventListener('click', function(){closePopup(popupImageElement)}, false); //закрыть попап при клике на крестик
+/** закрыть попап с картинкой при клике на крестик*/
+popupImgCloseBtnElement.addEventListener('click', () => {closePopup(popupImageElement)});

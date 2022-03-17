@@ -1,8 +1,8 @@
-/* общие стили */
+/** общие стили */
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
 
-/* card */
+/** card */
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__del-button/card__del-button.css);
 @import url(../blocks/card/__image/card__image.css);
@@ -11,22 +11,22 @@
 @import url(../blocks/card/__title/card__title.css);
 @import url(../blocks/card/__wrapper/card__wrapper.css);
 
-/* cards */
+/** cards */
 @import url(../blocks/cards/cards.css);
 @import url(../blocks/cards/__list/cards__list.css);
 
-/* footer */
+/** footer */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-/* header */
+/** header */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 
-/* page */
+/** page */
 @import url(../blocks/page/page.css);
 
-/* popup */
+/** popup */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__close-button/_type_image/popup__close-button_type_image.css);
@@ -44,7 +44,7 @@
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_type_image/popup_type_image.css);
 
-/* profile */
+/** profile */
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
@@ -55,5 +55,5 @@
 @import url(../blocks/profile/__title-wrapper/profile__title-wrapper.css);
 @import url(../blocks/profile/__title/profile__title.css);
 
-/* root */
+/** root */
 @import url(../blocks/root/root.css);
