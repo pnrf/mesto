@@ -30,11 +30,11 @@ const popupLinkElement = popupCardsElement.querySelector('.popup__input-text_typ
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
 const popupImgCloseBtnElement = popupImageElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
+const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
 
 /** TEMPLATE for cards */
 const itemTemplate = document.querySelector('#template'); // ссылка на темплейт
 const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
-
 
 /** (2) FUNCTIONS  */
 
@@ -64,34 +64,40 @@ const closePopup = item => {
   item.classList.remove('popup_opened');
 };
 
+/** функция: обработчик события для слушателя на картинке (вызывывается внутри функции createCard()); */
+const addDataToPopupImg = ({name, link}) => {
+  popupFigcaptionElement.textContent = name;
+  popupImgElm.src = link;
+  popupImgElm.alt = `${name}. Фотография`;
+};
+
 /** функция: сгенерировать карточку из темлейта:
  * 1) клонировать темплейт из html в DOM;
  * 2) наполнить темплейт содержимым: название места, ссылка на картинку, alt к картинке;
  * 3) установить слушатели: на картинку, на кнопку лайк/дизлайк, на кнопку удаления карточки (корзинку);
  *
- * на вход функция получает объект, поэтому обращаемся к свойствам объекта через ключ-переменную: item['name'] и item['link'];
+ * на вход функция получает объект, поэтому обращаемся к свойствам объекта можно через точку: item.name и item.link,
+ * через ключ-переменную: item['name'] и item['link'] либо воспользоваться деструктуризацией: const createCard = ({name, link}) => {};
  * данная функция возвращает сгенерированную карточку;
  * для отрисовки карточки на странице используется функция renderCard();
 */
-const createCard = (item) => {
+const createCard = ({name, link}) => {
   // клонировал темлейт из html в DOM
   const itemElement = itemTemplate.content.cloneNode(true);
-  // ввел переменные внутри функции
-  const cardImgElm = itemElement.querySelector('.card__image');
-  const popupImgElm = popupImageElement.querySelector('.popup__image');
+  // ввел переменную внутри функции
+  const cardImgElm = itemElement.querySelector('.card__image'); // ссылка на картинку в карточке
   // наполнил темплейт содержимым:
-  itemElement.querySelector('.card__title').textContent = item['name'];
-  cardImgElm.src = item['link'];
-  cardImgElm.alt = `${item['name']}. Фотография`;
+  itemElement.querySelector('.card__title').textContent = name;
+  cardImgElm.src = link;
+  cardImgElm.alt = `${name}. Фотография`;
   // слушатель на картинке:
   cardImgElm.addEventListener('click', function() {
-    popupFigcaptionElement.textContent = item['name'];
-    popupImgElm.src = item['link'];
-    popupImgElm.alt = `${item['name']}. Фотография`;
+    addDataToPopupImg({name, link});
     openPopup(popupImageElement);
   });
   // слушатель для лайка/дизлайка:
-  itemElement.querySelector('.card__like-button').addEventListener('click', event => {toggleLikeBtn(event)});
+  // т.к. в колбек нужно передавать только объект события, можно сократить запись, передавая обработчик вторым аргументом:
+  itemElement.querySelector('.card__like-button').addEventListener('click', toggleLikeBtn);
   // слушатель для удаления карточки:
   itemElement.querySelector('.card__del-button').addEventListener('click', event => {removeCard(event)});
 
@@ -115,8 +121,7 @@ const addNewCard = evt => {
   evt.preventDefault();
   renderCard(popupPlaceElement.value, popupLinkElement.value);
   closePopup(popupCardsElement);
-  popupPlaceElement.value = ''; // чтобы при добавлении новой карточки, прежние значения обнулялись
-  popupLinkElement.value = ''; // иначе, они остаются в попапе и перебивают placeholder
+  popupCardsForm.reset(); // обнуление значений полей формы в попапе
 };
 
 
@@ -136,9 +141,9 @@ initialCards.reverse().forEach(item => {
  * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
 */
 editBtnElement.addEventListener('click', () => {
-  openPopup(popupProfileElement);
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
+  openPopup(popupProfileElement);
 }); // открыть попап при клике на кнопке "редактировать"
 
 popupCloseBtnElement.addEventListener('click', () => {closePopup(popupProfileElement)}); //закрыть попап при клике на крестик
