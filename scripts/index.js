@@ -1,4 +1,4 @@
-/** (1) CONSTANTS and VARIABLES */
+/** (I) CONSTANTS and VARIABLES */
 
 /** кнопки на странице */
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
@@ -36,7 +36,7 @@ const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссы�
 const itemTemplate = document.querySelector('#template'); // ссылка на темплейт
 const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 
-/** (2) FUNCTIONS  */
+/** (II) FUNCTIONS  */
 
 /** функция: поставить лайк/дизлайк */
 const toggleLikeBtn = event => {
@@ -143,7 +143,7 @@ const addNewCard = evt => {
 };
 
 
-// (3) EVENT HANDLERS
+/** (III) EVENT HANDLERS  */
 
 /** перебрать исходный массив, и отрисовать карточки по порядку
  * поскольку функция renderCard использует метод prepend вместо appendChild, то я вынужден применить reverse(),
@@ -159,7 +159,7 @@ initialCards.reverse().forEach(item => {
  * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
 */
 
-/** 1) открыть попап при клике на кнопке"редактировать", вставить в попап данные со страницы */
+/** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
 editBtnElement.addEventListener('click', () => {
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
