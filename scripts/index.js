@@ -51,17 +51,35 @@ const removeCard = event => {
 /** функция: открыть попап:
  * данная функция переиспользуется для всех 3 (трех) попапов
  * поэтому на вход она получает ссылку на соответствующий попап.
+ *
+ * в функцию добавлен слушатель для закрытия попапа при нажатии Esc.
  */
 const openPopup = item => {
   item.classList.add('popup_opened');
+  document.addEventListener('keydown', evt => {closePopupWithEscBtn(evt, item)});
 };
 
 /** функция: закрыть попап:
+ * попап закрывается при клике на крестик, на оверлей и при нажатии Esc;
  * данная функция переиспользуется для всех 3 (трех) попапов
  * поэтому на вход она получает ссылку на соответствующий попап.
  */
 const closePopup = item => {
   item.classList.remove('popup_opened');
+};
+
+/** функция: закрыть попап при нажатии Esc */
+const closePopupWithEscBtn = (evt, item) => {
+  if (evt.key === 'Escape') {
+    closePopup(item);
+  };
+};
+
+/** функция: закрыть попап при клике на крестик или на оверлей */
+const closePopupWithClick = (evt, closeBtn, overlayItem) => {
+  if (evt.target.contains(closeBtn)) {
+    closePopup(overlayItem);
+  };
 };
 
 /** функция: обработчик события для слушателя на картинке (вызывывается внутри функции createCard()); */
@@ -137,30 +155,50 @@ initialCards.reverse().forEach(item => {
 
 /** редактировать профиль (Жак-Ив Кусто, исследователь океана)
  * 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы;
- * 2) закрыть попап при клике на крестик;
+ * 2) закрыть попап при клике на крестик, на оверлей и при нажатии Esc;
  * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
 */
+
+/** 1) открыть попап при клике на кнопке"редактировать", вставить в попап данные со страницы */
 editBtnElement.addEventListener('click', () => {
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
   openPopup(popupProfileElement);
-}); // открыть попап при клике на кнопке "редактировать"
+});
 
-popupCloseBtnElement.addEventListener('click', () => {closePopup(popupProfileElement)}); //закрыть попап при клике на крестик
+/** 2) закрыть попап при клике на крестик или на оверлей */
+popupProfileElement.addEventListener('click', evt => {
+  closePopupWithClick(evt, popupCloseBtnElement, popupProfileElement);
+});
 
+/** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
 popupProfileForm.addEventListener('submit', evt => {
   evt.preventDefault();
   profileNameElement.textContent = popupNameElement.value;
   profileAboutElement.textContent = popupAboutElement.value;
   closePopup(popupProfileElement);
-}); // изменить данные профиля на странице при клике на кнопку "сохранить"
+});
 
-/** добавить новую карточку */
-addBtnElement.addEventListener('click', () => {openPopup(popupCardsElement);}); // открыть попап при клике на кнопке "добавить"
+/** добавить новую карточку
+ * 1) открыть попап при клике на кнопке "добавить";
+ * 2) закрыть попап при клике на крестик или на оверлей;
+ * 3) добавить новую карточку на страницу (при клике на кнопке "создать")
+*/
 
-popupCardsCloseBtnElement.addEventListener('click', () => {closePopup(popupCardsElement);}); //закрыть попап при клике на крестик
+/** 1) открыть попап при клике на кнопке "добавить" */
+addBtnElement.addEventListener('click', () => {openPopup(popupCardsElement);});
 
-popupCardsForm.addEventListener('submit', evt => {addNewCard(evt);}); // добавить новую карточку на страницу (при клике на кнопку "создать")
+/** 2) закрыть попап при клике на крестик или на оверлей */
+popupCardsElement.addEventListener('click', evt => {
+  closePopupWithClick(evt, popupCardsCloseBtnElement, popupCardsElement);
+});
 
-/** закрыть попап с картинкой при клике на крестик*/
-popupImgCloseBtnElement.addEventListener('click', () => {closePopup(popupImageElement)});
+/** 3) добавить новую карточку на страницу (при клике на кнопке "создать") */
+popupCardsForm.addEventListener('submit', evt => {addNewCard(evt);});
+
+/** закрыть попап с картинкой
+ * при клике на крестик или на оверлей
+*/
+popupImageElement.addEventListener('click', evt => {
+  closePopupWithClick(evt, popupImgCloseBtnElement, popupImageElement);
+});
