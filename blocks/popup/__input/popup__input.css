@@ -1,4 +1,4 @@
-.popup__input-text {
+.popup__input {
   width: 238px;
   min-height: 27px;
   box-sizing: border-box;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .popup__input-text {
+  .popup__input {
     width: 358px;
   }
 }

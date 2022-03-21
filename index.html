@@ -45,9 +45,15 @@
       <div class="popup__content">
         <h3 class="popup__title">Редактировать профиль</h3>
         <form name="popup-profile-form" class="popup__input-list">
-          <input type="text" name="form-name" class="popup__input-text popup__input-text_type_name">
-          <input type="text" name="form-about" class="popup__input-text popup__input-text_type_about">
-          <button class="popup__save-button" type="submit">Сохранить</button>
+          <label class="popup__field">
+            <input id="name-input" class="popup__input" type="text" placeholder="Имя" minlength="2" maxlength="40" required>
+            <span class="popup__input-error"></span>
+          </label>
+          <label class="popup__field">
+            <input id="about-input" class="popup__input" type="text" placeholder="О себе" minlength="2" maxlength="200" required>
+            <span class="popup__input-error"></span>
+          </label>
+          <button class="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
@@ -59,9 +65,15 @@
       <div class="popup__content">
         <h3 class="popup__title">Новое место</h3>
         <form name="popup-cards-form" class="popup__input-list">
-          <input type="text" name="form-name" placeholder="Название" class="popup__input-text popup__input-text_type_name" required>
-          <input type="url" name="form-about" placeholder="Ссылка на картинку" class="popup__input-text popup__input-text_type_about" required>
-          <button class="popup__save-button" type="submit">Создать</button>
+          <label class="popup__field">
+            <input id="place-input" class="popup__input" type="text" placeholder="Название" minlength="2" maxlength="30" required />
+            <span class="popup__input-error"></span>
+          </label>
+          <label class="popup__field">
+            <input id="url-input" class="popup__input" type="url" placeholder="Ссылка на картинку" required />
+            <span class="popup__input-error"></span>
+          </label>
+          <button class="popup__save-button popup__save-button_inactive" type="submit">Создать</button>
         </form>
       </div>
     </div>
@@ -86,6 +98,7 @@
     </li>
   </template>
   <script src="./scripts/initialCards.js"></script>
-  <script src="./scripts/index.js"></script>
+  <script src="./scripts/index.js" defer></script>
+  <script src="./scripts/validateForms.js" defer></script>
 </body>
 </html>

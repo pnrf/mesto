@@ -10,8 +10,8 @@ const popupProfileElement = document.querySelector('.popup_type_profile'); // с
 const popupCloseBtnElement = popupProfileElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 const popupSaveBtnElement = popupProfileElement.querySelector('.popup__save-button'); // ссылка на кнопку "сохранить" в попапе
 const popupProfileForm = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupNameElement = popupProfileElement.querySelector('.popup__input-text_type_name'); // ссылка на поле "имя" в попапе
-const popupAboutElement = popupProfileElement.querySelector('.popup__input-text_type_about'); // ссылка на поле "описание" в попапе
+const popupNameElement = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
+const popupAboutElement = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
 
 const profileElement = document.querySelector('.profile'); // ссылка на профиль
 const profileNameElement = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
@@ -23,8 +23,8 @@ const popupCardsElement = document.querySelector('.popup_type_cards'); // ссы
 const popupCardsCloseBtnElement = popupCardsElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 const popupCardsSaveBtnElement = popupCardsElement.querySelector('.popup__save-button'); // ссылка на кнопку "создать" в попапе
 const popupCardsForm = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupPlaceElement = popupCardsElement.querySelector('.popup__input-text_type_name'); // ссылка на поле "название места" в попапе
-const popupLinkElement = popupCardsElement.querySelector('.popup__input-text_type_about'); // ссылка на поле "ссылка на картинку" в попапе
+const popupPlaceElement = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
+const popupLinkElement = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
@@ -158,7 +158,6 @@ initialCards.reverse().forEach(item => {
  * 2) закрыть попап при клике на крестик, на оверлей и при нажатии Esc;
  * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
 */
-
 /** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
 editBtnElement.addEventListener('click', () => {
   popupNameElement.value = profileNameElement.textContent;
@@ -184,7 +183,6 @@ popupProfileForm.addEventListener('submit', evt => {
  * 2) закрыть попап при клике на крестик или на оверлей;
  * 3) добавить новую карточку на страницу (при клике на кнопке "создать")
 */
-
 /** 1) открыть попап при клике на кнопке "добавить" */
 addBtnElement.addEventListener('click', () => {openPopup(popupCardsElement);});
 
