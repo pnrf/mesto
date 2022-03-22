@@ -52,41 +52,73 @@ const removeCard = event => {
  * данная функция переиспользуется для всех 3 (трех) попапов
  * поэтому на вход она получает ссылку на соответствующий попап.
  *
- * в функцию добавлен слушатель для закрытия попапа при нажатии Esc.
+ * в функцию добавлен слушатель для закрытия попапа при нажатии Esc. Вместо анонимной стрелочной
+ * функции (evt => {closePopupWithEscBtn(evt, item)}) ссылка на функцию closePopupWithEscBtn передается
+ * слушателю вторым аргументом(параметром), чтобы этот слушатель удалялся при закрытии попапа. В противном
+ * случае код удаления слушателя (см. функцию closePopup) работать не будет.
  */
 const openPopup = item => {
   item.classList.add('popup_opened');
-  document.addEventListener('keydown', evt => {closePopupWithEscBtn(evt, item)});
+  document.addEventListener('keydown', closePopupWithEscBtn);
+
+/** пришлось усложнить код.
+ * Иначе при повторном открытии попапа (после добавления новой карточки) кнопка "создать" вновь становится активной по умолчанию.
+ */
+  const inputList = Array.from(item.querySelectorAll('.popup__input')); // создает массив со ссылками на все поля input в форме
+  const buttonElement = item.querySelector('.popup__save-button'); // находит ссылку на кнопку "сохранить" или "создать"
+
+  toggleButtonState(inputList, buttonElement);
 };
 
 /** функция: закрыть попап:
  * попап закрывается при клике на крестик, на оверлей и при нажатии Esc;
  * данная функция переиспользуется для всех 3 (трех) попапов
  * поэтому на вход она получает ссылку на соответствующий попап.
+ *
+ * в функцию добавлен метод для удаления слушателя при закрытии попапа. Из урока: "слушатель редко снимают, но
+ * иногда это нужно. Так происходит в браузерной игре: когда персонаж выпивает зелье здоровья, склянка с ним должна
+ * исчезать". В данном случае удалить слушатель - это требование задания (в учебных целях). Хотя логика подсказывает,
+ * что это требование обосновано (в данном конкретном случае).
  */
 const closePopup = item => {
   item.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupWithEscBtn);
 };
 
 /** функция: закрыть попап при нажатии Esc */
-const closePopupWithEscBtn = (evt, item) => {
+const closePopupWithEscBtn = evt => {
   if (evt.key === 'Escape') {
-    closePopup(item);
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   };
 };
 
-/** функция: закрыть попап при клике на крестик или на оверлей */
-const closePopupWithClick = (evt, closeBtn, overlayItem) => {
-  if (evt.target.contains(closeBtn)) {
-    closePopup(overlayItem);
+/** функция: закрыть попап при клике на крестик или на оверлей
+ * данная функция применяется для 3-х разных попапов, кнопки в которых тоже разные;
+*/
+const closePopupWithClick = evt => {
+  const openedPopup = document.querySelector('.popup_opened');
+  const closeBtnElement = openedPopup.querySelector('.popup__close-button');
+  if (evt.target.contains(closeBtnElement)) {
+    closePopup(openedPopup);
   };
 };
 
-/** функция: обработчик события для слушателя на картинке (вызывывается внутри функции createCard()); */
+/** функция: обработчик события для слушателя на картинке (вызывывается внутри функции createCard());
+ * входящие параметры принимаются как единый обект, но при этом деструктурированы.
+ */
 const addDataToPopupImg = ({name, link}) => {
   popupFigcaptionElement.textContent = name;
   popupImgElm.src = link;
   popupImgElm.alt = `${name}. Фотография`;
+};
+
+/** функция: изменить данные профиля на странице: */
+const changeProfileData = evt => {
+  evt.preventDefault();
+  profileNameElement.textContent = popupNameElement.value;
+  profileAboutElement.textContent = popupAboutElement.value;
+  closePopup(popupProfileElement);
 };
 
 /** функция: сгенерировать карточку из темлейта:
@@ -117,7 +149,7 @@ const createCard = ({name, link}) => {
   // т.к. в колбек нужно передавать только объект события, можно сократить запись, передавая обработчик вторым аргументом:
   itemElement.querySelector('.card__like-button').addEventListener('click', toggleLikeBtn);
   // слушатель для удаления карточки:
-  itemElement.querySelector('.card__del-button').addEventListener('click', event => {removeCard(event)});
+  itemElement.querySelector('.card__del-button').addEventListener('click', removeCard);
 
   return itemElement;
 };
@@ -149,9 +181,7 @@ const addNewCard = evt => {
  * поскольку функция renderCard использует метод prepend вместо appendChild, то я вынужден применить reverse(),
  * иначе карточки отрисуются в обратном порядке, что будет противоречить макету;
 */
-initialCards.reverse().forEach(item => {
-  renderCard(item.name, item.link);
-});
+initialCards.reverse().forEach(item => renderCard(item.name, item.link));
 
 /** редактировать профиль (Жак-Ив Кусто, исследователь океана)
  * 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы;
@@ -166,37 +196,28 @@ editBtnElement.addEventListener('click', () => {
 });
 
 /** 2) закрыть попап при клике на крестик или на оверлей */
-popupProfileElement.addEventListener('click', evt => {
-  closePopupWithClick(evt, popupCloseBtnElement, popupProfileElement);
-});
+popupProfileElement.addEventListener('click', closePopupWithClick);
 
 /** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
-popupProfileForm.addEventListener('submit', evt => {
-  evt.preventDefault();
-  profileNameElement.textContent = popupNameElement.value;
-  profileAboutElement.textContent = popupAboutElement.value;
-  closePopup(popupProfileElement);
-});
+popupProfileForm.addEventListener('submit', changeProfileData);
 
 /** добавить новую карточку
  * 1) открыть попап при клике на кнопке "добавить";
  * 2) закрыть попап при клике на крестик или на оверлей;
  * 3) добавить новую карточку на страницу (при клике на кнопке "создать")
 */
-/** 1) открыть попап при клике на кнопке "добавить" */
-addBtnElement.addEventListener('click', () => {openPopup(popupCardsElement);});
+/** 1) открыть попап при клике на кнопке "добавить"
+ * если колбек слушателя содержит однострочную функцию, то ее можно не обособлять фигурными скобками.
+*/
+addBtnElement.addEventListener('click', () => openPopup(popupCardsElement));
 
 /** 2) закрыть попап при клике на крестик или на оверлей */
-popupCardsElement.addEventListener('click', evt => {
-  closePopupWithClick(evt, popupCardsCloseBtnElement, popupCardsElement);
-});
+popupCardsElement.addEventListener('click', closePopupWithClick);
 
-/** 3) добавить новую карточку на страницу (при клике на кнопке "создать") */
-popupCardsForm.addEventListener('submit', evt => {addNewCard(evt);});
+/** 3) добавить новую карточку на страницу (при клике на кнопке "создать"(submit)) */
+popupCardsForm.addEventListener('submit', addNewCard);
 
 /** закрыть попап с картинкой
  * при клике на крестик или на оверлей
 */
-popupImageElement.addEventListener('click', evt => {
-  closePopupWithClick(evt, popupImgCloseBtnElement, popupImageElement);
-});
+popupImageElement.addEventListener('click', closePopupWithClick);
