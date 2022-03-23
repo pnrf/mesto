@@ -60,14 +60,6 @@ const removeCard = event => {
 const openPopup = item => {
   item.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEscBtn);
-
-/** пришлось усложнить код.
- * Иначе при повторном открытии попапа (после добавления новой карточки) кнопка "создать" вновь становится активной по умолчанию.
- */
-  const inputList = Array.from(item.querySelectorAll('.popup__input')); // создает массив со ссылками на все поля input в форме
-  const buttonElement = item.querySelector('.popup__save-button'); // находит ссылку на кнопку "сохранить" или "создать"
-
-  toggleButtonState(inputList, buttonElement);
 };
 
 /** функция: закрыть попап:
@@ -165,13 +157,24 @@ const renderCard = (name, link) => {
 };
 
 /** функция: обработчик события для добавления новой карточки (при клике на кнопку "создать")
- * сюда же добавлен функционал обнуления значений попапа, чтобы они не появлялись при новом открытии попапа
+ * сюда же добавлен функционал обнуления значений попапа, чтобы они не появлялись при новом открытии попапа и
+ * функция деактивации кнопки "создать"
 */
 const addNewCard = evt => {
   evt.preventDefault();
   renderCard(popupPlaceElement.value, popupLinkElement.value);
   closePopup(popupCardsElement);
   popupCardsForm.reset(); // обнуление значений полей формы в попапе
+  /** пришлось усложнить код.
+ * Иначе при повторном открытии попапа (после добавления новой карточки) кнопка "создать" вновь становится активной по умолчанию.
+ * Здесь используется составная конструкция: Array.from(form.elements['name']):
+ * 1) evt.target ловит событие evt, а именно клик по кнопке "создать" (submit) и возвращает ссылку на форму;
+ * 2) form.elements[name] возвращает HTMLCollection элементов с указанным именем. Имена присвоены в файле index_html.
+ * 3) Array.from преобразует эту коллекцию в массив, который мы передаем в качестве аргумента функции toggleButtonState.
+ */
+  const inputList = Array.from(evt.target.elements['input']); // создает массив со ссылками на все поля input в форме
+  const buttonElement = evt.submitter; // находит ссылку на кнопку "сохранить" или "создать"
+  toggleButtonState(inputList, buttonElement);
 };
 
 
