@@ -27,10 +27,10 @@ const popupPlaceElement = popupCardsElement.querySelector('#place-input'); // с
 const popupLinkElement = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
-const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
-const popupImgCloseBtnElement = popupImageElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
-const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
-const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
+ const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
+// const popupImgCloseBtnElement = popupImageElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
+// const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
+// const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
 
 /** TEMPLATE for cards */
 const itemTemplate = document.querySelector('#template'); // ссылка на темплейт
@@ -39,14 +39,14 @@ const listElement = document.querySelector('.cards__list'); // ссылка на
 /** (II) FUNCTIONS  */
 
 /** функция: поставить лайк/дизлайк */
-const toggleLikeBtn = event => {
-  event.target.classList.toggle('card__like-button_active');
-};
+// const toggleLikeBtn = event => {
+//   event.target.classList.toggle('card__like-button_active');
+// };
 
 /** функция: удалить карточку со страницы */
-const removeCard = event => {
-  event.target.closest('.card').remove();
-};
+// const removeCard = event => {
+//   event.target.closest('.card').remove();
+// };
 
 /** функция: открыть попап:
  * данная функция переиспользуется для всех 3 (трех) попапов
@@ -61,6 +61,8 @@ const openPopup = item => {
   item.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupWithEscBtn);
 };
+
+export {openPopup};
 
 /** функция: закрыть попап:
  * попап закрывается при клике на крестик, на оверлей и при нажатии Esc;
@@ -96,14 +98,14 @@ const closePopupWithClick = evt => {
   };
 };
 
-/** функция: обработчик события для слушателя на картинке (вызывывается внутри функции createCard());
+/** функция: обработчик события для слушателя на картинке (вызывывается внутри класса Card);
  * входящие параметры принимаются как единый обект, но при этом деструктурированы.
  */
-const addDataToPopupImg = ({name, link}) => {
-  popupFigcaptionElement.textContent = name;
-  popupImgElm.src = link;
-  popupImgElm.alt = `${name}. Фотография`;
-};
+// const addDataToPopupImg = (name, link) => {
+//   popupFigcaptionElement.textContent = name;
+//   popupImgElm.src = link;
+//   popupImgElm.alt = `${name}. Фотография`;
+// };
 
 /** функция: изменить данные профиля на странице: */
 const changeProfileData = evt => {
@@ -113,47 +115,19 @@ const changeProfileData = evt => {
   closePopup(popupProfileElement);
 };
 
-/** функция: сгенерировать карточку из темлейта:
- * 1) клонировать темплейт из html в DOM;
- * 2) наполнить темплейт содержимым: название места, ссылка на картинку, alt к картинке;
- * 3) установить слушатели: на картинку, на кнопку лайк/дизлайк, на кнопку удаления карточки (корзинку);
- *
- * на вход функция получает объект, поэтому обращаемся к свойствам объекта можно через точку: item.name и item.link,
- * через ключ-переменную: item['name'] и item['link'] либо воспользоваться деструктуризацией: const createCard = ({name, link}) => {};
- * данная функция возвращает сгенерированную карточку;
- * для отрисовки карточки на странице используется функция renderCard();
-*/
-const createCard = ({name, link}) => {
-  // клонировал темлейт из html в DOM
-  const itemElement = itemTemplate.content.cloneNode(true);
-  // ввел переменную внутри функции
-  const cardImgElm = itemElement.querySelector('.card__image'); // ссылка на картинку в карточке
-  // наполнил темплейт содержимым:
-  itemElement.querySelector('.card__title').textContent = name;
-  cardImgElm.src = link;
-  cardImgElm.alt = `${name}. Фотография`;
-  // слушатель на картинке:
-  cardImgElm.addEventListener('click', function() {
-    addDataToPopupImg({name, link});
-    openPopup(popupImageElement);
-  });
-  // слушатель для лайка/дизлайка:
-  // т.к. в колбек нужно передавать только объект события, можно сократить запись, передавая обработчик вторым аргументом:
-  itemElement.querySelector('.card__like-button').addEventListener('click', toggleLikeBtn);
-  // слушатель для удаления карточки:
-  itemElement.querySelector('.card__del-button').addEventListener('click', removeCard);
-
-  return itemElement;
-};
-
 /** функция: отрисовать карточку на странице (вставить в разметку):
  * данная функция переиспользуется для отрисовки исходного массива и для добавления новой карточки;
  * на вход функция получает 2 (два) строчных значения (текст и ссылку), которые пользователь ввел в форму;
  * эти значения присваиваются ключам-переменным (name, link);
- * затем ключи-переменные объединяем и в качестве (!)объекта передаем в функцию createCard;
+ * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
 */
+import Card from "./Card.js";
+
 const renderCard = (name, link) => {
-  listElement.prepend(createCard({name, link}));
+  const card = new Card({name, link}, '#template');
+  const generatedCard = card.generateCard();
+
+  listElement.prepend(generatedCard);
 };
 
 /** функция: обработчик события для добавления новой карточки (при клике на кнопку "создать")
