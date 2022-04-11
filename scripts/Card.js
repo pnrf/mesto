@@ -1,19 +1,17 @@
+/** Создайте класс Card, который создаёт карточку с текстом и ссылкой на изображение:
+ * принимает в конструктор её данные и селектор её template-элемента;
+ * содержит приватные методы, которые работают с разметкой, устанавливают слушателей событий;
+ * содержит приватные методы для каждого обработчика;
+ * содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.
+ *
+ * Для каждой карточки создайте экземпляр класса Card. */
+
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
 const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
 
 import {openPopup} from './index.js';
 
-/** функция: сгенерировать карточку из темлейта:
- * 1) клонировать темплейт из html в DOM;
- * 2) наполнить темплейт содержимым: название места, ссылка на картинку, alt к картинке;
- * 3) установить слушатели: на картинку, на кнопку лайк/дизлайк, на кнопку удаления карточки (корзинку);
- *
- * на вход функция получает объект, поэтому обращаемся к свойствам объекта можно через точку: item.name и item.link,
- * через ключ-переменную: item['name'] и item['link'] либо воспользоваться деструктуризацией: const createCard = ({name, link}) => {};
- * данная функция возвращает сгенерированную карточку;
- * для отрисовки карточки на странице используется функция renderCard();
-*/
 export default class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
@@ -48,7 +46,7 @@ export default class Card {
     return this._cardElement;
   }
 
-  //установить слушатели событий в сгенерированной карточке (а не в темплейте):
+  // слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку
     this._cardElementImage.addEventListener('click', () => {
@@ -65,6 +63,7 @@ export default class Card {
     });
   }
 
+  //метод класса: наполнить попап (превью картинки) контентом:
   _addDataToPopupImg = (name, link) => {
     popupFigcaptionElement.textContent = name;
     popupImgElm.src = link;
