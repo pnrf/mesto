@@ -124,6 +124,8 @@ const changeProfileData = evt => {
  * эти значения присваиваются ключам-переменным (name, link);
  * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
 */
+
+import {initialCards} from "./initialCards.js";
 import Card from "./Card.js";
 
 const renderCard = (name, link) => {

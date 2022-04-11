@@ -2,7 +2,7 @@
  * согласно ТЗ, в процессе кода никакие манипуляции с массивом не производятся;
  * новые карточки добавляются сразу на страницу, минуя массив;
 */
-const initialCards = [
+export const initialCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
