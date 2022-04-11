@@ -4,6 +4,9 @@
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
 
+/** псевдомассив всех форм на странице */
+const popupFormList = document.querySelectorAll('.popup__input-list');
+
 /** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
 
@@ -198,3 +201,20 @@ popupCardsForm.addEventListener('submit', addNewCard);
  * при клике на крестик или на оверлей
 */
 popupImageElement.addEventListener('click', closePopupWithClick);
+
+/** подключить валидацию полей формы */
+import FormValidator from "./FormValidator.js";
+
+const validateEachForm = () => {
+  const formList = Array.from(popupFormList); // создает массив со ссылками на все формы
+  formList.forEach(formSelector => {
+    const form = new FormValidator(formSelector);
+    form.enableValidation();
+  });
+/** перебрал массив с формами;
+ * для каждой проверяемой формы создал экземпляр класса FormValidator и
+ * применил метод enableValidation() данного класса.
+*/
+};
+
+validateEachForm();
