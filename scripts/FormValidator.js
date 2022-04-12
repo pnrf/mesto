@@ -7,8 +7,10 @@
  * Для каждой проверяемой формы создайте экземпляр класса FormValidator.
  */
 export default class FormValidator {
-  constructor(formSelector) {
-    this._formSelector = formSelector;
+  constructor(inputListSelector, formElement) {
+    this._inputList = inputListSelector;
+    this._formElement = formElement;
+    this._buttonElement = this._formElement.querySelector('.popup__save-button');
   }
 
 
@@ -38,8 +40,8 @@ export default class FormValidator {
 }
 
 /** функция: перебрать массив, чтобы найти невалидный input */
-  _hasInvalidInput = inputList => {
-  return inputList.some(inputElement => {
+  _hasInvalidInput = () => {
+  return this._inputList.some(inputElement => {
     return !inputElement.validity.valid;
   });
 }
@@ -49,27 +51,27 @@ export default class FormValidator {
  * pointer-events: none, чтобы на неактивной кнопке не срабатывал hover. Также это позволяет исключить
  * возможность добавления пустой карточки.
 */
-  _toggleButtonState = (inputList, buttonElement) => {
-  if (this._hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__save-button_inactive');
-    buttonElement.setAttribute('disabled', true);
+  toggleButtonState = () => {
+  if (this._hasInvalidInput(this._inputList)) {
+    this._buttonElement.classList.add('popup__save-button_inactive');
+    this._buttonElement.setAttribute('disabled', true);
   } else {
-    buttonElement.classList.remove('popup__save-button_inactive');
-    buttonElement.removeAttribute('disabled');
+    this._buttonElement.classList.remove('popup__save-button_inactive');
+    this._buttonElement.removeAttribute('disabled');
   }
 }
 
 /** функция: установить слушатель для добавления сообщений об ошибках при заполнении полей формы */
   _setEventListeners = () => {
-  const inputList = Array.from(this._formSelector.querySelectorAll('.popup__input')); // создает массив со ссылками на все поля input в форме
-  const buttonElement = this._formSelector.querySelector('.popup__save-button'); // находит ссылку на кнопку "сохранить" или "создать"
+ //const inputList = Array.from(this._formElement.querySelectorAll('.popup__input')); // создает массив со ссылками на все поля input в форме
+  // const buttonElement = this._formElement.querySelector('.popup__save-button'); // находит ссылку на кнопку "сохранить" или "создать"
 
-  this._toggleButtonState(inputList, buttonElement); // делает кнопку неактивной, если хотя бы одно поле формы невалидно
+  this.toggleButtonState(this._buttonElement); // делает кнопку неактивной, если хотя бы одно поле формы невалидно
 
-  inputList.forEach(inputElement => { // для каждого поля input установил слушатель, проверяющий на валидность
+  this._inputList.forEach(inputElement => { // для каждого поля input установил слушатель, проверяющий на валидность
     inputElement.addEventListener('input', () => {
       this._isValid(inputElement);
-      this._toggleButtonState(inputList, buttonElement);
+      this.toggleButtonState(this._buttonElement);
     });
   });
 }
@@ -79,7 +81,8 @@ export default class FormValidator {
   /** устанавливаю слушатели на форму для добавления сообщений об ошибках (setEventListeners).
    * При этом здесь отменять дефолтное поведение формы (evt.preventDefault()) не нужно, т.к. это сделано
    * в файле index_js в функциях changeProfileData и addNewCard;
-   * formSelector - это ссылка на форму;
+   * formElement - это ссылка на форму;
   */
   };
 }
+

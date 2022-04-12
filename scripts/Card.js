@@ -70,5 +70,3 @@ export default class Card {
     popupImgElm.alt = `${name}. Фотография`;
   }
 }
-
-

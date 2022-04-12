@@ -4,11 +4,13 @@
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
 
+
 /** псевдомассив всех форм на странице */
 const popupFormList = document.querySelectorAll('.popup__input-list');
 
 /** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
+const inputListSelectorPopupProfile = Array.from(popupProfileElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
 
 const popupCloseBtnElement = popupProfileElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 const popupSaveBtnElement = popupProfileElement.querySelector('.popup__save-button'); // ссылка на кнопку "сохранить" в попапе
@@ -22,6 +24,8 @@ const profileAboutElement = profileElement.querySelector('.profile__subtitle'); 
 
 /** POPUP 2: card adding form */
 const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
+const inputListSelectorPopupCards = Array.from(popupCardsElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
+
 
 const popupCardsCloseBtnElement = popupCardsElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
 const popupCardsSaveBtnElement = popupCardsElement.querySelector('.popup__save-button'); // ссылка на кнопку "создать" в попапе
@@ -74,8 +78,8 @@ export {openPopup};
  *
  * в функцию добавлен метод для удаления слушателя при закрытии попапа. Из урока: "слушатель редко снимают, но
  * иногда это нужно. Так происходит в браузерной игре: когда персонаж выпивает зелье здоровья, склянка с ним должна
- * исчезать". В данном случае удалить слушатель - это требование задания (в учебных целях). Хотя логика подсказывает,
- * что это требование обосновано (в данном конкретном случае).
+ * исчезать". В данном случае требование удалить слушатель обосновано тем, что слушатель клавиатуры реагирует на
+ * все нажатия клавиш. Когда нет открытого попапа, то не стоит зря загружать систему.
  */
 const closePopup = item => {
   item.classList.remove('popup_opened');
@@ -118,8 +122,8 @@ const changeProfileData = evt => {
   closePopup(popupProfileElement);
 };
 
-/** функция: отрисовать карточку на странице (вставить в разметку):
- * данная функция переиспользуется для отрисовки исходного массива и для добавления новой карточки;
+/** задача функций createCard и renderCard: отрисовать карточку на странице (вставить в разметку):
+ * функция renderCard переиспользуется для отрисовки исходного массива и для добавления новой карточки;
  * на вход функция получает 2 (два) строчных значения (текст и ссылку), которые пользователь ввел в форму;
  * эти значения присваиваются ключам-переменным (name, link);
  * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
@@ -128,11 +132,18 @@ const changeProfileData = evt => {
 import {initialCards} from "./initialCards.js";
 import Card from "./Card.js";
 
-const renderCard = (name, link) => {
+/** функция: создает карточку и возвращает ее разметку, которую мы вставляем в нужное место через функцию renderCard */
+const createCard = (name, link) => {
   const card = new Card({name, link}, '#template');
   const generatedCard = card.generateCard();
+  return generatedCard;
+};
 
-  listElement.prepend(generatedCard);
+/** функция render вызывает функцию create для создания карточки, получает из нее разметку и эту готовую разметку prepend
+ * в нужную секцию или при необходимости на другую страницу. Т.е. цель этой функции -- место вставки кода.
+ */
+const renderCard = (name, link) => {
+  listElement.prepend(createCard(name, link));
 };
 
 /** функция: обработчик события для добавления новой карточки (при клике на кнопку "создать")
@@ -151,9 +162,9 @@ const addNewCard = evt => {
  * 2) form.elements[name] возвращает HTMLCollection элементов с указанным именем. Имена присвоены в файле index_html.
  * 3) Array.from преобразует эту коллекцию в массив, который мы передаем в качестве аргумента функции toggleButtonState.
  */
-  const inputList = Array.from(evt.target.elements['input']); // создает массив со ссылками на все поля input в форме
-  const buttonElement = evt.submitter; // находит ссылку на кнопку "сохранить" или "создать"
-  toggleButtonState(inputList, buttonElement);
+  //const inputList = Array.from(evt.target.elements['input']); // создает массив со ссылками на все поля input в форме
+  // const buttonElement = evt.submitter; // находит ссылку на кнопку "сохранить" или "создать"
+  // FormValidator.prototype.toggleButtonState(buttonElement);
 };
 
 
@@ -191,7 +202,10 @@ popupProfileForm.addEventListener('submit', changeProfileData);
 /** 1) открыть попап при клике на кнопке "добавить"
  * если колбек слушателя содержит однострочную функцию, то ее можно не обособлять фигурными скобками.
 */
-addBtnElement.addEventListener('click', () => openPopup(popupCardsElement));
+addBtnElement.addEventListener('click', () => {
+openPopup(popupCardsElement);
+newCardValidation.toggleButtonState();
+});
 
 /** 2) закрыть попап при клике на крестик или на оверлей */
 popupCardsElement.addEventListener('click', closePopupWithClick);
@@ -207,16 +221,7 @@ popupImageElement.addEventListener('click', closePopupWithClick);
 /** подключить валидацию полей формы */
 import FormValidator from "./FormValidator.js";
 
-const validateEachForm = () => {
-  const formList = Array.from(popupFormList); // создает массив со ссылками на все формы
-  formList.forEach(formSelector => {
-    const form = new FormValidator(formSelector);
-    form.enableValidation();
-  });
-/** перебрал массив с формами;
- * для каждой проверяемой формы создал экземпляр класса FormValidator и
- * применил метод enableValidation() данного класса.
-*/
-};
-
-validateEachForm();
+const profileValidation = new FormValidator(inputListSelectorPopupProfile, popupProfileElement);
+const newCardValidation = new FormValidator(inputListSelectorPopupCards, popupCardsElement);
+profileValidation.enableValidation();
+newCardValidation.enableValidation();
