@@ -46,7 +46,7 @@ export default class Card {
     return this._cardElement;
   }
 
-  // слушатели событий в сгенерированной карточке (а не в темплейте):
+  // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку
     this._cardElementImage.addEventListener('click', () => {

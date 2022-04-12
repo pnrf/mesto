@@ -4,16 +4,10 @@
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
 
-
-/** псевдомассив всех форм на странице */
-const popupFormList = document.querySelectorAll('.popup__input-list');
-
 /** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
 const inputListSelectorPopupProfile = Array.from(popupProfileElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
 
-const popupCloseBtnElement = popupProfileElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
-const popupSaveBtnElement = popupProfileElement.querySelector('.popup__save-button'); // ссылка на кнопку "сохранить" в попапе
 const popupProfileForm = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
 const popupNameElement = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
 const popupAboutElement = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
@@ -26,34 +20,18 @@ const profileAboutElement = profileElement.querySelector('.profile__subtitle'); 
 const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
 const inputListSelectorPopupCards = Array.from(popupCardsElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
 
-
-const popupCardsCloseBtnElement = popupCardsElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
-const popupCardsSaveBtnElement = popupCardsElement.querySelector('.popup__save-button'); // ссылка на кнопку "создать" в попапе
 const popupCardsForm = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
 const popupPlaceElement = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
 const popupLinkElement = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
  const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
-// const popupImgCloseBtnElement = popupImageElement.querySelector('.popup__close-button'); // ссылка на крестик в popup
-// const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
-// const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
 
 /** TEMPLATE for cards */
-const itemTemplate = document.querySelector('#template'); // ссылка на темплейт
 const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 
+
 /** (II) FUNCTIONS  */
-
-/** функция: поставить лайк/дизлайк */
-// const toggleLikeBtn = event => {
-//   event.target.classList.toggle('card__like-button_active');
-// };
-
-/** функция: удалить карточку со страницы */
-// const removeCard = event => {
-//   event.target.closest('.card').remove();
-// };
 
 /** функция: открыть попап:
  * данная функция переиспользуется для всех 3 (трех) попапов
@@ -105,15 +83,6 @@ const closePopupWithClick = evt => {
   };
 };
 
-/** функция: обработчик события для слушателя на картинке (вызывывается внутри класса Card);
- * входящие параметры принимаются как единый обект, но при этом деструктурированы.
- */
-// const addDataToPopupImg = (name, link) => {
-//   popupFigcaptionElement.textContent = name;
-//   popupImgElm.src = link;
-//   popupImgElm.alt = `${name}. Фотография`;
-// };
-
 /** функция: изменить данные профиля на странице: */
 const changeProfileData = evt => {
   evt.preventDefault();
@@ -155,16 +124,6 @@ const addNewCard = evt => {
   renderCard(popupPlaceElement.value, popupLinkElement.value);
   closePopup(popupCardsElement);
   popupCardsForm.reset(); // обнуление значений полей формы в попапе
-  /** пришлось усложнить код.
- * Иначе при повторном открытии попапа (после добавления новой карточки) кнопка "создать" вновь становится активной по умолчанию.
- * Здесь используется составная конструкция: Array.from(form.elements['name']):
- * 1) evt.target ловит событие evt, а именно клик по кнопке "создать" (submit) и возвращает ссылку на форму;
- * 2) form.elements[name] возвращает HTMLCollection элементов с указанным именем. Имена присвоены в файле index_html.
- * 3) Array.from преобразует эту коллекцию в массив, который мы передаем в качестве аргумента функции toggleButtonState.
- */
-  //const inputList = Array.from(evt.target.elements['input']); // создает массив со ссылками на все поля input в форме
-  // const buttonElement = evt.submitter; // находит ссылку на кнопку "сохранить" или "создать"
-  // FormValidator.prototype.toggleButtonState(buttonElement);
 };
 
 
@@ -176,29 +135,20 @@ const addNewCard = evt => {
 */
 initialCards.reverse().forEach(item => renderCard(item.name, item.link));
 
-/** редактировать профиль (Жак-Ив Кусто, исследователь океана)
- * 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы;
- * 2) закрыть попап при клике на крестик, на оверлей и при нажатии Esc;
- * 3) изменить данные профиля на странице, прервать перезагрузку страницы, закрыть попап при клике на кнопку "сохранить"
-*/
+/** редактировать профиль (Жак-Ив Кусто, исследователь океана): */
 /** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
 editBtnElement.addEventListener('click', () => {
   popupNameElement.value = profileNameElement.textContent;
   popupAboutElement.value = profileAboutElement.textContent;
   openPopup(popupProfileElement);
 });
-
 /** 2) закрыть попап при клике на крестик или на оверлей */
 popupProfileElement.addEventListener('click', closePopupWithClick);
-
 /** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
 popupProfileForm.addEventListener('submit', changeProfileData);
 
-/** добавить новую карточку
- * 1) открыть попап при клике на кнопке "добавить";
- * 2) закрыть попап при клике на крестик или на оверлей;
- * 3) добавить новую карточку на страницу (при клике на кнопке "создать")
-*/
+
+/** добавить новую карточку: */
 /** 1) открыть попап при клике на кнопке "добавить"
  * если колбек слушателя содержит однострочную функцию, то ее можно не обособлять фигурными скобками.
 */
@@ -206,17 +156,17 @@ addBtnElement.addEventListener('click', () => {
 openPopup(popupCardsElement);
 newCardValidation.toggleButtonState();
 });
-
 /** 2) закрыть попап при клике на крестик или на оверлей */
 popupCardsElement.addEventListener('click', closePopupWithClick);
-
 /** 3) добавить новую карточку на страницу (при клике на кнопке "создать"(submit)) */
 popupCardsForm.addEventListener('submit', addNewCard);
+
 
 /** закрыть попап с картинкой
  * при клике на крестик или на оверлей
 */
 popupImageElement.addEventListener('click', closePopupWithClick);
+
 
 /** подключить валидацию полей формы */
 import FormValidator from "./FormValidator.js";
