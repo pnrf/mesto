@@ -41,6 +41,8 @@ export default class Card {
     this._cardElementImage.src = this._link;
     this._cardElementImage.alt = `${this._name}. Фотография`;
 
+    this._likeButton = this._cardElement.querySelector('.card__like-button');
+
     this._setEventListeners();
 
     return this._cardElement;
@@ -53,14 +55,31 @@ export default class Card {
       this._addDataToPopupImg(this._name, this._link);
       openPopup(popupImageElement);
     });
-    // установить слушатель на кнопку лайк/дизлайк (сердечко)
-    this._cardElement.querySelector('.card__like-button').addEventListener('click', evt => {
-      evt.target.classList.toggle('card__like-button_active');
+    /** установить слушатель на кнопку лайк/дизлайк (сердечко). Для этого отрефакторили прежний код:
+     *
+     * this._cardElement.querySelector('.card__like-button').addEventListener('click', evt => {
+     * evt.target.classList.toggle('card__like-button_active');
+     * });
+     *
+     * Заменили его, вставив ссылку на кнопку лайка в метод generateCard() - см. this._likeButton. Затем повесили на нее слушатель
+     * с функцией this._handleLikeButton, которую прописали в качестве метода класса Card.
+    */
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeButton();
     });
-    // установить слушатель на кнопку попапа для удаления карточки (корзинка)
+
+    /** установить слушатель на кнопку попапа для удаления карточки (корзинка):
+     * gри удалении экземпляра класса его дополнительно нужно занулять: this._cardElement = null!!!
+     * Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
+     * */
     this._cardElement.querySelector('.card__del-button').addEventListener('click', evt => {
-      evt.target.closest('.card').remove();
+      this._cardElement.remove();
+      this._cardElement = null;
     });
+  }
+
+  _handleLikeButton() {
+    this._likeButton.classList.toggle('card__like-button_active');
   }
 
   //метод класса: наполнить попап (превью картинки) контентом:
