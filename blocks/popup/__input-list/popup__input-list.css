@@ -3,8 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 75px auto 45px;
-  gap: 8px;
+  margin: 50px auto 45px;
 }
 
 @media screen and (min-width: 768px) {
