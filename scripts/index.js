@@ -6,7 +6,6 @@ const addBtnElement = document.querySelector('.profile__add-button'); // ссы�
 
 /** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
-const inputListSelectorPopupProfile = Array.from(popupProfileElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
 
 const popupProfileForm = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
 const popupNameElement = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
@@ -18,18 +17,27 @@ const profileAboutElement = profileElement.querySelector('.profile__subtitle'); 
 
 /** POPUP 2: card adding form */
 const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
-const inputListSelectorPopupCards = Array.from(popupCardsElement.querySelectorAll('.popup__input')); // массив со ссылками на все поля input в форме
 
 const popupCardsForm = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
 const popupPlaceElement = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
 const popupLinkElement = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
- const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
+const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
 
 /** TEMPLATE for cards */
 const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 
+/** Form Selectors */
+const formSelectors = {
+  inputFieldSelector: '.popup__field',
+  inputSelector: '.popup__input',
+  inputErrorSelector: '.popup__input-error',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  buttonElement: '.popup__save-button'
+};
 
 /** (II) FUNCTIONS  */
 
@@ -153,8 +161,8 @@ popupProfileForm.addEventListener('submit', changeProfileData);
  * если колбек слушателя содержит однострочную функцию, то ее можно не обособлять фигурными скобками.
 */
 addBtnElement.addEventListener('click', () => {
-openPopup(popupCardsElement);
-newCardValidation.toggleButtonState();
+  newCardValidation.toggleButtonState();
+  openPopup(popupCardsElement);
 });
 /** 2) закрыть попап при клике на крестик или на оверлей */
 popupCardsElement.addEventListener('click', closePopupWithClick);
@@ -171,7 +179,7 @@ popupImageElement.addEventListener('click', closePopupWithClick);
 /** подключить валидацию полей формы */
 import FormValidator from "./FormValidator.js";
 
-const profileValidation = new FormValidator(inputListSelectorPopupProfile, popupProfileElement);
-const newCardValidation = new FormValidator(inputListSelectorPopupCards, popupCardsElement);
+const profileValidation = new FormValidator(formSelectors, popupProfileElement);
+const newCardValidation = new FormValidator(formSelectors, popupCardsElement);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();
