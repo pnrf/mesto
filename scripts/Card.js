@@ -83,9 +83,9 @@ export default class Card {
   }
 
   //метод класса: наполнить попап (превью картинки) контентом:
-  _addDataToPopupImg = (name, link) => {
-    popupFigcaptionElement.textContent = name;
-    popupImgElm.src = link;
-    popupImgElm.alt = `${name}. Фотография`;
-  }
+  // _addDataToPopupImg = (name, link) => {
+  //   popupFigcaptionElement.textContent = name;
+  //   popupImgElm.src = link;
+  //   popupImgElm.alt = `${name}. Фотография`;
+  // }
 }
