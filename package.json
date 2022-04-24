@@ -1,0 +1,26 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "my study project in Yandex.Praktikum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnrf/mesto.git"
+  },
+  "keywords": [
+    "mesto"
+  ],
+  "author": "Yuri A. Pankratov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pnrf/mesto/issues"
+  },
+  "homepage": "https://github.com/pnrf/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
