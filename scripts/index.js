@@ -50,10 +50,10 @@ const formSelectors = {
  * слушателю вторым аргументом(параметром), чтобы этот слушатель удалялся при закрытии попапа. В противном
  * случае код удаления слушателя (см. функцию closePopup) работать не будет.
  */
-const openPopup = item => {
-  item.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupWithEscBtn);
-};
+// const openPopup = item => {
+//   item.classList.add('popup_opened');
+//   document.addEventListener('keydown', closePopupWithEscBtn);
+// };
 
 export {openPopup};
 
@@ -67,29 +67,29 @@ export {openPopup};
  * исчезать". В данном случае требование удалить слушатель обосновано тем, что слушатель клавиатуры реагирует на
  * все нажатия клавиш. Когда нет открытого попапа, то не стоит зря загружать систему.
  */
-const closePopup = item => {
-  item.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupWithEscBtn);
-};
+// const closePopup = item => {
+//   item.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closePopupWithEscBtn);
+// };
 
 /** функция: закрыть попап при нажатии Esc */
-const closePopupWithEscBtn = evt => {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  };
-};
+// const closePopupWithEscBtn = evt => {
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup);
+//   };
+// };
 
 /** функция: закрыть попап при клике на крестик или на оверлей
  * данная функция применяется для 3-х разных попапов, кнопки в которых тоже разные;
 */
-const closePopupWithClick = evt => {
-  const openedPopup = document.querySelector('.popup_opened');
-  const closeBtnElement = openedPopup.querySelector('.popup__close-button');
-  if (evt.target.contains(closeBtnElement)) {
-    closePopup(openedPopup);
-  };
-};
+// const closePopupWithClick = evt => {
+//   const openedPopup = document.querySelector('.popup_opened');
+//   const closeBtnElement = openedPopup.querySelector('.popup__close-button');
+//   if (evt.target.contains(closeBtnElement)) {
+//     closePopup(openedPopup);
+//   };
+// };
 
 /** функция: изменить данные профиля на странице: */
 const changeProfileData = evt => {
