@@ -1,45 +1,28 @@
-/** (I) CONSTANTS and VARIABLES */
+/** Import of constants */
+import {
+  editBtnElement,
+  addBtnElement,
 
-/** кнопки на странице */
-const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
-const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
+  profileElement,
+  profileNameSelector,
+  profileAboutSelector,
 
-/** секции на странице */
-const profileElement = document.querySelector('.profile'); // ссылка на профиль
-const profileNameSelector = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
-const profileAboutSelector = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
+  cardListSelector,
 
-const cardListSelector = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
+  popupProfileElement,
+  popupProfileFormSelector,
+  popupProfileNameSelector,
+  popupProfileAboutSelector,
 
+  popupCardsElement,
+  popupCardsFormSelector,
+  popupCardsPlaceSelector,
+  popupCardsLinkSelector,
 
-/** POPUP 1: profile editing form */
-const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
+  popupImageElement,
 
-const popupProfileFormSelector = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupProfileNameSelector = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
-const popupProfileAboutSelector = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
-
-
-/** POPUP 2: card adding form */
-const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
-
-const popupCardsFormSelector = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupCardsPlaceSelector = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
-const popupCardsLinkSelector = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
-
-/** POPUP 3: image preview */
-const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
-
-/** Form Selectors */
-const formSelectors = {
-  inputFieldSelector: '.popup__field',
-  inputSelector: '.popup__input',
-  inputErrorSelector: '.popup__input-error',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  buttonElement: '.popup__save-button'
-};
+  formSelectors
+} from '../utils/constants.js';
 
 /** Import of Classes and Data */
 import Card from '../components/Card.js';
