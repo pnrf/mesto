@@ -6,19 +6,46 @@
  * Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
  * Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
  */
- import Popup from './Popup.js'
+import Popup from './Popup.js'
 
- export default class PopupWithForm extends Popup {
-   constructor() {}
+export default class PopupWithForm extends Popup {
+    constructor(popupSelector, callbackSubmitForm) {
+      super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
+      this._popupForm = this._popupSelector.querySelector('.popup__input-list'); // ссылка на форму
+      this._formInputFields = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
+      this._submitButtonElement = this._popupSelector.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
+      this._callbackSubmitForm = callbackSubmitForm;
+    }
 
-   /** _getInputValues - приватный метод: собрать данные всех полей форм */
-   _getInputValues() {
+    /** _getInputValues - приватный метод: собрать данные всех полей формы. Куда? - в некий объект.
+    * Порядок действий:
+    * 1) создать новый объект;
+    * 2) обойти методом forEach псевдомассив всех полей input формы,
+    * 3) их значения записать в созданный объект. Обратиться к свойству объекта лучше не через точку, а через квадратные скобки (это универсальный способ).
+    * 4) вернуть созданный объект.
+    */
+    _getInputValues() {
+      this._formInputFieldsData = {};
 
-   }
+      this._formInputFields.forEach(item => {
+        this._formInputFieldsData[item] = item.value;
+      });
+      return this._formInputFieldsData;
+    }
 
    /** перезаписать родительский метод setEventListeners */
+    setEventListeners() {
+      this._popupSelector.addEventListener('click', evt => {
+        this._callbackSubmitForm(evt);
+        super.setEventListeners();
+      });
+    }
 
    /** перезаписать родительский метод closePopup */
+    closePopup() {
+      this._popupForm.reset(); // сбросить значения полей формы. Здесь или лучше при открытии попапа???
+      super.closePopup();
+    }
 
-   /** для каждого попапа создать свой экземпляр класса PopupWithForm */
- }
+    /** для каждого попапа создать свой экземпляр класса PopupWithForm */
+}

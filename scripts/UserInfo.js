@@ -13,12 +13,19 @@ export default class UserInfo {
   /** getUserInfo -- публичный метод:
    * вернуть объект с данными пользователя
   */
-  getUserInfo() {}
+  getUserInfo() {
+    return {
+      profileName: this._profileNameSelector.textContent,
+      profileAbout: this._profileAboutSelector.textContent
+    }
+  }
 
   /** setUserInfo -- публичный метод:
    * принять новые данные пользователя
    * добавить новые данные пользователя на страницу
   */
- setUserInfo() {}
-
+  setUserInfo(profileName, profileAbout) {
+    this._profileNameSelector.textContent = profileName;
+    this._profileAboutSelector.textContent = profileAbout;
+  }
 }

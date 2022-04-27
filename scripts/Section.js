@@ -14,21 +14,21 @@ export default class Section {
     this._containerElements = document.querySelector(containerSelector);
   }
 
-  /** renderElements -- публичный метод: отрисовать все элементы на странице.
+  /** renderItems -- публичный метод: отрисовать все элементы на странице.
    * На вход принимает массив данных.
    * Содержит функцию renderer, которая перебирает вх. массив данных и отрисовывает каждый элемент в отдельности.
   */
-  renderElements() {
-    this._items.forEach(element => {
-      this._renderer(element);
+  renderItems() {
+    this._items.forEach(item => {
+      this._renderer(item);
     });
   }
 
   /** addItem -- публичный метод.
    * На вход принимает DOM-элемент и добавляет его в контейнер (вначало методом append).
    */
-  addItem(element) {
-    this._containerElements.append(element);
+  addItem(item) {
+    this._containerElements.append(item);
   }
 }
 

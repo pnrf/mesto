@@ -39,6 +39,16 @@ const formSelectors = {
   buttonElement: '.popup__save-button'
 };
 
+/** Import of Classes and Data */
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import {initialCards} from "./initialCards.js";
+import Popup from './Popup.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
+import Section from './Section.js';
+import UserInfo from './UserInfo.js';
+
 /** (II) FUNCTIONS  */
 
 /** функция: открыть попап:
@@ -55,7 +65,7 @@ const formSelectors = {
 //   document.addEventListener('keydown', closePopupWithEscBtn);
 // };
 
-export {openPopup};
+// export {openPopup};
 
 /** функция: закрыть попап:
  * попап закрывается при клике на крестик, на оверлей и при нажатии Esc;
@@ -106,8 +116,8 @@ const changeProfileData = evt => {
  * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
 */
 
-import {initialCards} from "./initialCards.js";
-import Card from "./Card.js";
+// import {initialCards} from "./initialCards.js";
+// import Card from "./Card.js";
 
 /** функция: создает карточку и возвращает ее разметку, которую мы вставляем в нужное место через функцию renderCard */
 const createCard = (name, link) => {
@@ -151,7 +161,7 @@ editBtnElement.addEventListener('click', () => {
   openPopup(popupProfileElement);
 });
 /** 2) закрыть попап при клике на крестик или на оверлей */
-popupProfileElement.addEventListener('click', closePopupWithClick);
+// popupProfileElement.addEventListener('click', closePopupWithClick);
 /** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
 popupProfileForm.addEventListener('submit', changeProfileData);
 
@@ -165,7 +175,7 @@ addBtnElement.addEventListener('click', () => {
   openPopup(popupCardsElement);
 });
 /** 2) закрыть попап при клике на крестик или на оверлей */
-popupCardsElement.addEventListener('click', closePopupWithClick);
+// popupCardsElement.addEventListener('click', closePopupWithClick);
 /** 3) добавить новую карточку на страницу (при клике на кнопке "создать"(submit)) */
 popupCardsForm.addEventListener('submit', addNewCard);
 
@@ -173,12 +183,15 @@ popupCardsForm.addEventListener('submit', addNewCard);
 /** закрыть попап с картинкой
  * при клике на крестик или на оверлей
 */
-popupImageElement.addEventListener('click', closePopupWithClick);
+// popupImageElement.addEventListener('click', closePopupWithClick);
+
+/** Просмотр картинки в попапе */
+const popupImageViewer = new PopupWithImage(popupImageElement);
+popupImageViewer.setEventListeners(); // закрыть попап при клике на крестик, оверлей или Esc
 
 
 /** подключить валидацию полей формы */
-import FormValidator from "./FormValidator.js";
-
+// import FormValidator from "./FormValidator.js";
 const profileValidation = new FormValidator(formSelectors, popupProfileElement);
 const newCardValidation = new FormValidator(formSelectors, popupCardsElement);
 profileValidation.enableValidation();

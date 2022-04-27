@@ -6,17 +6,23 @@
  *
  * Для каждой карточки создайте экземпляр класса Card. */
 
+/**Свяжите класс Card c попапом.
+ * Сделайте так, чтобы Card принимал в конструктор функцию handleCardClick.
+ * Эта функция должна открывать попап с картинкой при клике на карточку.
+ */
+
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
 const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
 
-import {openPopup} from './index.js';
+// import {openPopup} from './index.js';
 
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   // метод класса: клонировать темлейт из html в DOM
@@ -51,10 +57,13 @@ export default class Card {
   // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку
-    this._cardElementImage.addEventListener('click', () => {
-      this._addDataToPopupImg(this._name, this._link);
-      openPopup(popupImageElement);
-    });
+    // this._cardElementImage.addEventListener('click', () => {
+    //   this._addDataToPopupImg(this._name, this._link);
+    //   openPopup(popupImageElement);
+    // });
+    this._cardElementImage.addEventListener('click', () => this._handleCardClick);
+
+
     /** установить слушатель на кнопку лайк/дизлайк (сердечко). Для этого отрефакторили прежний код:
      *
      * this._cardElement.querySelector('.card__like-button').addEventListener('click', evt => {
