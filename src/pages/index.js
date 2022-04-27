@@ -4,29 +4,31 @@
 const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
 const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
 
+/** секции на странице */
+const profileElement = document.querySelector('.profile'); // ссылка на профиль
+const profileNameSelector = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
+const profileAboutSelector = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
+
+const cardListSelector = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
+
+
 /** POPUP 1: profile editing form */
 const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
 
-const popupProfileForm = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupNameElement = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
-const popupAboutElement = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
+const popupProfileFormSelector = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
+const popupProfileNameSelector = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
+const popupProfileAboutSelector = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
 
-const profileElement = document.querySelector('.profile'); // ссылка на профиль
-const profileNameElement = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
-const profileAboutElement = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
 
 /** POPUP 2: card adding form */
 const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
 
-const popupCardsForm = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
-const popupPlaceElement = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
-const popupLinkElement = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
+const popupCardsFormSelector = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
+const popupCardsPlaceSelector = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
+const popupCardsLinkSelector = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
 const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
-
-/** TEMPLATE for cards */
-const listElement = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 
 /** Form Selectors */
 const formSelectors = {
@@ -102,12 +104,14 @@ import UserInfo from '../components/UserInfo.js';
 // };
 
 /** функция: изменить данные профиля на странице: */
-const changeProfileData = evt => {
-  evt.preventDefault();
-  profileNameElement.textContent = popupNameElement.value;
-  profileAboutElement.textContent = popupAboutElement.value;
-  closePopup(popupProfileElement);
-};
+// const changeProfileData = evt => {
+//   evt.preventDefault();
+//   profileNameSelector.textContent = popupProfileNameSelector.value;
+//   profileAboutSelector.textContent = popupProfileAboutSelector.value;
+//   closePopup(popupProfileElement);
+// };
+
+const profileInfo = new UserInfo(profileNameSelector, profileAboutSelector);
 
 /** задача функций createCard и renderCard: отрисовать карточку на странице (вставить в разметку):
  * функция renderCard переиспользуется для отрисовки исходного массива и для добавления новой карточки;
@@ -130,7 +134,7 @@ const createCard = (name, link) => {
  * в нужную секцию или при необходимости на другую страницу. Т.е. цель этой функции -- место вставки кода.
  */
 const renderCard = (name, link) => {
-  listElement.prepend(createCard(name, link));
+  cardListSelector.prepend(createCard(name, link));
 };
 
 /** функция: обработчик события для добавления новой карточки (при клике на кнопку "создать")
@@ -139,9 +143,9 @@ const renderCard = (name, link) => {
 */
 const addNewCard = evt => {
   evt.preventDefault();
-  renderCard(popupPlaceElement.value, popupLinkElement.value);
+  renderCard(popupCardsPlaceSelector.value, popupCardsLinkSelector.value);
   closePopup(popupCardsElement);
-  popupCardsForm.reset(); // обнуление значений полей формы в попапе
+  popupCardsFormSelector.reset(); // обнуление значений полей формы в попапе
 };
 
 
@@ -156,14 +160,14 @@ initialCards.reverse().forEach(item => renderCard(item.name, item.link));
 /** редактировать профиль (Жак-Ив Кусто, исследователь океана): */
 /** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
 editBtnElement.addEventListener('click', () => {
-  popupNameElement.value = profileNameElement.textContent;
-  popupAboutElement.value = profileAboutElement.textContent;
+  popupProfileNameSelector.value = profileNameSelector.textContent;
+  popupProfileAboutSelector.value = profileAboutSelector.textContent;
   openPopup(popupProfileElement);
 });
 /** 2) закрыть попап при клике на крестик или на оверлей */
 // popupProfileElement.addEventListener('click', closePopupWithClick);
 /** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
-popupProfileForm.addEventListener('submit', changeProfileData);
+popupProfileFormSelector.addEventListener('submit', changeProfileData);
 
 
 /** добавить новую карточку: */
@@ -177,7 +181,7 @@ addBtnElement.addEventListener('click', () => {
 /** 2) закрыть попап при клике на крестик или на оверлей */
 // popupCardsElement.addEventListener('click', closePopupWithClick);
 /** 3) добавить новую карточку на страницу (при клике на кнопке "создать"(submit)) */
-popupCardsForm.addEventListener('submit', addNewCard);
+popupCardsFormSelector.addEventListener('submit', addNewCard);
 
 
 /** закрыть попап с картинкой
