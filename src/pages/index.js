@@ -1,35 +1,29 @@
-/** Importing constants */
+/** Data Import */
+import {initialCards} from '../components/initialCards.js';
+
+
+/** Constants Import */
 import {
   editBtnElement,
   addBtnElement,
-
   profileElement,
   profileNameSelector,
   profileAboutSelector,
-
   cardListSelector,
-
   popupProfileElement,
   popupProfileFormSelector,
   popupProfileNameSelector,
   popupProfileAboutSelector,
-
   popupCardsElement,
   popupCardsFormSelector,
   popupCardsPlaceSelector,
   popupCardsLinkSelector,
-
   popupImageElement,
-
   formSelectors
 } from '../utils/constants.js';
 
 
-/** Importing data */
-import {initialCards} from "../components/initialCards.js";
-
-
-/** Importing functions */
+/** Functions Import */
 import {
   createCard,
   renderCard,
@@ -37,7 +31,7 @@ import {
 } from '../utils/utils.js';
 
 
-/** Importing Classes */
+/** Classes Import */
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Popup from '../components/Popup.js';
@@ -47,22 +41,26 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
 
-/** MAIN CODE: class instances and event handlers */
+
+/** --- MAIN CODE --- */
+
+/** Render initial cards at page first loading */
+const renderInitialCards = new Section({initialCards, renderer: () => {
+  initialCards.reverse().forEach(item => renderCard(item.name, item.link));
+  }
+}, cardListSelector);
+
+renderInitialCards();
+
+
 const profileInfo = new UserInfo(profileNameSelector, profileAboutSelector);
-
-
-
-
-
-
-
 
 
 /** перебрать исходный массив, и отрисовать карточки по порядку
  * поскольку функция renderCard использует метод prepend вместо appendChild, то я вынужден применить reverse(),
  * иначе карточки отрисуются в обратном порядке, что будет противоречить макету;
 */
-initialCards.reverse().forEach(item => renderCard(item.name, item.link));
+// initialCards.reverse().forEach(item => renderCard(item.name, item.link));
 
 /** редактировать профиль (Жак-Ив Кусто, исследователь океана): */
 /** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
