@@ -51,11 +51,11 @@ import UserInfo from '../components/UserInfo.js';
 
 /** Render cards: Card, PopupWithImage */
 function createCard(item, cardSelector) {
-  const newCard = new Card(item, cardSelector, () => {
+  const newCard = new Card(item, '#template' /*, () => {
     const popupWithImage = new PopupWithImage(popupImageElement);
     popupWithImage.setEventListeners();
     popupWithImage.openPopupWithImage(item.name, item.link);
-  });
+  }*/);
   return newCard.generateCard();
 }
 
@@ -63,8 +63,8 @@ function createCard(item, cardSelector) {
 const renderCards = new Section(
   { items: initialCards,
     renderer: (item) => {
-      const cardElm = createCard(item, cardSelector);
-      renderCards.addItemAppend(cardElm);
+      const card = createCard(item, cardSelector);
+      renderCards.addItemAppend(card);
     }
   },
   cardListSelector);
@@ -92,8 +92,8 @@ const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getFormData();
   const item = {name: formData.name, link: formData.url};
-  const cardElm = createCard(item, cardSelector);
-  renderCards.addItemPrepend(cardElm);
+  const card = createCard(item, cardSelector);
+  renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
 });
 

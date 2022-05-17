@@ -26,11 +26,11 @@ export default class Section {
     this._items.forEach(item => {
       this._renderer(item);
     });
-    return item;
+    // return item;
   }
 
   /**
-   * addItem -- публичный метод: принимает DOM-элемент и добавляет его в контейнер методом append (в начало списка).
+   * addItem -- публичный метод: принимает DOM-элемент и добавляет его в контейнер.
    */
   addItemAppend(item) {
     this._containerSelector.append(item);

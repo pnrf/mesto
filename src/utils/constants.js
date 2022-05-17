@@ -11,7 +11,7 @@ export const profileAboutSelector = profileElement.querySelector('.profile__subt
 
 export const cardListSelector = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
 export const cardSelector = document.querySelector('#template'); // ссылка на темплейт
-
+console.log(cardSelector);
 
 /** POPUP 1: profile editing form */
 export const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
