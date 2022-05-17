@@ -47,12 +47,13 @@ import UserInfo from '../components/UserInfo.js';
 /** --- MAIN CODE --- */
 
 /** Render initial cards at first loading of the page*/
-const renderInitialCards = new Section({initialCards, renderer: () => {
+const renderInitialCards = () => {new Section({initialCards, renderer: () => {
   initialCards.reverse().forEach(item => renderCard(item.name, item.link));
   }
 }, cardListSelector);
+};
 
-renderCard();
+renderInitialCards();
 
 
 const profileInfo = new UserInfo(profileNameSelector, profileAboutSelector);
