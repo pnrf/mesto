@@ -65,8 +65,26 @@
  * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
 */
 
-// import {initialCards} from "./initialCards.js";
-// import Card from "./Card.js";
+import {initialCards} from "../components/initialCards.js";
+import Card from "../components/Card.js";
+import {
+  editBtnElement,
+  addBtnElement,
+  profileElement,
+  profileNameSelector,
+  profileAboutSelector,
+  cardListSelector,
+  popupProfileElement,
+  popupProfileFormSelector,
+  popupProfileNameSelector,
+  popupProfileAboutSelector,
+  popupCardsElement,
+  popupCardsFormSelector,
+  popupCardsPlaceSelector,
+  popupCardsLinkSelector,
+  popupImageElement,
+  formSelectors
+} from '../utils/constants.js';
 
 /** функция: создает карточку и возвращает ее разметку, которую мы вставляем в нужное место через функцию renderCard */
 export const createCard = (name, link) => {

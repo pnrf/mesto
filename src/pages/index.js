@@ -1,6 +1,10 @@
+/**
+ * Файлы скриптов конкретной страницы расположим в уже существующей директории pages. Файлы скриптов страниц содержат только уникальный
+ * для конкретной страницы код: создание новых экземпляров класса и передачу в них данных, описание взаимодействия между классами.
+ */
+
 /** Data Import */
 import {initialCards} from '../components/initialCards.js';
-
 
 /** Constants Import */
 import {
@@ -22,14 +26,12 @@ import {
   formSelectors
 } from '../utils/constants.js';
 
-
 /** Functions Import */
 import {
   createCard,
   renderCard,
   addNewCard
 } from '../utils/utils.js';
-
 
 /** Classes Import */
 import Card from '../components/Card.js';
@@ -44,13 +46,13 @@ import UserInfo from '../components/UserInfo.js';
 
 /** --- MAIN CODE --- */
 
-/** Render initial cards at page first loading */
+/** Render initial cards at first loading of the page*/
 const renderInitialCards = new Section({initialCards, renderer: () => {
   initialCards.reverse().forEach(item => renderCard(item.name, item.link));
   }
 }, cardListSelector);
 
-renderInitialCards();
+renderCard();
 
 
 const profileInfo = new UserInfo(profileNameSelector, profileAboutSelector);
@@ -71,8 +73,9 @@ editBtnElement.addEventListener('click', () => {
 });
 /** 2) закрыть попап при клике на крестик или на оверлей */
 // popupProfileElement.addEventListener('click', closePopupWithClick);
-/** 3) изменить данные профиля на странице при клике на кнопку "сохрать" */
-popupProfileFormSelector.addEventListener('submit', changeProfileData);
+/** 3) изменить данные профиля на странице при клике на кнопку "сохранить" */
+
+//popupProfileFormSelector.addEventListener('submit', changeProfileData);
 
 
 /** добавить новую карточку: */

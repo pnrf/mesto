@@ -57,22 +57,10 @@ export default class Card {
   // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку
-    // this._cardElementImage.addEventListener('click', () => {
-    //   this._addDataToPopupImg(this._name, this._link);
-    //   openPopup(popupImageElement);
-    // });
-    this._cardElementImage.addEventListener('click', () => this._handleCardClick);
+      this._cardElementImage.addEventListener('click', () => this._handleCardClick);
 
 
-    /** установить слушатель на кнопку лайк/дизлайк (сердечко). Для этого отрефакторили прежний код:
-     *
-     * this._cardElement.querySelector('.card__like-button').addEventListener('click', evt => {
-     * evt.target.classList.toggle('card__like-button_active');
-     * });
-     *
-     * Заменили его, вставив ссылку на кнопку лайка в метод generateCard() - см. this._likeButton. Затем повесили на нее слушатель
-     * с функцией this._handleLikeButton, которую прописали в качестве метода класса Card.
-    */
+    // установить слушатель на кнопку лайк/дизлайк (сердечко).
     this._likeButton.addEventListener('click', () => {
       this._handleLikeButton();
     });
@@ -91,10 +79,4 @@ export default class Card {
     this._likeButton.classList.toggle('card__like-button_active');
   }
 
-  //метод класса: наполнить попап (превью картинки) контентом:
-  // _addDataToPopupImg = (name, link) => {
-  //   popupFigcaptionElement.textContent = name;
-  //   popupImgElm.src = link;
-  //   popupImgElm.alt = `${name}. Фотография`;
-  // }
 }

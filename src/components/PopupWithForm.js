@@ -25,12 +25,12 @@ export default class PopupWithForm extends Popup {
     * 4) вернуть созданный объект.
     */
     _getInputValues() {
-      this._formInputFieldsData = {};
+      this._formInputFieldsArr = {};
 
       this._formInputFields.forEach(item => {
-        this._formInputFieldsData[item] = item.value;
+        this._formInputFieldsArr[item] = item.value;
       });
-      return this._formInputFieldsData;
+      return this._formInputFieldsArr;
     }
 
    /** перезаписать родительский метод setEventListeners */
@@ -43,9 +43,9 @@ export default class PopupWithForm extends Popup {
 
    /** перезаписать родительский метод closePopup */
     closePopup() {
-      this._popupForm.reset(); // сбросить значения полей формы. Здесь или лучше при открытии попапа???
+      this._popupForm.reset(); // сбросить значения полей формы.
       super.closePopup();
     }
 
-    /** для каждого попапа создать свой экземпляр класса PopupWithForm */
+    /** для каждого попапа нужно создавать свой экземпляр класса PopupWithForm */
 }
