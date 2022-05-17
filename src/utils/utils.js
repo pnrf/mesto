@@ -65,7 +65,7 @@
  * затем ключи-переменные объединяем и в качестве (!)объекта передаем в класс Card;
 */
 
-import {initialCards} from "../components/initialCards.js";
+import {initialCards} from "./initialCards.js";
 import Card from "../components/Card.js";
 import {
   editBtnElement,
@@ -87,8 +87,8 @@ import {
 } from '../utils/constants.js';
 
 /** функция: создает карточку и возвращает ее разметку, которую мы вставляем в нужное место через функцию renderCard */
-export const createCard = (name, link) => {
-  const card = new Card({name, link}, '#template');
+export const createCard = ({name, link}, cardSelector) => {
+  const card = new Card({name, link}, cardSelector);
   const generatedCard = card.generateCard();
   return generatedCard;
 };

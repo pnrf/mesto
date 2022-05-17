@@ -33,6 +33,15 @@ export default class PopupWithForm extends Popup {
       return this._formInputFieldsArr;
     }
 
+    /** а нужно ли???? */
+    getFormData() {
+      return this._getInputValues();
+    }
+
+    getPopupForm () {
+      return this._popupForm;
+    }
+
    /** перезаписать родительский метод setEventListeners */
     setEventListeners() {
       this._popupSelector.addEventListener('click', evt => {

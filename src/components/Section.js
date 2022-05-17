@@ -32,8 +32,12 @@ export default class Section {
   /**
    * addItem -- публичный метод: принимает DOM-элемент и добавляет его в контейнер методом append (в начало списка).
    */
-  addItem(item) {
+  addItemAppend(item) {
     this._containerSelector.append(item);
+  }
+
+  addItemPrepend(item) {
+    this._containerSelector.prepend(item);
   }
 }
 
