@@ -29,8 +29,8 @@ export default class Popup {
   }
 
   /** _handleEscClose -- приватный метод: закрыть попап клавишей Esc (ранее это была функция closePopupWithEscBtn в index.js) */
-  _handleEscClose() {
-    if (evt.key === 'Escape') {
+  _handleEscClose(event) {
+    if (event.key === 'Escape') {
       this.closePopup();
     }
   }
@@ -42,8 +42,8 @@ export default class Popup {
    * Здесь вместо переменных функции, которые querySelector классы '.popup_opened' и '.popup__close-button', нахожу эти элементы через evt.target;
    */
   setEventListeners() {
-    this._popupSelector.addEventListener('click', evt => {
-      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+    this._popupSelector.addEventListener('click', event => {
+      if (event.target.classList.contains('popup_opened') || event.target.classList.contains('popup__close-button')) {
         this.closePopup();
       };
     });
