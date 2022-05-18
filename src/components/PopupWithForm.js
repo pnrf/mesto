@@ -33,7 +33,6 @@ export default class PopupWithForm extends Popup {
       return this._formInputFieldsArr;
     }
 
-    /** а нужно ли???? */
     getFormData() {
       return this._getInputValues();
     }
@@ -55,6 +54,4 @@ export default class PopupWithForm extends Popup {
       this._popupForm.reset(); // сбросить значения полей формы.
       super.closePopup();
     }
-
-    /** для каждого попапа нужно создавать свой экземпляр класса PopupWithForm */
 }

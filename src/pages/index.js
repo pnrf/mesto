@@ -73,7 +73,7 @@ import UserInfo from '../components/UserInfo.js';
 
 function handleCardClick(item) {
   const popupWithImage = new PopupWithImage(popupImageElement);
-  popupWithImage.setEventListeners(); // устанавливает слушатели для закрытия попапа
+  popupWithImage.setEventListeners();
   popupWithImage.openPopupWithImage(item);
 };
 
@@ -111,7 +111,7 @@ renderCards.renderItems();
  * 3) колбэк сабмита формы:
  *    а) отменить события формы по умолчанию методом event.preventDefault();
  *    б) методом getUserInfo() экземпляра класса UserInfo получить объект с данными пользователя;
- *    в) методом setUserInfo() экземпляра класса UserInfo передать из формы
+ *    в) методом setUserInfo() экземпляра класса UserInfo передать из формы новые данные пользователя для отрисовки их на странице;
  *    г) закрыть попап, обращаясь к методу closePopup() созданного экземпляра класса.
  *
  * 4) установить слушатель на кнопку редактирования (editBtnElement):
@@ -132,42 +132,6 @@ const popupWithFormProfile = new PopupWithForm(popupProfileElement, (event) => {
 popupWithFormProfile.setEventListeners();
 
 
-
-/** Создание новой карточки */
-/** PopupWithForm для новой карточки */
-const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
-  event.preventDefault();
-  const formData = popupWithFormNewCard.getFormData();
-  const item = {name: formData.name, link: formData.url};
-  const card = createCard(item);
-  renderCards.addItemPrepend(card);
-  popupWithFormNewCard.closePopup();
-});
-
-popupWithFormNewCard.setEventListeners();
-
-/** */
-
-/** перебрать исходный массив, и отрисовать карточки по порядку
- * поскольку функция renderCard использует метод prepend вместо appendChild, то я вынужден применить reverse(),
- * иначе карточки отрисуются в обратном порядке, что будет противоречить макету;
-*/
-// initialCards.reverse().forEach(item => renderCard(item.name, item.link));
-
-/** редактировать профиль (Жак-Ив Кусто, исследователь океана): */
-/** 1) открыть попап при клике на кнопке "редактировать", вставить в попап данные со страницы */
-// editBtnElement.addEventListener('click', () => {
-//   popupProfileNameSelector.value = profileNameSelector.textContent;
-//   popupProfileAboutSelector.value = profileAboutSelector.textContent;
-//   openPopup(popupProfileElement);
-// });
-
-
-/** При клике на кнопку "Редактировать профайл":
- * 1) получить ссылку попап с формой для редактирования профиля;
- * 2) подставить в форму значения со страницы (name и about);
- * 3) открыть попап с формой для редактирования профайла;
- */
 editBtnElement.addEventListener('click', () => {
   const formElm = popupWithFormProfile.getPopupForm();
   // formElm.elements.name.value = userInfo.getUserInfo().profileName;
@@ -182,17 +146,22 @@ editBtnElement.addEventListener('click', () => {
   popupWithFormProfile.openPopup();
 });
 
-/** 2) закрыть попап при клике на крестик или на оверлей */
-// popupProfileElement.addEventListener('click', closePopupWithClick);
-/** 3) изменить данные профиля на странице при клике на кнопку "сохранить" */
-
-//popupProfileFormSelector.addEventListener('submit', changeProfileData);
 
 
-/** добавить новую карточку: */
-/** 1) открыть попап при клике на кнопке "добавить"
- * если колбек слушателя содержит однострочную функцию, то ее можно не обособлять фигурными скобками.
-*/
+/** Создание новой карточки: */
+/** PopupWithForm для новой карточки */
+const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
+  event.preventDefault();
+  const formData = popupWithFormNewCard.getFormData();
+  const item = {name: formData.name, link: formData.url};
+  const card = createCard(item);
+  renderCards.addItemPrepend(card);
+  popupWithFormNewCard.closePopup();
+});
+
+popupWithFormNewCard.setEventListeners();
+
+
 addBtnElement.addEventListener('click', () => {
   newCardValidation.toggleButtonState();
   popupWithFormNewCard.openPopup();
@@ -200,25 +169,7 @@ addBtnElement.addEventListener('click', () => {
 
 
 
-/** 2) закрыть попап при клике на крестик или на оверлей */
-// popupCardsElement.addEventListener('click', closePopupWithClick);
-/** 3) добавить новую карточку на страницу (при клике на кнопке "создать"(submit)) */
-
-// popupCardsFormSelector.addEventListener('submit', addNewCard);
-
-
-/** закрыть попап с картинкой
- * при клике на крестик или на оверлей
-*/
-// popupImageElement.addEventListener('click', closePopupWithClick);
-
-/** Просмотр картинки в попапе */
-// const popupImageViewer = new PopupWithImage(popupImageElement);
-// popupImageViewer.setEventListeners(); // закрыть попап при клике на крестик, оверлей или Esc
-
-
-/** подключить валидацию полей формы */
-// import FormValidator from "./FormValidator.js";
+/** Подключение валидации полей формы */
 const profileValidation = new FormValidator(formSelectors, popupProfileElement);
 const newCardValidation = new FormValidator(formSelectors, popupCardsElement);
 profileValidation.enableValidation();
