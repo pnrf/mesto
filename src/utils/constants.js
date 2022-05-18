@@ -10,8 +10,7 @@ export const profileNameSelector = profileElement.querySelector('.profile__title
 export const profileAboutSelector = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
 
 export const cardListSelector = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
-export const cardSelector = document.querySelector('#template'); // ссылка на темплейт
-console.log(cardSelector);
+
 
 /** POPUP 1: profile editing form */
 export const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
@@ -30,6 +29,10 @@ export const popupCardsLinkSelector = popupCardsElement.querySelector('#url-inpu
 
 /** POPUP 3: image preview */
 export const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
+
+/** TEMPLATE */
+export const cardSelector = document.querySelector('#template'); // ссылка на темплейт
+
 
 /** Form Selectors */
 export const formSelectors = {

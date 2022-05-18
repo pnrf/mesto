@@ -27,13 +27,12 @@ export default class Card {
 
   // метод класса: клонировать темлейт из html в DOM
   _getTemplate() {
-    const cardElement = document
+    return document
       .querySelector(this._cardSelector) // использую селектор для карточки
       .content
       .querySelector('.card')
       .cloneNode(true);
 
-    return cardElement;
   }
 
   // метод класса: сгенерировать карточку, т.е. наполнить темплейт содержимым
@@ -56,23 +55,24 @@ export default class Card {
 
   // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
-    // установить слушатель на картинку
-      this._cardElementImage.addEventListener('click', () => this._handleCardClick);
-
+    // установить слушатель на картинку для открытия попапа
+      this._cardElementImage.addEventListener('click', () => {
+        this._handleCardClick();
+      });
 
     // установить слушатель на кнопку лайк/дизлайк (сердечко).
-    this._likeButton.addEventListener('click', () => {
-      this._handleLikeButton();
-    });
+      this._likeButton.addEventListener('click', () => {
+        this._handleLikeButton();
+      });
 
-    /** установить слушатель на кнопку попапа для удаления карточки (корзинка):
-     * gри удалении экземпляра класса его дополнительно нужно занулять: this._cardElement = null!!!
-     * Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
-     * */
-    this._cardElement.querySelector('.card__del-button').addEventListener('click', evt => {
-      this._cardElement.remove();
-      this._cardElement = null;
-    });
+      /** установить слушатель на кнопку попапа для удаления карточки (корзинка):
+       * gри удалении экземпляра класса его дополнительно нужно занулять: this._cardElement = null!!!
+       * Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
+       * */
+      this._cardElement.querySelector('.card__del-button').addEventListener('click', evt => {
+        this._cardElement.remove();
+        this._cardElement = null;
+      });
   }
 
   _handleLikeButton() {

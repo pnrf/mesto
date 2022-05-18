@@ -18,14 +18,14 @@ export default class Popup {
 
   /** openPopup -- публичный метод: открыть попап (ранее это была функция openPopup в index.js)*/
   openPopup() {
-    this._popupSelector.add('popup_opened');
-    document.addEventListener('keydown', this._handleEscClose);
+    this._popupSelector.classList.add('popup_opened');
+    document.addEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   /** closePopup -- публичный метод: закрыть попап (ранее это была функция closePopup в index.js)*/
   closePopup() {
-    this._popupSelector.remove('popup_opened');
-    document.removeEventListener('keydown', this._handleEscClose);
+    this._popupSelector.classList.remove('popup_opened');
+    document.removeEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   /** _handleEscClose -- приватный метод: закрыть попап клавишей Esc (ранее это была функция closePopupWithEscBtn в index.js) */

@@ -49,27 +49,34 @@ import UserInfo from '../components/UserInfo.js';
 
 /** --- MAIN CODE --- */
 
-/** Render cards: Card, PopupWithImage */
-function createCard(item, cardSelector) {
-  const newCard = new Card(item, '#template' /*, () => {
-    const popupWithImage = new PopupWithImage(popupImageElement);
-    popupWithImage.setEventListeners();
-    popupWithImage.openPopupWithImage(item.name, item.link);
-  }*/);
+/** Отрисовать карточки: Card; установить слушатель на PopupWithImage */
+function handleCardClick(item) {
+  const popupWithImage = new PopupWithImage(popupImageElement);
+  console.log("ту-ту", popupImageElement)
+  popupWithImage.setEventListeners(); // устанавливает слушатели для закрытия попапа
+  popupWithImage.openPopupWithImage(item);
+};
+
+function createCard(item) {
+  const newCard = new Card(item, '#template', () => {handleCardClick(item)});
   return newCard.generateCard();
-}
+};
 
 
 const renderCards = new Section(
   { items: initialCards,
     renderer: (item) => {
-      const card = createCard(item, cardSelector);
+      const card = createCard(item);
       renderCards.addItemAppend(card);
     }
   },
   cardListSelector);
 
 renderCards.renderItems();
+
+
+
+
 
 
 /** UserInfo */
@@ -92,7 +99,7 @@ const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getFormData();
   const item = {name: formData.name, link: formData.url};
-  const card = createCard(item, cardSelector);
+  const card = createCard(item);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
 });
