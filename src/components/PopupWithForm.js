@@ -28,7 +28,7 @@ export default class PopupWithForm extends Popup {
       this._formInputFieldsArr = {};
 
       this._formInputFields.forEach(item => {
-        this._formInputFieldsArr[item] = item.value;
+        this._formInputFieldsArr[item.key] = item.value;
       });
       return this._formInputFieldsArr;
     }
@@ -44,8 +44,8 @@ export default class PopupWithForm extends Popup {
 
    /** перезаписать родительский метод setEventListeners */
     setEventListeners() {
-      this._popupSelector.addEventListener('click', evt => {
-        this._callbackSubmitForm(evt);
+      this._popupSelector.addEventListener('submit', event => {
+        this._callbackSubmitForm(event);
         super.setEventListeners();
       });
     }

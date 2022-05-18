@@ -49,10 +49,30 @@ import UserInfo from '../components/UserInfo.js';
 
 /** --- MAIN CODE --- */
 
-/** Отрисовать карточки: Card; установить слушатель на PopupWithImage */
+/** При загрузке страницы отрисовать initial cards. Для этого:
+ *
+ * 1) объявить экземпляр класса Section, который отвечает за отрисовку карточек на странице (const renderCards);
+ *    а) передать ему в конструктор массив с данными - initialCards;
+ *    б) передать ему в конструктор функцию renderer, которая отвечает за создание и отрисовку каждой отдельной карточки на странице;
+ *    в) передать ему в конструктор селектор контейнера, куда нужно добавлять созданные карточки.
+ *
+ * 2) функция renderer:
+ *    а) вызвать функцию createCard;
+ *    б) отрисовать созданную карточку в начале списка.
+ *
+ * 3) объявить функцию createCard, которая для каждой карточки создает экземпляр класса Card:
+ *    а) объявить экземпляр класса Card, который который создаёт карточку с текстом и ссылкой на изображение;
+ *    б) передать ему в конструктор данные карточки и селектор её template-элемента;
+ *    в) передать ему в конструктор функцию handleCardClick;
+ *
+ * 4) объявить функцию handleCardClick, которая открывает попап с картинкой при клике на карточку:
+ *    а) объявить экземпляр класса PopupWithImage, который открывает попап с картинкой и наполняет его содержимым;
+ *    б) установить слушатели для закрытия попапа, обратившись с методу setEventListeners() созданного экземпляра класса;
+ *    в) открыть попап с наполненным содержимым, обратившись к методу openPopupWithImage() созданного экземпляра класса.
+ */
+
 function handleCardClick(item) {
   const popupWithImage = new PopupWithImage(popupImageElement);
-  console.log("ту-ту", popupImageElement)
   popupWithImage.setEventListeners(); // устанавливает слушатели для закрытия попапа
   popupWithImage.openPopupWithImage(item);
 };
@@ -61,7 +81,6 @@ function createCard(item) {
   const newCard = new Card(item, '#template', () => {handleCardClick(item)});
   return newCard.generateCard();
 };
-
 
 const renderCards = new Section(
   { items: initialCards,
@@ -75,25 +94,46 @@ const renderCards = new Section(
 renderCards.renderItems();
 
 
+/** Изменение данных профиля:
+ *  - при клике на кнопку редактирования открыть попап с формой для редактирования профиля;
+ *  - при клике на кнопку сабмита формы отрисовать на странице новые данные о пользователе.
+ *
+ * Для этого:
+ *
+ * 1) объявить экземпляр класса UserInfo, который управляет информацией о пользователе на странице:
+ *    а) методом getUserInfo() возвращает объект с данными пользователя;
+ *    б) методом setUserInfo() принимает новые данные пользователя (из формы) и добавляет эти данные на страницу;
+ *    в) передать ему в конструктор объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе.
+ *
+ * 2) объявить экземпляр класса PopupWithForm, который открывает/закрывает попап и наполняет его содержимым;
+ *    а) передать ему в конструктор селектор попапа и колбэк сабмита формы;
+ *
+ * 3) колбэк сабмита формы:
+ *    а) отменить события формы по умолчанию методом event.preventDefault();
+ *    б) методом getUserInfo() экземпляра класса UserInfo получить объект с данными пользователя;
+ *    в)
+ *    г) закрыть попап, обращаясь к методу closePopup() созданного экземпляра класса.
+ *
+ * 4) установить слушатель на кнопку редактирования (editBtnElement):
+ *    а) получить ссылку на попап с формой для редактирования профиля;
+ *    б) подставить в форму значения со страницы (name и about);
+ *    в) открыть попап с формой для редактирования профайла;
+ */
 
-
-
-
-/** UserInfo */
 const userInfo = new UserInfo(profileNameSelector, profileAboutSelector);
 
-
-/** PopupWithForm для профайла*/
 const popupWithFormProfile = new PopupWithForm(popupProfileElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormProfile.getFormData();
-  userInfo.setUserInfo(profileNameSelector, profileAboutSelector);
+  userInfo.setUserInfo(formData.profileName, formData.profileAbout);
   popupWithFormProfile.closePopup();
 });
 
 popupWithFormProfile.setEventListeners();
 
 
+
+/** Создание новой карточки */
 /** PopupWithForm для новой карточки */
 const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
@@ -122,10 +162,23 @@ popupWithFormNewCard.setEventListeners();
 //   openPopup(popupProfileElement);
 // });
 
+
+/** При клике на кнопку "Редактировать профайл":
+ * 1) получить ссылку попап с формой для редактирования профиля;
+ * 2) подставить в форму значения со страницы (name и about);
+ * 3) открыть попап с формой для редактирования профайла;
+ */
 editBtnElement.addEventListener('click', () => {
   const formElm = popupWithFormProfile.getPopupForm();
-  formElm.elements.name.value = userInfo.getUserInfo().profileName;
-  formElm.elements.about.value = userInfo.getUserInfo().profileAbout;
+  // formElm.elements.name.value = userInfo.getUserInfo().profileName;
+  // formElm.elements.about.value = userInfo.getUserInfo().profileAbout;
+
+  formElm.querySelector('#name-input').value = userInfo.getUserInfo().profileName;
+  formElm.querySelector('#about-input').value = userInfo.getUserInfo().profileAbout;
+
+  // popupProfileNameSelector.textContent = userInfo.getUserInfo().profileName;
+  // popupProfileAboutSelector.textContent = userInfo.getUserInfo().profileAbout;
+  // console.log (popupProfileNameSelector.textContent, popupProfileAboutSelector.textContent);
   popupWithFormProfile.openPopup();
 });
 
@@ -142,7 +195,6 @@ editBtnElement.addEventListener('click', () => {
 */
 addBtnElement.addEventListener('click', () => {
   newCardValidation.toggleButtonState();
-  // openPopup(popupCardsElement);
   popupWithFormNewCard.openPopup();
 });
 
