@@ -1,37 +1,35 @@
 /** (I) CONSTANTS and VARIABLES */
 
 /** кнопки на странице */
-export const editBtnElement = document.querySelector('.profile__edit-button'); // ссылка на кнопку "редактировать профиль"
-export const addBtnElement = document.querySelector('.profile__add-button'); // ссылка на кнопку "добавить новую карточку"
+export const editBtnElement = '.profile__edit-button'; // кнопка "редактировать профиль"
+export const addBtnElement = '.profile__add-button'; // кнопка "добавить новую карточку"
 
 /** секции на странице */
-export const profileElement = document.querySelector('.profile'); // ссылка на профиль
-export const profileNameSelector = profileElement.querySelector('.profile__title'); // ссылка на имя (Жак-Ив Кусто) на странице
-export const profileAboutSelector = profileElement.querySelector('.profile__subtitle'); // ссылка на описание (Исследователь океана) на странице
+export const profileElement = '.profile'; // профиль
+export const profileNameSelector = '.profile__title'; // имя профиля (Жак-Ив Кусто) на странице
+export const profileAboutSelector = '.profile__subtitle'; // описание профиля (Исследователь океана) на странице
 
-export const cardListSelector = document.querySelector('.cards__list'); // ссылка на родителя (куда вставить темплейт)
-
+export const cardListSelector = '.cards__list'; // контейнер, куда вставлять карточки
 
 /** POPUP 1: profile editing form */
-export const popupProfileElement = document.querySelector('.popup_type_profile'); // ссылка на popup для редактирования профиля
+export const popupProfileElement = '.popup_type_profile'; // попап для редактирования профиля
 
-export const popupProfileFormSelector = popupProfileElement.querySelector('.popup__input-list'); // ссылка на форму
-export const popupProfileNameSelector = popupProfileElement.querySelector('#name-input'); // ссылка на поле "имя" в попапе
-export const popupProfileAboutSelector = popupProfileElement.querySelector('#about-input'); // ссылка на поле "описание" в попапе
-
+export const popupProfileFormSelector = '.popup__input-list'; // форма попапа для редактирования профиля
+export const popupProfileNameSelector = '#name-input'; // поле "имя" в попапе
+export const popupProfileAboutSelector = '#about-input'; // поле "описание" в попапе
 
 /** POPUP 2: card adding form */
-export const popupCardsElement = document.querySelector('.popup_type_cards'); // ссылка на popup для добавления новой карточки
+export const popupCardsElement = '.popup_type_cards'; // попап для добавления новой карточки
 
-export const popupCardsFormSelector = popupCardsElement.querySelector('.popup__input-list'); // ссылка на форму
-export const popupCardsPlaceSelector = popupCardsElement.querySelector('#place-input'); // ссылка на поле "название места" в попапе
-export const popupCardsLinkSelector = popupCardsElement.querySelector('#url-input'); // ссылка на поле "ссылка на картинку" в попапе
+export const popupCardsFormSelector = '.popup__input-list'; // форма попапа для добавления новой карточки
+export const popupCardsPlaceSelector = '#place-input'; // поле "название места" в попапе
+export const popupCardsLinkSelector = '#url-input'; // поле "ссылка на картинку" в попапе
 
 /** POPUP 3: image preview */
-export const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
+export const popupImageElement = '.popup_type_image'; // попап для просмотра картики
 
 /** TEMPLATE */
-export const cardSelector = document.querySelector('#template'); // ссылка на темплейт
+export const cardSelector = '#template'; // темплейт
 
 
 /** Form Selectors */
