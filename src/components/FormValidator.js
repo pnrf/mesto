@@ -8,7 +8,7 @@
  */
 export default class FormValidator {
   constructor(formSelectors, formElement) {
-    this._formElement = formElement;
+    this._formElement = document.querySelector(formElement);
 
     this._inputFieldSelector = formSelectors.inputFieldSelector;
     this._inputSelector = formSelectors.inputSelector;

@@ -132,7 +132,7 @@ const popupWithFormProfile = new PopupWithForm(popupProfileElement, (event) => {
 popupWithFormProfile.setEventListeners();
 
 
-editBtnElement.addEventListener('click', () => {
+document.querySelector(editBtnElement).addEventListener('click', () => {
   const formElm = popupWithFormProfile.getPopupForm();
   // formElm.elements.name.value = userInfo.getUserInfo().profileName;
   // formElm.elements.about.value = userInfo.getUserInfo().profileAbout;
@@ -159,7 +159,7 @@ const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
 popupWithFormNewCard.setEventListeners();
 
 
-addBtnElement.addEventListener('click', () => {
+document.querySelector(addBtnElement).addEventListener('click', () => {
   newCardValidation.toggleButtonState();
   popupWithFormNewCard.openPopup();
 });
