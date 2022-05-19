@@ -149,8 +149,14 @@ document.querySelector(editBtnElement).addEventListener('click', () => {
 /** PopupWithForm для новой карточки */
 const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
-  const formData = popupWithFormNewCard.getFormData();
-  const data = {name: formData.name, link: formData.url};
+  const formData = popupWithFormNewCard.getInputValues();
+  console.log(popupWithFormNewCard.getInputValues());
+
+  const data = {name: formData[0], link: formData[1]};
+
+
+
+  // const data = {name: formData.name, link: formData.url};
   const card = createCard(data, cardSelector);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
