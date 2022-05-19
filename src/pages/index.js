@@ -10,31 +10,17 @@ import {initialCards} from '../utils/initialCards.js';
 import {
   editBtnElement,
   addBtnElement,
-  profileElement,
   profileNameSelector,
   profileAboutSelector,
   cardListSelector,
   cardSelector,
   popupProfileElement,
-  popupProfileFormSelector,
   popupProfileNameSelector,
   popupProfileAboutSelector,
   popupCardsElement,
-  popupCardsFormSelector,
-  popupCardsPlaceSelector,
-  popupCardsLinkSelector,
   popupImageElement,
   formSelectors
 } from '../utils/constants.js';
-
-/** Functions Import */
-/*
-import {
-  createCard,
-  renderCard,
-  addNewCard
-} from '../utils/utils.js';
-*/
 
 /** Classes Import */
 import Card from '../components/Card.js';
@@ -145,18 +131,25 @@ document.querySelector(editBtnElement).addEventListener('click', () => {
 
 
 
-/** Создание новой карточки: */
-/** PopupWithForm для новой карточки */
+/** Создание новой карточки:
+ * 1) объявить экземпляр класса PopupWithForm, который открывает/закрывает попап и наполняет его содержимым;
+ *    а) передать ему в конструктор селектор попапа и колбэк сабмита формы;
+ *
+ * 2) колбэк сабмита формы:
+ *    а) отменить события формы по умолчанию методом event.preventDefault();
+ *    б) методом getInputValues() созданного экземпляра класса получить данные из формы, заполненные пользователем;
+ *    в) выполнить функцию createCard, передав ей объект с данными из формы, заполнные пользователем, и селектор карточки;
+ *    г) отрисовать созданную карточку на странице;
+ *    д) закрыть попап;
+ *
+ * 3) установить слушатели.
+*/
+
 const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getInputValues();
-  console.log(popupWithFormNewCard.getInputValues());
-
   const data = {name: formData[0], link: formData[1]};
 
-
-
-  // const data = {name: formData.name, link: formData.url};
   const card = createCard(data, cardSelector);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();

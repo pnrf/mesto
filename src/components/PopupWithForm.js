@@ -34,10 +34,6 @@ export default class PopupWithForm extends Popup {
       return this._formValues;
     }
 
-    // getFormData() {
-    //   return this._getInputValues();
-    // }
-
     getPopupForm () {
       return this._popupForm;
     }

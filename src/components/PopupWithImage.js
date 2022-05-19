@@ -8,9 +8,6 @@ export default class PopupWithImage extends Popup {
     _popupImageSelector = this._popupSelector.querySelector('.popup__image'); // ссылка на картинку в попапе
     _popupImageСaptionSelector = this._popupSelector.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 
-  /** openPopupWithImage - публичный метод: вставить в попап картинку (src), alt и подпись к картинке
-   * ранее это был метод _addDataToPopupImg класса Card (Card.js)
-  */
   openPopupWithImage(item) {
     this._popupImageСaptionSelector.textContent = item.name;
     this._popupImageSelector.src = item.link;
