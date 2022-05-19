@@ -11,12 +11,6 @@
  * Эта функция должна открывать попап с картинкой при клике на карточку.
  */
 
-const popupImageElement = document.querySelector('.popup_type_image'); // ссылка на popup для просмотра картики
-const popupFigcaptionElement = popupImageElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
-const popupImgElm = popupImageElement.querySelector('.popup__image'); // ссылка на картинку в попапе
-
-// import {openPopup} from './index.js';
-
 export default class Card {
   constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;

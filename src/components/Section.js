@@ -8,13 +8,11 @@
  * У класса Section нет своей разметки. Он получает разметку через функцию-колбэк и вставляет её в контейнер.
 */
 
-//import { cardListSelector } from "../utils/constants";
-
 export default class Section {
   constructor({items, renderer}, containerSelector) {
     this._items = items; // массив данных, которые нужно добавить на страницу при инициализации класса;
     this._renderer = renderer; // функция, которая отвечает за создание и отрисовку данных на странице;
-    this._containerSelector = containerSelector; // селектор контейнера, в который нужно добавлять созданные элементы.
+    this._containerSelector = document.querySelector(containerSelector); // селектор контейнера, в который нужно добавлять созданные элементы.
   }
 
   /**

@@ -13,7 +13,7 @@
  */
 export default class Popup {
   constructor(popupSelector) {
-    this._popupSelector = popupSelector; // принимает на вход селектор попапа (ссылку на конкретный попап);
+    this._popupSelector = document.querySelector(popupSelector); // принимает на вход селектор попапа (ссылку на конкретный попап);
   }
 
   /** openPopup -- публичный метод: открыть попап (ранее это была функция openPopup в index.js)*/

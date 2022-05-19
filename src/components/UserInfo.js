@@ -7,8 +7,8 @@
 
 export default class UserInfo {
   constructor({profileNameSelector, profileAboutSelector}) {
-    this._profileNameSelector = profileNameSelector;
-    this._profileAboutSelector = profileAboutSelector;
+    this._profileNameSelector = document.querySelector(profileNameSelector);
+    this._profileAboutSelector = document.querySelector(profileAboutSelector);
   }
 
   /** getUserInfo -- публичный метод:
@@ -25,7 +25,7 @@ export default class UserInfo {
    * принимает новые данные пользователя
    * добавляет новые данные пользователя на страницу
   */
-  setUserInfo(profileName, profileAbout) {
+  setUserInfo({profileName, profileAbout}) {
     this._profileNameSelector.textContent = profileName;
     this._profileAboutSelector.textContent = profileAbout;
   }
