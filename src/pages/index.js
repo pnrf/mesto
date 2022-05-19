@@ -77,15 +77,15 @@ function handleCardClick(item) {
   popupWithImage.openPopupWithImage(item);
 };
 
-function createCard(item) {
-  const newCard = new Card(item, '#template', () => {handleCardClick(item)});
+function createCard(item, cardSelector) {
+  const newCard = new Card(item, cardSelector, () => {handleCardClick(item)});
   return newCard.generateCard();
 };
 
 const renderCards = new Section(
   { items: initialCards,
     renderer: (item) => {
-      const card = createCard(item);
+      const card = createCard(item, cardSelector);
       renderCards.addItemAppend(card);
     }
   },
@@ -120,12 +120,12 @@ renderCards.renderItems();
  *    в) открыть попап с формой для редактирования профайла;
  */
 
-const userInfo = new UserInfo(profileNameSelector, profileAboutSelector);
+const userInfo = new UserInfo({profileNameSelector, profileAboutSelector});
 
 const popupWithFormProfile = new PopupWithForm(popupProfileElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormProfile.getFormData();
-  userInfo.setUserInfo(formData.profileName, formData.profileAbout);
+  userInfo.setUserInfo({name: formData.profileName, about: formData.profileAbout});
   popupWithFormProfile.closePopup();
 });
 
@@ -137,12 +137,9 @@ editBtnElement.addEventListener('click', () => {
   // formElm.elements.name.value = userInfo.getUserInfo().profileName;
   // formElm.elements.about.value = userInfo.getUserInfo().profileAbout;
 
-  formElm.querySelector('#name-input').value = userInfo.getUserInfo().profileName;
-  formElm.querySelector('#about-input').value = userInfo.getUserInfo().profileAbout;
+  formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().profileName;
+  formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().profileAbout;
 
-  // popupProfileNameSelector.textContent = userInfo.getUserInfo().profileName;
-  // popupProfileAboutSelector.textContent = userInfo.getUserInfo().profileAbout;
-  // console.log (popupProfileNameSelector.textContent, popupProfileAboutSelector.textContent);
   popupWithFormProfile.openPopup();
 });
 
@@ -154,7 +151,7 @@ const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getFormData();
   const item = {name: formData.name, link: formData.url};
-  const card = createCard(item);
+  const card = createCard(item, cardSelector);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
 });

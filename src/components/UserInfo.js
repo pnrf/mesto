@@ -6,7 +6,7 @@
 */
 
 export default class UserInfo {
-  constructor(profileNameSelector, profileAboutSelector) {
+  constructor({profileNameSelector, profileAboutSelector}) {
     this._profileNameSelector = profileNameSelector;
     this._profileAboutSelector = profileAboutSelector;
   }
