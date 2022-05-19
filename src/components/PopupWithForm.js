@@ -11,8 +11,8 @@ import Popup from './Popup.js'
 export default class PopupWithForm extends Popup {
     constructor(popupSelector, callbackSubmitForm) {
       super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
+      this._popupSelector = document.querySelector(popupSelector);
       this._popupForm = this._popupSelector.querySelector('.popup__input-list'); // ссылка на форму
-      this._formInputFields = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
       this._submitButtonElement = this._popupSelector.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
       this._callbackSubmitForm = callbackSubmitForm;
     }
@@ -21,21 +21,22 @@ export default class PopupWithForm extends Popup {
     * Порядок действий:
     * 1) создать новый объект;
     * 2) обойти методом forEach псевдомассив всех полей input формы,
-    * 3) их значения записать в созданный объект. Обратиться к свойству объекта лучше не через точку, а через квадратные скобки (это универсальный способ).
+    * 3) их значения записать в созданный объект.
     * 4) вернуть созданный объект.
     */
-    _getInputValues() {
-      this._formInputFieldsArr = {};
-      this._formInputFields.forEach(item => {
-        this._formInputFieldsArr[item.name] = item.value;
-      });
-      return this._formInputFieldsArr;
+    getInputValues() {
+      this._inputsList = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
+      this._formValues = [];
+      this._inputsList.forEach(input => this._formValues.push(input.value));
+      // пришлось использовать массив вместо объекта. При добавлении input в объект, его значение перезаписывается:
+      // this._formValues = {};
+      // inputList.forEach(input => formValues[input.name] = input.value);
+      return this._formValues;
     }
 
-    getFormData() {
-      console.log(this._getInputValues());
-      return this._getInputValues();
-    }
+    // getFormData() {
+    //   return this._getInputValues();
+    // }
 
     getPopupForm () {
       return this._popupForm;
@@ -43,10 +44,10 @@ export default class PopupWithForm extends Popup {
 
    /** перезаписать родительский метод setEventListeners */
     setEventListeners() {
+      super.setEventListeners();
       this._popupSelector.addEventListener('submit', event => {
         this._callbackSubmitForm(event);
       });
-      super.setEventListeners();
     }
 
    /** перезаписать родительский метод closePopup */

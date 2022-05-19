@@ -122,25 +122,25 @@ renderCards.renderItems();
 
 const userInfo = new UserInfo({profileNameSelector, profileAboutSelector});
 
-const popupWithFormProfile = new PopupWithForm(popupProfileElement, (event) => {
+const popupWithProfileForm = new PopupWithForm(popupProfileElement, (event) => {
   event.preventDefault();
-  const formData = popupWithFormProfile.getFormData();
-  userInfo.setUserInfo({name: formData.profileName, about: formData.profileAbout});
-  popupWithFormProfile.closePopup();
+
+  const formData = popupWithProfileForm.getInputValues();
+  userInfo.setUserInfo({profileName: formData[0], profileAbout: formData[1]});
+
+  popupWithProfileForm.closePopup();
 });
 
-popupWithFormProfile.setEventListeners();
+popupWithProfileForm.setEventListeners();
 
 
 document.querySelector(editBtnElement).addEventListener('click', () => {
-  const formElm = popupWithFormProfile.getPopupForm();
-  // formElm.elements.name.value = userInfo.getUserInfo().profileName;
-  // formElm.elements.about.value = userInfo.getUserInfo().profileAbout;
+  const formElm = popupWithProfileForm.getPopupForm();
 
   formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().profileName;
   formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().profileAbout;
 
-  popupWithFormProfile.openPopup();
+  popupWithProfileForm.openPopup();
 });
 
 
