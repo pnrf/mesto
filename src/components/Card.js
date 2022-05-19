@@ -26,7 +26,6 @@ export default class Card {
       .content
       .querySelector('.card')
       .cloneNode(true);
-
   }
 
   // метод класса: сгенерировать карточку, т.е. наполнить темплейт содержимым

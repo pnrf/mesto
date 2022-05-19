@@ -26,14 +26,14 @@ export default class PopupWithForm extends Popup {
     */
     _getInputValues() {
       this._formInputFieldsArr = {};
-
       this._formInputFields.forEach(item => {
-        this._formInputFieldsArr[item.key] = item.value;
+        this._formInputFieldsArr[item.name] = item.value;
       });
       return this._formInputFieldsArr;
     }
 
     getFormData() {
+      console.log(this._getInputValues());
       return this._getInputValues();
     }
 
@@ -45,8 +45,8 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
       this._popupSelector.addEventListener('submit', event => {
         this._callbackSubmitForm(event);
-        super.setEventListeners();
       });
+      super.setEventListeners();
     }
 
    /** перезаписать родительский метод closePopup */

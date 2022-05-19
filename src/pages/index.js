@@ -77,15 +77,15 @@ function handleCardClick(item) {
   popupWithImage.openPopupWithImage(item);
 };
 
-function createCard(item, cardSelector) {
-  const newCard = new Card(item, cardSelector, () => {handleCardClick(item)});
+function createCard(data, cardSelector) {
+  const newCard = new Card(data, cardSelector, () => {handleCardClick(data)});
   return newCard.generateCard();
 };
 
 const renderCards = new Section(
   { items: initialCards,
-    renderer: (item) => {
-      const card = createCard(item, cardSelector);
+    renderer: (data) => {
+      const card = createCard(data, cardSelector);
       renderCards.addItemAppend(card);
     }
   },
@@ -150,8 +150,8 @@ document.querySelector(editBtnElement).addEventListener('click', () => {
 const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getFormData();
-  const item = {name: formData.name, link: formData.url};
-  const card = createCard(item, cardSelector);
+  const data = {name: formData.name, link: formData.url};
+  const card = createCard(data, cardSelector);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
 });
