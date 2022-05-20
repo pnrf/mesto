@@ -1,45 +1,28 @@
-/** (I) CONSTANTS and VARIABLES */
+export const profileEditButtonSelector = '.profile__edit-button'; // - editBtnElement
+export const cardAddButtonSelector = '.profile__add-button'; // - addBtnElement
 
-/** кнопки на странице */
-export const editBtnElement = '.profile__edit-button'; // кнопка "редактировать профиль"
-export const addBtnElement = '.profile__add-button'; // кнопка "добавить новую карточку"
+export const profileSelector = '.profile'
+export const profileNameSelector = '.profile__title'; // - profileNameSelector
+export const profileAboutSelector = '.profile__subtitle'; // - profileAboutSelector
 
-/** секции на странице */
+export const cardsListSelector = '.cards__list'; // - cardListSelector
 
-// export const profileElement = '.profile'; // профиль
-export const profileNameSelector = '.profile__title'; // имя профиля (Жак-Ив Кусто) на странице
-export const profileAboutSelector = '.profile__subtitle'; // описание профиля (Исследователь океана) на странице
+export const popupProfileSelector = '.popup_type_profile'; // - popupProfileElement
+export const popupProfileNameSelector = '#name-input'; // - popupProfileNameSelector
+export const popupProfileAboutSelector = '#about-input'; // - popupProfileAboutSelector
 
-export const cardListSelector = '.cards__list'; // контейнер, куда вставлять карточки
+export const popupCardSelector = '.popup_type_cards'; // - popupCardsElement
 
-/** POPUP 1: profile editing form */
-export const popupProfileElement = '.popup_type_profile'; // попап для редактирования профиля
+export const popupImageSelector = '.popup_type_image'; // - popupImageElement
 
-// export const popupProfileFormSelector = '.popup__input-list'; // форма попапа для редактирования профиля
-export const popupProfileNameSelector = '#name-input'; // поле "имя" в попапе
-export const popupProfileAboutSelector = '#about-input'; // поле "описание" в попапе
+export const cardTemplateSelector = '#template'; // - cardSelector
 
-/** POPUP 2: card adding form */
-export const popupCardsElement = '.popup_type_cards'; // попап для добавления новой карточки
-
-// export const popupCardsFormSelector = '.popup__input-list'; // форма попапа для добавления новой карточки
-// export const popupCardsPlaceSelector = '#place-input'; // поле "название места" в попапе
-// export const popupCardsLinkSelector = '#url-input'; // поле "ссылка на картинку" в попапе
-
-/** POPUP 3: image preview */
-export const popupImageElement = '.popup_type_image'; // попап для просмотра картики
-
-/** TEMPLATE */
-export const cardSelector = '#template'; // темплейт
-
-
-/** Form Selectors */
 export const formSelectors = {
   inputFieldSelector: '.popup__field',
   inputSelector: '.popup__input',
-  inputErrorSelector: '.popup__input-error',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  buttonElement: '.popup__save-button'
+  inputErrorMessageClass: '.popup__input-error', // inputErrorSelector
+  inputErrorUnderlineClass: 'popup__input_type_error', // inputErrorClass
+  activeErrorClass: 'popup__input-error_active', // errorClass
+  inactiveSubmitButtonClass: 'popup__save-button_inactive', // inactiveButtonClass
+  popupSubmitButtonSelector: '.popup__save-button' // buttonElement
 };

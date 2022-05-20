@@ -12,17 +12,17 @@
  */
 
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardTemplateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
-    this._cardSelector = cardSelector;
+    this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
   }
 
   // метод класса: клонировать темлейт из html в DOM
   _getTemplate() {
     return document
-      .querySelector(this._cardSelector) // использую селектор для карточки
+      .querySelector(this._cardTemplateSelector) // использую селектор для карточки
       .content
       .querySelector('.card')
       .cloneNode(true);

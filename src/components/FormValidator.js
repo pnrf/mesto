@@ -12,27 +12,27 @@ export default class FormValidator {
 
     this._inputFieldSelector = formSelectors.inputFieldSelector;
     this._inputSelector = formSelectors.inputSelector;
-    this._inputErrorSelector = formSelectors.inputErrorSelector;
-    this._inputErrorClass = formSelectors.inputErrorClass;
-    this._errorClass = formSelectors.errorClass;
-    this._inactiveButtonClass = formSelectors.inactiveButtonClass;
+    this._inputErrorMessageClass = formSelectors.inputErrorMessageClass;
+    this._inputErrorUnderlineClass = formSelectors.inputErrorUnderlineClass;
+    this._activeErrorClass = formSelectors.activeErrorClass;
+    this._inactiveSubmitButtonClass = formSelectors.inactiveSubmitButtonClass;
     this._inputSelectorList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formElement.querySelector(formSelectors.buttonElement);
+    this._popupSubmitButtonSelector = this._formElement.querySelector(formSelectors.popupSubmitButtonSelector);
   }
 
   /** приватный метод: добавить сообщение об ошибке */
   _showInputError = (inputElement, errorMessage) => {
-    const errorElement = inputElement.closest(this._inputFieldSelector).querySelector(this._inputErrorSelector); // ссылка на span внутри формы
-    inputElement.classList.add(this._inputErrorClass); // подчеркивает поле input красной линией
+    const errorElement = inputElement.closest(this._inputFieldSelector).querySelector(this._inputErrorMessageClass); // ссылка на span внутри формы
+    inputElement.classList.add(this._inputErrorUnderlineClass); // подчеркивает поле input красной линией
     errorElement.textContent = errorMessage; // вставляет в span текст ошибки
-    errorElement.classList.add(this._errorClass); // выводит сообщение об ошибке
+    errorElement.classList.add(this._activeErrorClass); // выводит сообщение об ошибке
   }
 
 /** приватный метод: удалить сообщение об ошибке */
   _hideInputError = inputElement => {
-    const errorElement = inputElement.closest(this._inputFieldSelector).querySelector(this._inputErrorSelector);
-    inputElement.classList.remove(this._inputErrorClass);
-    errorElement.classList.remove(this._errorClass);
+    const errorElement = inputElement.closest(this._inputFieldSelector).querySelector(this._inputErrorMessageClass);
+    inputElement.classList.remove(this._inputErrorUnderlineClass);
+    errorElement.classList.remove(this._activeErrorClass);
     errorElement.textContent = '';
   }
 
@@ -59,11 +59,11 @@ export default class FormValidator {
 */
   toggleButtonState = () => {
     if (this._hasInvalidInput()) {
-      this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.setAttribute('disabled', true);
+      this._popupSubmitButtonSelector.classList.add(this._inactiveSubmitButtonClass);
+      this._popupSubmitButtonSelector.setAttribute('disabled', true);
     } else {
-      this._buttonElement.classList.remove(this._inactiveButtonClass);
-      this._buttonElement.removeAttribute('disabled');
+      this._popupSubmitButtonSelector.classList.remove(this._inactiveSubmitButtonClass);
+      this._popupSubmitButtonSelector.removeAttribute('disabled');
     }
   }
 

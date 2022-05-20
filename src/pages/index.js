@@ -9,17 +9,18 @@ import {initialCards} from '../utils/initialCards.js';
 
 /** Constants Import */
 import {
-  editBtnElement,
-  addBtnElement,
+  profileEditButtonSelector,
+  cardAddButtonSelector,
+  profileSelector,
   profileNameSelector,
   profileAboutSelector,
-  cardListSelector,
-  cardSelector,
-  popupProfileElement,
+  cardsListSelector,
+  popupProfileSelector,
   popupProfileNameSelector,
   popupProfileAboutSelector,
-  popupCardsElement,
-  popupImageElement,
+  popupCardSelector,
+  popupImageSelector,
+  cardTemplateSelector,
   formSelectors
 } from '../utils/constants.js';
 
@@ -59,24 +60,24 @@ import UserInfo from '../components/UserInfo.js';
  */
 
 function handleCardClick(item) {
-  const popupWithImage = new PopupWithImage(popupImageElement);
+  const popupWithImage = new PopupWithImage(popupImageSelector);
   popupWithImage.setEventListeners();
   popupWithImage.openPopupWithImage(item);
 };
 
-function createCard(data, cardSelector) {
-  const newCard = new Card(data, cardSelector, () => {handleCardClick(data)});
+function createCard(data, cardTemplateSelector) {
+  const newCard = new Card(data, cardTemplateSelector, () => {handleCardClick(data)});
   return newCard.generateCard();
 };
 
 const renderCards = new Section(
   { items: initialCards,
     renderer: (data) => {
-      const card = createCard(data, cardSelector);
+      const card = createCard(data, cardTemplateSelector);
       renderCards.addItemAppend(card);
     }
   },
-  cardListSelector);
+  cardsListSelector);
 
 renderCards.renderItems();
 
@@ -101,7 +102,7 @@ renderCards.renderItems();
  *    в) методом setUserInfo() экземпляра класса UserInfo передать из формы новые данные пользователя для отрисовки их на странице;
  *    г) закрыть попап, обращаясь к методу closePopup() созданного экземпляра класса.
  *
- * 4) установить слушатель на кнопку редактирования (editBtnElement):
+ * 4) установить слушатель на кнопку редактирования (profileEditButtonSelector):
  *    а) получить ссылку на попап с формой для редактирования профиля;
  *    б) подставить в форму значения со страницы (name и about);
  *    в) открыть попап с формой для редактирования профайла;
@@ -109,7 +110,7 @@ renderCards.renderItems();
 
 const userInfo = new UserInfo({profileNameSelector, profileAboutSelector});
 
-const popupWithProfileForm = new PopupWithForm(popupProfileElement, (event) => {
+const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (event) => {
   event.preventDefault();
 
   const formData = popupWithProfileForm.getInputValues();
@@ -121,7 +122,7 @@ const popupWithProfileForm = new PopupWithForm(popupProfileElement, (event) => {
 popupWithProfileForm.setEventListeners();
 
 
-document.querySelector(editBtnElement).addEventListener('click', () => {
+document.querySelector(profileEditButtonSelector).addEventListener('click', () => {
   const formElm = popupWithProfileForm.getPopupForm();
 
   formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().profileName;
@@ -146,12 +147,12 @@ document.querySelector(editBtnElement).addEventListener('click', () => {
  * 3) установить слушатели.
 */
 
-const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
+const popupWithFormNewCard = new PopupWithForm(popupCardSelector, (event) => {
   event.preventDefault();
   const formData = popupWithFormNewCard.getInputValues();
   const data = {name: formData[0], link: formData[1]};
 
-  const card = createCard(data, cardSelector);
+  const card = createCard(data, cardTemplateSelector);
   renderCards.addItemPrepend(card);
   popupWithFormNewCard.closePopup();
 });
@@ -159,7 +160,7 @@ const popupWithFormNewCard = new PopupWithForm(popupCardsElement, (event) => {
 popupWithFormNewCard.setEventListeners();
 
 
-document.querySelector(addBtnElement).addEventListener('click', () => {
+document.querySelector(cardAddButtonSelector).addEventListener('click', () => {
   newCardValidation.toggleButtonState();
   popupWithFormNewCard.openPopup();
 });
@@ -167,7 +168,7 @@ document.querySelector(addBtnElement).addEventListener('click', () => {
 
 
 /** Подключение валидации полей формы */
-const profileValidation = new FormValidator(formSelectors, popupProfileElement);
-const newCardValidation = new FormValidator(formSelectors, popupCardsElement);
+const profileValidation = new FormValidator(formSelectors, popupProfileSelector);
+const newCardValidation = new FormValidator(formSelectors, popupCardSelector);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();
