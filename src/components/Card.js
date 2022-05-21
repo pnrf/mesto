@@ -13,8 +13,8 @@
 
 export default class Card {
   constructor(cardData, cardTemplateSelector, handleCardClick) {
-    this._cardNameData = cardData.name;
-    this._cardLinkData = cardData.link;
+    this._cardNameData = cardData.placeName;
+    this._cardLinkData = cardData.placeLink;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -54,15 +54,12 @@ export default class Card {
         this._handleCardClick();
       });
 
-    // установить слушатель на кнопку лайк/дизлайк (сердечко).
+    // установить слушатель на кнопку лайк/дизлайк (сердечко)
       this._likeButtonElement.addEventListener('click', () => {
         this._handleLikeButton();
       });
 
-      /** установить слушатель на кнопку попапа для удаления карточки (корзинка):
-       * gри удалении экземпляра класса его дополнительно нужно занулять: this._cardElement = null!!!
-       * Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
-       * */
+    // установить слушатель на кнопку попапа для удаления карточки (корзинка)
       this._cardElement.querySelector('.card__del-button').addEventListener('click', () => {
         this._removeCard();
       });

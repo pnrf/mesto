@@ -9,38 +9,29 @@
 import Popup from './Popup.js'
 
 export default class PopupWithForm extends Popup {
-    constructor(popupSelector, callbackSubmitForm) {
+    constructor(popupSelector, handleFormSubmit) {
       super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
       this._popupForm = this._popupElement.querySelector('.popup__input-list'); // ссылка на форму
       this._inputsList = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
       this._submitButtonElement = this._popupElement.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
-      this._callbackSubmitForm = callbackSubmitForm;
+      this._handleFormSubmit = handleFormSubmit;
     }
 
-    /** _getInputValues - приватный метод: собрать данные всех полей формы. Куда? - в некий объект.
-    * Порядок действий:
-    * 1) создать новый объект;
-    * 2) обойти методом forEach псевдомассив всех полей input формы,
-    * 3) их значения записать в созданный объект.
-    * 4) вернуть созданный объект.
-    */
-    getInputValues() {
-      // this._formValues = [];
-      // this._inputsList.forEach(input => this._formValues.push(input.value));
-      // пришлось использовать массив вместо объекта. При добавлении input в объект, его значение перезаписывается:
-      this._inputList.forEach(input => formValues[input.name] = input.value);
+    /** _getInputValues - приватный метод: собрать данные всех полей формы. */
+    _getInputValues() {
+      this._formValues = {};
+      this._inputsList.forEach(input => {
+        console.log("FFF", input);
+        this._formValues[input.name] = input.value});
       return this._formValues;
     }
 
-    getPopupForm () {
-      return this._popupForm;
-    }
-
-   /** перезаписать родительский метод setEventListeners */
+    /** перезаписать родительский метод setEventListeners */
     setEventListeners() {
       super.setEventListeners();
-      this._popupElement.addEventListener('submit', event => {
-        this._callbackSubmitForm(event, this._formValues);
+      this._popupElement.addEventListener('submit', (event) => {
+        event.preventDefault();
+        this._handleFormSubmit(this._getInputValues());
       });
     }
 

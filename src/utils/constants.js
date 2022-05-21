@@ -26,3 +26,8 @@ export const formSelectors = {
   inactiveSubmitButtonClass: 'popup__save-button_inactive', // inactiveButtonClass
   popupSubmitButtonSelector: '.popup__save-button' // buttonElement
 };
+
+// const arr = {};
+// const b = document.querySelectorAll('.popup__input');//.forEach(input => arr[input.name] = input.value);
+// const c = b.forEach(input => {console.log("Инпуты", input.name, input.value);});
+// console.log("Массив --", b, c);

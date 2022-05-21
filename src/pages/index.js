@@ -37,44 +37,18 @@ import UserInfo from '../components/UserInfo.js';
 
 /** --- MAIN CODE --- */
 
-/** При загрузке страницы отрисовать initial cards. Для этого:
- *
- * 1) объявить экземпляр класса Section, который отвечает за отрисовку карточек на странице (const renderCards);
- *    а) передать ему в конструктор массив с данными - initialCards;
- *    б) передать ему в конструктор функцию renderer, которая отвечает за создание и отрисовку каждой отдельной карточки на странице;
- *    в) передать ему в конструктор селектор контейнера, куда нужно добавлять созданные карточки.
- *
- * 2) функция renderer:
- *    а) вызвать функцию createCard;
- *    б) отрисовать созданную карточку в начале списка.
- *
- * 3) объявить функцию createCard, которая для каждой карточки создает экземпляр класса Card:
- *    а) объявить экземпляр класса Card, который который создаёт карточку с текстом и ссылкой на изображение;
- *    б) передать ему в конструктор данные карточки и селектор её template-элемента;
- *    в) передать ему в конструктор функцию handleCardClick;
- *
- * 4) объявить функцию handleCardClick, которая открывает попап с картинкой при клике на карточку:
- *    а) объявить экземпляр класса PopupWithImage, который открывает попап с картинкой и наполняет его содержимым;
- *    б) установить слушатели для закрытия попапа, обратившись с методу setEventListeners() созданного экземпляра класса;
- *    в) открыть попап с наполненным содержимым, обратившись к методу open() созданного экземпляра класса.
- */
-
+/** При загрузке страницы отрисовать initial cards. */
 const popupWithImage = new PopupWithImage(popupImageSelector);
 
-// function handleCardClick(item) {
-//   popupWithImage.setEventListeners();
-//   popupWithImage.open(item);
-// };
-
-function createCard(data) {
-  const newCard = new Card(data, cardTemplateSelector, () => {popupWithImage.setEventListeners(); popupWithImage.open(data)});
+function createCard(cardData) {
+  const newCard = new Card(cardData, cardTemplateSelector, () => {popupWithImage.setEventListeners(); popupWithImage.open(cardData)});
   return newCard.generateCard();
 };
 
 const renderCards = new Section(
   { items: initialCards,
-    renderer: (data) => {
-      const card = createCard(data);
+    renderer: (cardData) => {
+      const card = createCard(cardData);
       renderCards.addItemAppend(card);
     }
   },
@@ -83,89 +57,38 @@ const renderCards = new Section(
 renderCards.renderItems();
 
 
-/** Изменение данных профиля:
- *  - при клике на кнопку редактирования открыть попап с формой для редактирования профиля;
- *  - при клике на кнопку сабмита формы отрисовать на странице новые данные о пользователе.
- *
- * Для этого:
- *
- * 1) объявить экземпляр класса UserInfo, который управляет информацией о пользователе на странице:
- *    а) методом getUserInfo() возвращает объект с данными пользователя;
- *    б) методом setUserInfo() принимает новые данные пользователя (из формы) и добавляет эти данные на страницу;
- *    в) передать ему в конструктор объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе.
- *
- * 2) объявить экземпляр класса PopupWithForm, который открывает/закрывает попап и наполняет его содержимым;
- *    а) передать ему в конструктор селектор попапа и колбэк сабмита формы;
- *
- * 3) колбэк сабмита формы:
- *    а) отменить события формы по умолчанию методом event.preventDefault();
- *    б) методом getUserInfo() экземпляра класса UserInfo получить объект с данными пользователя;
- *    в) методом setUserInfo() экземпляра класса UserInfo передать из формы новые данные пользователя для отрисовки их на странице;
- *    г) закрыть попап, обращаясь к методу close() созданного экземпляра класса.
- *
- * 4) установить слушатель на кнопку редактирования (profileEditButtonSelector):
- *    а) получить ссылку на попап с формой для редактирования профиля;
- *    б) подставить в форму значения со страницы (name и about);
- *    в) открыть попап с формой для редактирования профайла;
- */
-
+/** Изменение данных профиля */
 const userInfo = new UserInfo({profileNameSelector, profileAboutSelector});
 
-const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (event, formData) => {
-  event.preventDefault();
-  userInfo.setUserInfo({username: formData.name, userAbout: formData.about});
-  // const formData = popupWithProfileForm.getInputValues();
-  // userInfo.setUserInfo({userName: formData[0], userAbout: formData[1]});
-
+const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) => {
+  userInfo.setUserInfo({userName: formData.userName, userAbout: formData.userAbout});
   popupWithProfileForm.close();
 });
-
 popupWithProfileForm.setEventListeners();
 
-
 document.querySelector(profileEditButtonSelector).addEventListener('click', () => {
-  const formElm = popupWithProfileForm.getPopupForm();
-
-  formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().userName;
-  formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().userAbout;
-
+  const userData = userInfo.getUserInfo();
+  document.querySelector(popupProfileNameSelector).value = userData.userName;
+  document.querySelector(popupProfileAboutSelector).value = userData.userAbout;
   popupWithProfileForm.open();
 });
 
 
-
-/** Создание новой карточки:
- * 1) объявить экземпляр класса PopupWithForm, который открывает/закрывает попап и наполняет его содержимым;
- *    а) передать ему в конструктор селектор попапа и колбэк сабмита формы;
- *
- * 2) колбэк сабмита формы:
- *    а) отменить события формы по умолчанию методом event.preventDefault();
- *    б) методом getInputValues() созданного экземпляра класса получить данные из формы, заполненные пользователем;
- *    в) выполнить функцию createCard, передав ей объект с данными из формы, заполнные пользователем, и селектор карточки;
- *    г) отрисовать созданную карточку на странице;
- *    д) закрыть попап;
- *
- * 3) установить слушатели.
-*/
-
-const popupWithFormNewCard = new PopupWithForm(popupCardSelector, (event) => {
-  event.preventDefault();
-  const formData = popupWithFormNewCard.getInputValues();
-  const data = {name: formData[0], link: formData[1]};
-
-  const card = createCard(data);
+/** Создание новой карточки */
+const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
+  console.log("DDD", formData);
+  const card = createCard({placeName: formData.placeName, placeLink: formData.placeLink});
   renderCards.addItemPrepend(card);
-  popupWithFormNewCard.close();
+  popupWithCardForm.close();
 });
 
-popupWithFormNewCard.setEventListeners();
+popupWithCardForm.setEventListeners();
 
 
 document.querySelector(cardAddButtonSelector).addEventListener('click', () => {
   newCardValidation.toggleButtonState();
-  popupWithFormNewCard.open();
+  popupWithCardForm.open();
 });
-
 
 
 /** Подключение валидации полей формы */

@@ -11,9 +11,7 @@ export default class UserInfo {
     this._profileAboutElement = document.querySelector(profileAboutSelector);
   }
 
-  /** getUserInfo -- публичный метод:
-   * возвращает объект с данными пользователя
-  */
+  /** getUserInfo -- возвращает объект с данными пользователя */
   getUserInfo() {
     return {
       userName: this._profileNameElement.textContent,
@@ -21,10 +19,7 @@ export default class UserInfo {
     }
   }
 
-  /** setUserInfo -- публичный метод:
-   * принимает новые данные пользователя
-   * добавляет новые данные пользователя на страницу
-  */
+  /** setUserInfo -- принимает новые данные пользователя, добавляет их на страницу */
   setUserInfo({userName, userAbout}) {
     this._profileNameElement.textContent = userName;
     this._profileAboutElement.textContent = userAbout;
