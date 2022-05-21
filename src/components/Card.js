@@ -19,7 +19,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
   }
 
-  // метод класса: клонировать темлейт из html в DOM
+// клонировать темлейт из html в DOM
   _getTemplate() {
     return document
       .querySelector(this._cardTemplateSelector) // использую селектор для карточки
@@ -28,14 +28,14 @@ export default class Card {
       .cloneNode(true);
   }
 
-  // метод класса: сгенерировать карточку, т.е. наполнить темплейт содержимым
+// сгенерировать карточку, т.е. наполнить темплейт содержимым
   generateCard() {
     this._cardElement = this._getTemplate();
 
     this._cardTitleElement = this._cardElement.querySelector('.card__title');
-    this._cardImageElement = this._cardElement.querySelector('.card__image');
-
     this._cardTitleElement.textContent = this._cardNameData;
+
+    this._cardImageElement = this._cardElement.querySelector('.card__image');
     this._cardImageElement.src = this._cardLinkData;
     this._cardImageElement.alt = `${this._cardNameData}. Фотография`;
 
@@ -46,9 +46,9 @@ export default class Card {
     return this._cardElement;
   }
 
-
-  // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
+//  установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
+
     // установить слушатель на картинку для открытия попапа
       this._cardImageElement.addEventListener('click', () => {
         this._handleCardClick();

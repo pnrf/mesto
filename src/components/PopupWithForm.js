@@ -10,10 +10,10 @@ import Popup from './Popup.js'
 
 export default class PopupWithForm extends Popup {
     constructor(popupSelector, handleFormSubmit) {
-      super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
-      this._popupForm = this._popupElement.querySelector('.popup__input-list'); // ссылка на форму
-      this._inputsList = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
-      this._submitButtonElement = this._popupElement.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
+      super(popupSelector);
+      this._popupForm = this._popupElement.querySelector('.popup__input-list');
+      this._inputsList = this._popupForm.querySelectorAll('.popup__input');
+      this._submitButtonElement = this._popupElement.querySelector('.popup__save-button');
       this._handleFormSubmit = handleFormSubmit;
     }
 
@@ -21,7 +21,6 @@ export default class PopupWithForm extends Popup {
     _getInputValues() {
       this._formValues = {};
       this._inputsList.forEach(input => {
-        console.log("FFF", input);
         this._formValues[input.name] = input.value});
       return this._formValues;
     }

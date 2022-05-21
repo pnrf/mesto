@@ -27,7 +27,6 @@ import {
 /** Classes Import */
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
-import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
@@ -64,6 +63,7 @@ const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) 
   userInfo.setUserInfo({userName: formData.userName, userAbout: formData.userAbout});
   popupWithProfileForm.close();
 });
+
 popupWithProfileForm.setEventListeners();
 
 document.querySelector(profileEditButtonSelector).addEventListener('click', () => {
@@ -83,7 +83,6 @@ const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
 });
 
 popupWithCardForm.setEventListeners();
-
 
 document.querySelector(cardAddButtonSelector).addEventListener('click', () => {
   newCardValidation.toggleButtonState();

@@ -5,8 +5,8 @@
 import Popup from './Popup.js'
 
 export default class PopupWithImage extends Popup {
-    _popupImageElement = this._popupElement.querySelector('.popup__image'); // ссылка на картинку в попапе
-    _popupImageСaptionElement = this._popupElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
+    _popupImageElement = this._popupElement.querySelector('.popup__image');
+    _popupImageСaptionElement = this._popupElement.querySelector('.popup__figcaption');
 
   open(item) {
     this._popupImageСaptionElement.textContent = item.placeName;

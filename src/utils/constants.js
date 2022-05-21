@@ -1,33 +1,29 @@
-export const profileEditButtonSelector = '.profile__edit-button'; // - editBtnElement
-export const cardAddButtonSelector = '.profile__add-button'; // - addBtnElement
+export const profileEditButtonSelector = '.profile__edit-button';
+export const cardAddButtonSelector = '.profile__add-button';
 
 export const profileSelector = '.profile'
-export const profileNameSelector = '.profile__title'; // - profileNameSelector
-export const profileAboutSelector = '.profile__subtitle'; // - profileAboutSelector
+export const profileNameSelector = '.profile__title';
+export const profileAboutSelector = '.profile__subtitle';
 
-export const cardsContainerSelector = '.cards__list'; // - cardListSelector
+export const cardsContainerSelector = '.cards__list';
 
-export const popupProfileSelector = '.popup_type_profile'; // - popupProfileElement
-export const popupProfileNameSelector = '#name-input'; // - popupProfileNameSelector
-export const popupProfileAboutSelector = '#about-input'; // - popupProfileAboutSelector
+export const popupProfileSelector = '.popup_type_profile';
+export const popupProfileNameSelector = '#name-input';
+export const popupProfileAboutSelector = '#about-input';
 
-export const popupCardSelector = '.popup_type_cards'; // - popupCardsElement
+export const popupCardSelector = '.popup_type_cards';
 
-export const popupImageSelector = '.popup_type_image'; // - popupImageElement
+export const popupImageSelector = '.popup_type_image';
 
-export const cardTemplateSelector = '#template'; // - cardSelector
+export const cardTemplateSelector = '#template';
 
 export const formSelectors = {
   inputFieldSelector: '.popup__field',
   inputSelector: '.popup__input',
-  inputErrorMessageClass: '.popup__input-error', // inputErrorSelector
-  inputErrorUnderlineClass: 'popup__input_type_error', // inputErrorClass
-  activeErrorClass: 'popup__input-error_active', // errorClass
-  inactiveSubmitButtonClass: 'popup__save-button_inactive', // inactiveButtonClass
-  popupSubmitButtonSelector: '.popup__save-button' // buttonElement
+  inputErrorMessageClass: '.popup__input-error',
+  inputErrorUnderlineClass: 'popup__input_type_error',
+  activeErrorClass: 'popup__input-error_active',
+  inactiveSubmitButtonClass: 'popup__save-button_inactive',
+  popupSubmitButtonSelector: '.popup__save-button'
 };
 
-// const arr = {};
-// const b = document.querySelectorAll('.popup__input');//.forEach(input => arr[input.name] = input.value);
-// const c = b.forEach(input => {console.log("Инпуты", input.name, input.value);});
-// console.log("Массив --", b, c);

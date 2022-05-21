@@ -71,10 +71,9 @@ export default class FormValidator {
   _setEventListeners = () => {
     this.toggleButtonState(); // делает кнопку неактивной, если хотя бы одно поле формы невалидно
 
-    this._inputElementsArr.forEach(inputElement => { // для каждого поля input установил слушатель, проверяющий на валидность
+    this._inputElementsArr.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
-        /** Классовые переменные доступны в любом методе класса, передавать их в качестве параметра не нужно. */
         this.toggleButtonState();
       });
     });
