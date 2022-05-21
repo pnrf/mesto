@@ -56,24 +56,25 @@ import UserInfo from '../components/UserInfo.js';
  * 4) объявить функцию handleCardClick, которая открывает попап с картинкой при клике на карточку:
  *    а) объявить экземпляр класса PopupWithImage, который открывает попап с картинкой и наполняет его содержимым;
  *    б) установить слушатели для закрытия попапа, обратившись с методу setEventListeners() созданного экземпляра класса;
- *    в) открыть попап с наполненным содержимым, обратившись к методу openPopupWithImage() созданного экземпляра класса.
+ *    в) открыть попап с наполненным содержимым, обратившись к методу open() созданного экземпляра класса.
  */
 
-function handleCardClick(item) {
-  const popupWithImage = new PopupWithImage(popupImageSelector);
-  popupWithImage.setEventListeners();
-  popupWithImage.openPopupWithImage(item);
-};
+const popupWithImage = new PopupWithImage(popupImageSelector);
 
-function createCard(data, cardTemplateSelector) {
-  const newCard = new Card(data, cardTemplateSelector, () => {handleCardClick(data)});
+// function handleCardClick(item) {
+//   popupWithImage.setEventListeners();
+//   popupWithImage.open(item);
+// };
+
+function createCard(data) {
+  const newCard = new Card(data, cardTemplateSelector, () => {popupWithImage.setEventListeners(); popupWithImage.open(data)});
   return newCard.generateCard();
 };
 
 const renderCards = new Section(
   { items: initialCards,
     renderer: (data) => {
-      const card = createCard(data, cardTemplateSelector);
+      const card = createCard(data);
       renderCards.addItemAppend(card);
     }
   },
@@ -100,7 +101,7 @@ renderCards.renderItems();
  *    а) отменить события формы по умолчанию методом event.preventDefault();
  *    б) методом getUserInfo() экземпляра класса UserInfo получить объект с данными пользователя;
  *    в) методом setUserInfo() экземпляра класса UserInfo передать из формы новые данные пользователя для отрисовки их на странице;
- *    г) закрыть попап, обращаясь к методу closePopup() созданного экземпляра класса.
+ *    г) закрыть попап, обращаясь к методу close() созданного экземпляра класса.
  *
  * 4) установить слушатель на кнопку редактирования (profileEditButtonSelector):
  *    а) получить ссылку на попап с формой для редактирования профиля;
@@ -110,13 +111,13 @@ renderCards.renderItems();
 
 const userInfo = new UserInfo({profileNameSelector, profileAboutSelector});
 
-const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (event) => {
+const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (event, formData) => {
   event.preventDefault();
+  userInfo.setUserInfo({username: formData.name, userAbout: formData.about});
+  // const formData = popupWithProfileForm.getInputValues();
+  // userInfo.setUserInfo({userName: formData[0], userAbout: formData[1]});
 
-  const formData = popupWithProfileForm.getInputValues();
-  userInfo.setUserInfo({userName: formData[0], userAbout: formData[1]});
-
-  popupWithProfileForm.closePopup();
+  popupWithProfileForm.close();
 });
 
 popupWithProfileForm.setEventListeners();
@@ -128,7 +129,7 @@ document.querySelector(profileEditButtonSelector).addEventListener('click', () =
   formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().userName;
   formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().userAbout;
 
-  popupWithProfileForm.openPopup();
+  popupWithProfileForm.open();
 });
 
 
@@ -152,9 +153,9 @@ const popupWithFormNewCard = new PopupWithForm(popupCardSelector, (event) => {
   const formData = popupWithFormNewCard.getInputValues();
   const data = {name: formData[0], link: formData[1]};
 
-  const card = createCard(data, cardTemplateSelector);
+  const card = createCard(data);
   renderCards.addItemPrepend(card);
-  popupWithFormNewCard.closePopup();
+  popupWithFormNewCard.close();
 });
 
 popupWithFormNewCard.setEventListeners();
@@ -162,7 +163,7 @@ popupWithFormNewCard.setEventListeners();
 
 document.querySelector(cardAddButtonSelector).addEventListener('click', () => {
   newCardValidation.toggleButtonState();
-  popupWithFormNewCard.openPopup();
+  popupWithFormNewCard.open();
 });
 
 

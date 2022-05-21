@@ -46,6 +46,7 @@ export default class Card {
     return this._cardElement;
   }
 
+
   // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку для открытия попапа
@@ -62,14 +63,18 @@ export default class Card {
        * gри удалении экземпляра класса его дополнительно нужно занулять: this._cardElement = null!!!
        * Метод remove удаляет только разметку из html, но объект карточки остается в памяти приложения и потребляет ресурсы.
        * */
-      this._cardElement.querySelector('.card__del-button').addEventListener('click', evt => {
-        this._cardElement.remove();
-        this._cardElement = null;
+      this._cardElement.querySelector('.card__del-button').addEventListener('click', () => {
+        this._removeCard();
       });
   }
 
   _handleLikeButton() {
     this._likeButtonElement.classList.toggle('card__like-button_active');
+  }
+
+  _removeCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
   }
 
 }

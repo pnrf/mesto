@@ -8,12 +8,12 @@ export default class PopupWithImage extends Popup {
     _popupImageElement = this._popupElement.querySelector('.popup__image'); // ссылка на картинку в попапе
     _popupImageСaptionElement = this._popupElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 
-  openPopupWithImage(item) {
+  open(item) {
     this._popupImageСaptionElement.textContent = item.name;
     this._popupImageElement.src = item.link;
     this._popupImageElement.alt = `${item.name}. Фотография`;
 
-    super.openPopup();
+    super.open();
   }
 }
 

@@ -11,8 +11,8 @@ import Popup from './Popup.js'
 export default class PopupWithForm extends Popup {
     constructor(popupSelector, callbackSubmitForm) {
       super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
-      this._popupElement = document.querySelector(popupSelector);
       this._popupForm = this._popupElement.querySelector('.popup__input-list'); // ссылка на форму
+      this._inputsList = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
       this._submitButtonElement = this._popupElement.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
       this._callbackSubmitForm = callbackSubmitForm;
     }
@@ -25,12 +25,10 @@ export default class PopupWithForm extends Popup {
     * 4) вернуть созданный объект.
     */
     getInputValues() {
-      this._inputsList = this._popupForm.querySelectorAll('.popup__input'); // псевдомассив всех полей input формы
-      this._formValues = [];
-      this._inputsList.forEach(input => this._formValues.push(input.value));
+      // this._formValues = [];
+      // this._inputsList.forEach(input => this._formValues.push(input.value));
       // пришлось использовать массив вместо объекта. При добавлении input в объект, его значение перезаписывается:
-      // this._formValues = {};
-      // inputList.forEach(input => formValues[input.name] = input.value);
+      this._inputList.forEach(input => formValues[input.name] = input.value);
       return this._formValues;
     }
 
@@ -42,13 +40,13 @@ export default class PopupWithForm extends Popup {
     setEventListeners() {
       super.setEventListeners();
       this._popupElement.addEventListener('submit', event => {
-        this._callbackSubmitForm(event);
+        this._callbackSubmitForm(event, this._formValues);
       });
     }
 
-   /** перезаписать родительский метод closePopup */
-    closePopup() {
+   /** перезаписать родительский метод close */
+    close() {
+      super.close();
       this._popupForm.reset(); // сбросить значения полей формы.
-      super.closePopup();
     }
 }
