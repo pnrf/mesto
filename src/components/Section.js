@@ -12,7 +12,7 @@ export default class Section {
   constructor({items, renderer}, containerSelector) {
     this._items = items; // массив данных, которые нужно добавить на страницу при инициализации класса;
     this._renderer = renderer; // функция, которая отвечает за создание и отрисовку данных на странице;
-    this._containerSelector = document.querySelector(containerSelector); // селектор контейнера, в который нужно добавлять созданные элементы.
+    this._containerElement = document.querySelector(containerSelector); // селектор контейнера, в который нужно добавлять созданные элементы.
   }
 
   /**
@@ -24,18 +24,17 @@ export default class Section {
     this._items.forEach(item => {
       this._renderer(item);
     });
-    // return item;
   }
 
   /**
    * addItem -- публичный метод: принимает DOM-элемент и добавляет его в контейнер.
    */
   addItemAppend(item) {
-    this._containerSelector.append(item);
+    this._containerElement.append(item);
   }
 
   addItemPrepend(item) {
-    this._containerSelector.prepend(item);
+    this._containerElement.prepend(item);
   }
 }
 

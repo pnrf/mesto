@@ -5,13 +5,13 @@
 import Popup from './Popup.js'
 
 export default class PopupWithImage extends Popup {
-    _popupImageSelector = this._popupSelector.querySelector('.popup__image'); // ссылка на картинку в попапе
-    _popupImageСaptionSelector = this._popupSelector.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
+    _popupImageElement = this._popupElement.querySelector('.popup__image'); // ссылка на картинку в попапе
+    _popupImageСaptionElement = this._popupElement.querySelector('.popup__figcaption'); // ссылка на подпись к картинке
 
   openPopupWithImage(item) {
-    this._popupImageСaptionSelector.textContent = item.name;
-    this._popupImageSelector.src = item.link;
-    this._popupImageSelector.alt = `${item.name}. Фотография`;
+    this._popupImageСaptionElement.textContent = item.name;
+    this._popupImageElement.src = item.link;
+    this._popupImageElement.alt = `${item.name}. Фотография`;
 
     super.openPopup();
   }

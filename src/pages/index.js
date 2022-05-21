@@ -14,7 +14,7 @@ import {
   profileSelector,
   profileNameSelector,
   profileAboutSelector,
-  cardsListSelector,
+  cardsContainerSelector,
   popupProfileSelector,
   popupProfileNameSelector,
   popupProfileAboutSelector,
@@ -77,7 +77,7 @@ const renderCards = new Section(
       renderCards.addItemAppend(card);
     }
   },
-  cardsListSelector);
+  cardsContainerSelector);
 
 renderCards.renderItems();
 
@@ -114,7 +114,7 @@ const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (event) => 
   event.preventDefault();
 
   const formData = popupWithProfileForm.getInputValues();
-  userInfo.setUserInfo({profileName: formData[0], profileAbout: formData[1]});
+  userInfo.setUserInfo({userName: formData[0], userAbout: formData[1]});
 
   popupWithProfileForm.closePopup();
 });
@@ -125,8 +125,8 @@ popupWithProfileForm.setEventListeners();
 document.querySelector(profileEditButtonSelector).addEventListener('click', () => {
   const formElm = popupWithProfileForm.getPopupForm();
 
-  formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().profileName;
-  formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().profileAbout;
+  formElm.querySelector(popupProfileNameSelector).value = userInfo.getUserInfo().userName;
+  formElm.querySelector(popupProfileAboutSelector).value = userInfo.getUserInfo().userAbout;
 
   popupWithProfileForm.openPopup();
 });

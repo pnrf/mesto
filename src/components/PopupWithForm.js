@@ -11,9 +11,9 @@ import Popup from './Popup.js'
 export default class PopupWithForm extends Popup {
     constructor(popupSelector, callbackSubmitForm) {
       super(popupSelector); // вызывает конструктор родительского класса с одним аргументом - селектором формы;
-      this._popupSelector = document.querySelector(popupSelector);
-      this._popupForm = this._popupSelector.querySelector('.popup__input-list'); // ссылка на форму
-      this._submitButtonElement = this._popupSelector.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
+      this._popupElement = document.querySelector(popupSelector);
+      this._popupForm = this._popupElement.querySelector('.popup__input-list'); // ссылка на форму
+      this._submitButtonElement = this._popupElement.querySelector('.popup__save-button'); // ссылка на кнопку submit формы
       this._callbackSubmitForm = callbackSubmitForm;
     }
 
@@ -41,7 +41,7 @@ export default class PopupWithForm extends Popup {
    /** перезаписать родительский метод setEventListeners */
     setEventListeners() {
       super.setEventListeners();
-      this._popupSelector.addEventListener('submit', event => {
+      this._popupElement.addEventListener('submit', event => {
         this._callbackSubmitForm(event);
       });
     }

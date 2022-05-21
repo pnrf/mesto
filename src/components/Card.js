@@ -12,9 +12,9 @@
  */
 
 export default class Card {
-  constructor(data, cardTemplateSelector, handleCardClick) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor(cardData, cardTemplateSelector, handleCardClick) {
+    this._cardNameData = cardData.name;
+    this._cardLinkData = cardData.link;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -32,14 +32,14 @@ export default class Card {
   generateCard() {
     this._cardElement = this._getTemplate();
 
-    this._cardElementTitle = this._cardElement.querySelector('.card__title');
-    this._cardElementImage = this._cardElement.querySelector('.card__image');
+    this._cardTitleElement = this._cardElement.querySelector('.card__title');
+    this._cardImageElement = this._cardElement.querySelector('.card__image');
 
-    this._cardElementTitle.textContent = this._name;
-    this._cardElementImage.src = this._link;
-    this._cardElementImage.alt = `${this._name}. Фотография`;
+    this._cardTitleElement.textContent = this._cardNameData;
+    this._cardImageElement.src = this._cardLinkData;
+    this._cardImageElement.alt = `${this._cardNameData}. Фотография`;
 
-    this._likeButton = this._cardElement.querySelector('.card__like-button');
+    this._likeButtonElement = this._cardElement.querySelector('.card__like-button');
 
     this._setEventListeners();
 
@@ -49,12 +49,12 @@ export default class Card {
   // метод класса: установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
     // установить слушатель на картинку для открытия попапа
-      this._cardElementImage.addEventListener('click', () => {
+      this._cardImageElement.addEventListener('click', () => {
         this._handleCardClick();
       });
 
     // установить слушатель на кнопку лайк/дизлайк (сердечко).
-      this._likeButton.addEventListener('click', () => {
+      this._likeButtonElement.addEventListener('click', () => {
         this._handleLikeButton();
       });
 
@@ -69,7 +69,7 @@ export default class Card {
   }
 
   _handleLikeButton() {
-    this._likeButton.classList.toggle('card__like-button_active');
+    this._likeButtonElement.classList.toggle('card__like-button_active');
   }
 
 }

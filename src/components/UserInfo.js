@@ -7,8 +7,8 @@
 
 export default class UserInfo {
   constructor({profileNameSelector, profileAboutSelector}) {
-    this._profileNameSelector = document.querySelector(profileNameSelector);
-    this._profileAboutSelector = document.querySelector(profileAboutSelector);
+    this._profileNameElement = document.querySelector(profileNameSelector);
+    this._profileAboutElement = document.querySelector(profileAboutSelector);
   }
 
   /** getUserInfo -- публичный метод:
@@ -16,8 +16,8 @@ export default class UserInfo {
   */
   getUserInfo() {
     return {
-      profileName: this._profileNameSelector.textContent,
-      profileAbout: this._profileAboutSelector.textContent
+      userName: this._profileNameElement.textContent,
+      userAbout: this._profileAboutElement.textContent
     }
   }
 
@@ -25,8 +25,8 @@ export default class UserInfo {
    * принимает новые данные пользователя
    * добавляет новые данные пользователя на страницу
   */
-  setUserInfo({profileName, profileAbout}) {
-    this._profileNameSelector.textContent = profileName;
-    this._profileAboutSelector.textContent = profileAbout;
+  setUserInfo({userName, userAbout}) {
+    this._profileNameElement.textContent = userName;
+    this._profileAboutElement.textContent = userAbout;
   }
 }

@@ -5,7 +5,7 @@ export const profileSelector = '.profile'
 export const profileNameSelector = '.profile__title'; // - profileNameSelector
 export const profileAboutSelector = '.profile__subtitle'; // - profileAboutSelector
 
-export const cardsListSelector = '.cards__list'; // - cardListSelector
+export const cardsContainerSelector = '.cards__list'; // - cardListSelector
 
 export const popupProfileSelector = '.popup_type_profile'; // - popupProfileElement
 export const popupProfileNameSelector = '#name-input'; // - popupProfileNameSelector

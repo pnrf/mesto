@@ -16,8 +16,8 @@ export default class FormValidator {
     this._inputErrorUnderlineClass = formSelectors.inputErrorUnderlineClass;
     this._activeErrorClass = formSelectors.activeErrorClass;
     this._inactiveSubmitButtonClass = formSelectors.inactiveSubmitButtonClass;
-    this._inputSelectorList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._popupSubmitButtonSelector = this._formElement.querySelector(formSelectors.popupSubmitButtonSelector);
+    this._inputElementsArr = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._popupSubmitButtonElement = this._formElement.querySelector(formSelectors.popupSubmitButtonSelector);
   }
 
   /** приватный метод: добавить сообщение об ошибке */
@@ -47,7 +47,7 @@ export default class FormValidator {
 
 /** приватный метод: перебрать массив, чтобы найти невалидный input */
   _hasInvalidInput = () => {
-    return this._inputSelectorList.some(inputElement => {
+    return this._inputElementsArr.some(inputElement => {
       return !inputElement.validity.valid;
     });
   }
@@ -59,11 +59,11 @@ export default class FormValidator {
 */
   toggleButtonState = () => {
     if (this._hasInvalidInput()) {
-      this._popupSubmitButtonSelector.classList.add(this._inactiveSubmitButtonClass);
-      this._popupSubmitButtonSelector.setAttribute('disabled', true);
+      this._popupSubmitButtonElement.classList.add(this._inactiveSubmitButtonClass);
+      this._popupSubmitButtonElement.setAttribute('disabled', true);
     } else {
-      this._popupSubmitButtonSelector.classList.remove(this._inactiveSubmitButtonClass);
-      this._popupSubmitButtonSelector.removeAttribute('disabled');
+      this._popupSubmitButtonElement.classList.remove(this._inactiveSubmitButtonClass);
+      this._popupSubmitButtonElement.removeAttribute('disabled');
     }
   }
 
@@ -71,7 +71,7 @@ export default class FormValidator {
   _setEventListeners = () => {
     this.toggleButtonState(); // делает кнопку неактивной, если хотя бы одно поле формы невалидно
 
-    this._inputSelectorList.forEach(inputElement => { // для каждого поля input установил слушатель, проверяющий на валидность
+    this._inputElementsArr.forEach(inputElement => { // для каждого поля input установил слушатель, проверяющий на валидность
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         /** Классовые переменные доступны в любом методе класса, передавать их в качестве параметра не нужно. */
