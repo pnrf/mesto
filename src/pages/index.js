@@ -7,6 +7,14 @@ import './index.css';
 /** Data Import */
 import {initialCards} from '../utils/initialCards.js';
 
+/** Classes Import */
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
+
 /** Constants Import */
 import {
   profileEditButtonSelector,
@@ -24,23 +32,25 @@ import {
   formSelectors
 } from '../utils/constants.js';
 
-/** Classes Import */
-import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import Section from '../components/Section.js';
-import UserInfo from '../components/UserInfo.js';
+/** Constants and variables */
+const profileElement = document.querySelector(profileSelector);
+const profileEditButtonElement = profileElement.querySelector(profileEditButtonSelector);
 
+const popupProfileFormElement = document.querySelector(popupProfileSelector);
+const popupCardFormElement = document.querySelector(popupCardSelector);
+
+const popupProfileNameElement = popupProfileFormElement.querySelector(popupProfileNameSelector);
+const popupProfileAboutElement = popupProfileFormElement.querySelector(popupProfileAboutSelector);
 
 
 /** --- MAIN CODE --- */
 
 /** При загрузке страницы отрисовать initial cards. */
 const popupWithImage = new PopupWithImage(popupImageSelector);
+popupWithImage.setEventListeners();
 
 function createCard(cardData) {
-  const newCard = new Card(cardData, cardTemplateSelector, () => {popupWithImage.setEventListeners(); popupWithImage.open(cardData)});
+  const newCard = new Card(cardData, cardTemplateSelector, () => {popupWithImage.open(cardData)});
   return newCard.generateCard();
 };
 
@@ -66,18 +76,17 @@ const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) 
 
 popupWithProfileForm.setEventListeners();
 
-document.querySelector(profileEditButtonSelector).addEventListener('click', () => {
+profileEditButtonElement.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
-  document.querySelector(popupProfileNameSelector).value = userData.userName;
-  document.querySelector(popupProfileAboutSelector).value = userData.userAbout;
+  popupProfileNameElement.value = userData.userName;
+  popupProfileAboutElement.value = userData.userAbout;
   popupWithProfileForm.open();
 });
 
 
 /** Создание новой карточки */
 const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
-  console.log("DDD", formData);
-  const card = createCard({placeName: formData.placeName, placeLink: formData.placeLink});
+  const card = createCard({name: formData.name, link: formData.link});
   renderCards.addItemPrepend(card);
   popupWithCardForm.close();
 });
@@ -91,7 +100,7 @@ document.querySelector(cardAddButtonSelector).addEventListener('click', () => {
 
 
 /** Подключение валидации полей формы */
-const profileValidation = new FormValidator(formSelectors, popupProfileSelector);
-const newCardValidation = new FormValidator(formSelectors, popupCardSelector);
+const profileValidation = new FormValidator(formSelectors, popupProfileFormElement);
+const newCardValidation = new FormValidator(formSelectors, popupCardFormElement);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();

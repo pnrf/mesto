@@ -13,8 +13,8 @@
 
 export default class Card {
   constructor(cardData, cardTemplateSelector, handleCardClick) {
-    this._cardNameData = cardData.placeName;
-    this._cardLinkData = cardData.placeLink;
+    this._cardNameData = cardData.name;
+    this._cardLinkData = cardData.link;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
   }
