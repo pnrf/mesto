@@ -6,6 +6,7 @@ import './index.css';
 
 /** Data Import */
 import {initialCards} from '../utils/initialCards.js';
+import {token, cohort} from '../utils/authorizationData.js'
 
 /** Classes Import */
 import Card from '../components/Card.js';
@@ -19,14 +20,18 @@ import UserInfo from '../components/UserInfo.js';
 import {
   profileEditButtonSelector,
   cardAddButtonSelector,
+  avatarEditButtonSelector,
   profileSelector,
   profileNameSelector,
   profileAboutSelector,
+  profileAvatarImageSelector,
   cardsContainerSelector,
   popupProfileSelector,
   popupProfileNameSelector,
   popupProfileAboutSelector,
+  popupAvatarSelector,
   popupCardSelector,
+  popupConfirmDelSelector,
   popupImageSelector,
   cardTemplateSelector,
   formSelectors
@@ -44,6 +49,9 @@ const popupProfileAboutElement = popupProfileFormElement.querySelector(popupProf
 
 
 /** --- MAIN CODE --- */
+
+
+
 
 /** При загрузке страницы отрисовать initial cards. */
 const popupWithImage = new PopupWithImage(popupImageSelector);

@@ -19,7 +19,7 @@
     <main>
       <section class="profile">
         <div class="profile__container">
-          <img src="<%=require('./images/img-profile-avatar.jpg')%>" alt="Аватар для профайла" class="profile__avatar">
+          <button class="profile__avatar-edit-button" type="button"><img src="<%=require('./images/img-profile-avatar.jpg')%>" alt="Аватар для профайла" class="profile__avatar"></button>
           <div class="profile__describe">
             <div class="profile__title-wrapper">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -121,7 +121,10 @@
       <button class="card__del-button" type="button"></button>
       <div class="card__wrapper">
         <h2 class="card__title"></h2>
-        <button class="card__like-button" type="button"></button>
+        <div class="card__likes-wrapper">
+          <button class="card__like-button" type="button"></button>
+          <p class="card__likes-counter"></p>
+        </div>
       </div>
     </li>
   </template>
