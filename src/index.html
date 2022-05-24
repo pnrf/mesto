@@ -58,7 +58,23 @@
       </div>
     </div>
   </section>
-<!-- POPUP 2: card adding form -->
+<!-- POPUP 2: change profile avatar -->
+  <section class="popup popup_type_avatar">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <div class="popup__content">
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form name="popup-avatar-form" class="popup__input-list" novalidate>
+          <label class="popup__field">
+            <input id="avatar-input" name="url" class="popup__input" type="url" placeholder="Ссылка на аватар" required />
+            <span class="popup__input-error"></span>
+          </label>
+          <button class="popup__save-button popup__save-button_inactive" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </section>
+<!-- POPUP 3: card adding form -->
   <section class="popup popup_type_cards">
     <div class="popup__container">
       <button class="popup__close-button" type="button"></button>
@@ -78,7 +94,19 @@
       </div>
     </div>
   </section>
-<!-- POPUP 3: image preview -->
+<!-- POPUP 4: confirm card deletion -->
+  <section class="popup popup_type_confirm-deletion">
+    <div class="popup__container">
+      <button class="popup__close-button" type="button"></button>
+      <div class="popup__content">
+        <h3 class="popup__title">Вы уверены?</h3>
+        <form name="popup-confirmation-form" class="popup__input-list" novalidate>
+          <button class="popup__save-button popup__save-button_inactive" type="submit">Да</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!-- POPUP 5: image preview -->
   <section class="popup popup_type_image">
     <figure class="popup__container popup__container_type_image">
       <button class="popup__close-button popup__close-button_type_image" type="button"></button>
