@@ -1,7 +1,7 @@
 {
   "name": "mesto",
   "version": "1.0.0",
-  "description": "my study project in Yandex.Praktikum",
+  "description": "Место. Учебный проект в Яндекс.Практикуме",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
