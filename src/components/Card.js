@@ -12,17 +12,26 @@
  */
 
 export default class Card {
-  constructor(cardData, cardTemplateSelector, handleCardClick) {
+  constructor({cardData, cardTemplateSelector, userId, handleCardClick, handleLikeButton, handleRemoveButton}) {
     this._cardNameData = cardData.name;
     this._cardLinkData = cardData.link;
+    this._likes = cardData.likes;
+    this._cardId = cardData._id;
+
     this._cardTemplateSelector = cardTemplateSelector;
+
+    this._UserId = userId,
+    this._isUserCard = userId === cardData.owner._id;
+
     this._handleCardClick = handleCardClick;
+    this._handleLikeButton = handleLikeButton;
+    this._handleRemoveButton = handleRemoveButton;
   }
 
 // клонировать темлейт из html в DOM
   _getTemplate() {
     return document
-      .querySelector(this._cardTemplateSelector) // использую селектор для карточки
+      .querySelector(this._cardTemplateSelector)
       .content
       .querySelector('.card')
       .cloneNode(true);
@@ -40,38 +49,72 @@ export default class Card {
     this._cardImageElement.alt = `${this._cardNameData}. Фотография`;
 
     this._likeButtonElement = this._cardElement.querySelector('.card__like-button');
+    this._likesCounter = this._cardElement.querySelector('.card__likes-counter');
+    this._likesCounter.textContent = this._likes.length;
 
     this._setEventListeners();
+    this._toggleLikesCounter();
+
 
     return this._cardElement;
   }
 
-//  установить слушатели событий в сгенерированной карточке (а не в темплейте):
+  //  установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
 
     // установить слушатель на картинку для открытия попапа
-      this._cardImageElement.addEventListener('click', () => {
-        this._handleCardClick();
-      });
+    this._cardImageElement.addEventListener('click', () => {
+      this._handleCardClick();
+    });
 
     // установить слушатель на кнопку лайк/дизлайк (сердечко)
-      this._likeButtonElement.addEventListener('click', () => {
-        this._handleLikeButton();
-      });
+    this._likeButtonElement.addEventListener('click', () => {
+      this._handleLikeButton();
+    });
 
     // установить слушатель на кнопку попапа для удаления карточки (корзинка)
-      this._cardElement.querySelector('.card__del-button').addEventListener('click', () => {
-        this._removeCard();
+    if (!this._isUserCard) {
+      this.cardDelButton = this._cardElement.querySelector('.card__del-button');
+      this.cardDelButton.remove();
+      this.cardDelButton = null;
+    } else {
+      this._cardElement.querySelector('.card__del-button').addEventListener('click', (event) => {
+        this._handleRemoveButton(event);
       });
+    }
   }
 
-  _handleLikeButton() {
-    this._likeButtonElement.classList.toggle('card__like-button_active');
+  // счетчик лайков
+  _toggleLikesCounter() {
+    if (this._checkUserLikes()) {
+      this.setLikes();
+    } else {
+      this.unsetLike();
+    };
   }
 
-  _removeCard() {
-    this._cardElement.remove();
-    this._cardElement = null;
+  _checkUserLikes() {
+    return this._likes.some(item => item._id === this._UserId);
+  }
+
+  setLike() {
+    this._likeButtonElement.classList.add('card__like-button_active');
+    this.isLiked = true;
+  }
+
+  unsetLike() {
+    this._likeButtonElement.classList.remove('card__like-button_active');
+    this.isLiked = false;
+  }
+
+  updatelikesCounter(data) {
+    this._likesCounter.textContent = data.length;
+  }
+
+  // вернуть Id карточки
+  getCardId() {
+    return this._cardId;
   }
 
 }
+

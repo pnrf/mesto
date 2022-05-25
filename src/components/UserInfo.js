@@ -6,9 +6,10 @@
 */
 
 export default class UserInfo {
-  constructor({profileNameSelector, profileAboutSelector}) {
+  constructor({profileNameSelector, profileAboutSelector, profileAvatarSelector}) {
     this._profileNameElement = document.querySelector(profileNameSelector);
     this._profileAboutElement = document.querySelector(profileAboutSelector);
+    this._profileAvatarElement = document.querySelector(profileAvatarSelector);
   }
 
   /** getUserInfo -- возвращает объект с данными пользователя */
@@ -23,5 +24,17 @@ export default class UserInfo {
   setUserInfo({userName, userAbout}) {
     this._profileNameElement.textContent = userName;
     this._profileAboutElement.textContent = userAbout;
+  }
+
+  setUserAvatar({userAvatarLink}) {
+    this._profileAvatarElement.src = userAvatarLink;
+  }
+
+  saveUserId(userId) {
+    this._userId = userId;
+  }
+
+  getUserId() {
+    return this._userId;
   }
 }
