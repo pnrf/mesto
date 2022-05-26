@@ -88,7 +88,6 @@ api.getDataFromServer().then((responses) => {
 const renderCards = new Section(
   {
   renderer: (cardData) => {
-      console.log("Это cardData --", cardData);
       const card = createCard(cardData);// ok
       renderCards.addItemAppend(card);// ok
     }
@@ -163,7 +162,6 @@ profileEditButtonElement.addEventListener('click', () => {
 const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
   popupWithCardForm.isLoadingMessage(true);
   api.addNewCard(formData).then((formData) => {
-    // const newCardElement = createCard(formData);
     renderCards.addItemPrepend(createCard(formData));
     popupWithCardForm.close();
   }).catch((err) => {
@@ -198,12 +196,13 @@ popupWithImage.setEventListeners();
 
 
 function createCard(cardData) {
+
   const newCard = new Card({
     cardData: cardData,
     cardTemplateSelector: cardTemplateSelector,
     userId: userInfo.getUserId(),
-    handleCardClick: (cardData) => {
-      popupWithImage.open(cardData)
+    handleCardClick: (name, link) => {
+      popupWithImage.open(name, link);
     },
     handleLikeButton: () => {
       if (newCard.isLiked) {
@@ -224,9 +223,9 @@ function createCard(cardData) {
     },
     handleRemoveButton: (event) => {
       const cardElement = event.target.closest('.card');
-      popupWithConfirmation.open();
       const cardId = newCard.getCardId();
-      popupWithConfirmation.changeHandleFormSubmit(() => {
+      popupWithConfirmation.open();
+      popupWithConfirmation.submitCallback(() => {
         api.removeCard(cardId).then(() => {
           cardElement.remove();
           popupWithConfirmation.close();

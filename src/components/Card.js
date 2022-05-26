@@ -62,17 +62,17 @@ export default class Card {
   //  установить слушатели событий в сгенерированной карточке (а не в темплейте):
   _setEventListeners() {
 
-    // установить слушатель на картинку для открытия попапа
+    // слушатель на картинке для открытия попапа
     this._cardImageElement.addEventListener('click', () => {
-      this._handleCardClick();
+      this._handleCardClick(this._cardNameData, this._cardLinkData);
     });
 
-    // установить слушатель на кнопку лайк/дизлайк (сердечко)
+    // слушатель на кнопке лайк/дизлайк (сердечко)
     this._likeButtonElement.addEventListener('click', () => {
       this._handleLikeButton();
     });
 
-    // установить слушатель на кнопку попапа для удаления карточки (корзинка)
+    // слушатель на кнопке попапа для удаления карточки (корзинка)
     if (!this._isUserCard) {
       this.cardDelButton = this._cardElement.querySelector('.card__del-button');
       this.cardDelButton.remove();
