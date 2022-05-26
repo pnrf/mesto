@@ -87,7 +87,7 @@ export default class Card {
   // счетчик лайков
   _toggleLikesCounter() {
     if (this._checkUserLikes()) {
-      this.setLikes();
+      this.setLike();
     } else {
       this.unsetLike();
     };
