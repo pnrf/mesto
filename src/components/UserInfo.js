@@ -30,7 +30,7 @@ export default class UserInfo {
     this._profileAvatarElement.src = userAvatarLink;
   }
 
-  saveUserId(userId) {
+  fixUserId(userId) {
     this._userId = userId;
   }
 

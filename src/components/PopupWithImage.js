@@ -9,7 +9,6 @@ export default class PopupWithImage extends Popup {
     _popupImageСaptionElement = this._popupElement.querySelector('.popup__figcaption');
 
   open(item) {
-    console.log("popup with image open ==", item);
     this._popupImageСaptionElement.textContent = item.name;
     this._popupImageElement.src = item.link;
     this._popupImageElement.alt = `${item.name}. Фотография`;

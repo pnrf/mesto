@@ -43,6 +43,7 @@ import {
 const profileElement = document.querySelector(profileSelector);
 const profileEditButtonElement = profileElement.querySelector(profileEditButtonSelector);
 const cardAddButtonElement = document.querySelector(cardAddButtonSelector);
+const avatarEditButtonElement = document.querySelector(avatarEditButtonSelector);
 
 const popupProfileFormElement = document.querySelector(popupProfileSelector);
 const popupCardFormElement = document.querySelector(popupCardSelector);
@@ -63,6 +64,10 @@ const api = new Api({
   }
 });
 
+
+
+/** ---------- Initial Cards ----------*/
+
 /** Получить данные c сервера или вывести сообщение об ошибке*/
 api.getDataFromServer().then((responses) => {
   const [initialCards, userData] = responses;
@@ -72,7 +77,7 @@ api.getDataFromServer().then((responses) => {
 
   userInfo.setUserInfo({userName: userData.name, userAbout: userData.about});
   userInfo.setUserAvatar({userAvatarLink: userData.avatar});
-  userInfo.saveUserId(userData._id);
+  userInfo.fixUserId(userData._id);
 
   renderCards.renderItems(initialCards);
 }).catch((err) => {
@@ -92,12 +97,13 @@ const renderCards = new Section(
 
 
 
+/** ---------- Профиль ----------*/
 
 /** Изменение данных профиля */
 const userInfo = new UserInfo({profileNameSelector, profileAboutSelector, profileAvatarSelector});
 
 /** Сменить аватар профиля*/
-const popupUpdateAvatar = new PopupWithForm(popupAvatarSelector, (formData) => {
+const popupUpdateAvatar = new PopupWithForm(popupAvatarSelector, (formData) => { // formData - это объект с данными полей input формы (мы его получаем в PopupWithForm - это _formValues)
   popupUpdateAvatar.isLoadingMessage(true);
   api.updateProfileAvatar({avatar: formData.url}).then((data) => {
     userInfo.setUserAvatar({userAvatarLink: data.avatar});
@@ -111,11 +117,22 @@ const popupUpdateAvatar = new PopupWithForm(popupAvatarSelector, (formData) => {
 
 popupUpdateAvatar.setEventListeners();
 
+/** Валидация полей формы аватара*/
+const avatarValidation = new FormValidator(formSelectors, popupAvatarFormElement);
+avatarValidation.enableValidation();
+
+/** Клик на кнопке редактирования аватара */
+avatarEditButtonElement.addEventListener('click', () => {
+  avatarValidation.toggleButtonState();
+  popupUpdateAvatar.open();
+});
+
+
 /** Изменить имя и описание профиля */
 const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) => {
   popupWithProfileForm.isLoadingMessage(true);
-  api.updateUserInfo({name: formData.userName, about: formData.userAbout}).then((data) => {
-    userInfo.setUserInfo({userName: data.userName, userAbout: data.userAbout});
+  api.updateUserInfo({name: formData.userName, about: formData.userAbout}).then((formData) => {
+    userInfo.setUserInfo({userName: formData.userName, userAbout: formData.userAbout});
     popupWithProfileForm.close();
   }).catch((err) => {
     console.error(err);
@@ -126,8 +143,11 @@ const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) 
 
 popupWithProfileForm.setEventListeners();
 
+/** Валидация полей формы редактирования профиля */
+const profileValidation = new FormValidator(formSelectors, popupProfileFormElement);
+profileValidation.enableValidation();
 
-/** Клик на кнопке редактирования профайла */
+/** Клик на кнопке редактирования профиля */
 profileEditButtonElement.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
   popupProfileNameElement.value = userData.userName;
@@ -136,13 +156,16 @@ profileEditButtonElement.addEventListener('click', () => {
 });
 
 
+
+/** ---------- Новая карточка ----------*/
+
 /** Создание новой карточки */
 const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
   const card = createCard({name: formData.name, link: formData.link});
   popupWithCardForm.isLoadingMessage(true);
   api.addNewCard(formData).then((newCardItem) => {
     const cardElm = createCard(newCardItem, card);
-    cards.addNewItem(card);
+    card.addNewItem(card);
     popupWithCardForm.close();
   }).catch((err) => {
     console.error(err);
@@ -155,6 +178,9 @@ const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
 
 popupWithCardForm.setEventListeners();
 
+/** Валидация полей формы добавления новой карточки*/
+const newCardValidation = new FormValidator(formSelectors, popupCardFormElement);
+newCardValidation.enableValidation();
 
 /** Клик на кнопке добавления новой карточки */
 cardAddButtonElement.addEventListener('click', () => {
@@ -171,22 +197,17 @@ popupWithConfirmation.setEventListeners();
 const popupWithImage = new PopupWithImage(popupImageSelector);
 popupWithImage.setEventListeners();
 
-/** Подключение валидации полей формы */
-const profileValidation = new FormValidator(formSelectors, popupProfileFormElement);
-const newCardValidation = new FormValidator(formSelectors, popupCardFormElement);
-const avatarValidation = new FormValidator(formSelectors, popupAvatarFormElement);
-profileValidation.enableValidation();
-newCardValidation.enableValidation();
-avatarValidation.enableValidation();
+
 
 
 function createCard(cardData) {
-  console.log("функция createCard - cardData это ==", cardData);
   const newCard = new Card({
-    cardData,
-    cardTemplateSelector,
+    cardData: cardData,
+    cardTemplateSelector: cardTemplateSelector,
     userId: userInfo.getUserId(),
-    handleCardClick: () => {popupWithImage.open(cardData)},
+    handleCardClick: (cardData) => {
+      popupWithImage.open(cardData)
+    },
     handleLikeButton: () => {
       if (newCard.isLiked) {
         api.deleteCardLike(newCard.getCardId()).then((cardData) => {
@@ -206,8 +227,9 @@ function createCard(cardData) {
     },
     handleRemoveButton: (event) => {
       const cardElement = event.target.closest('.card');
+      popupWithConfirmation.open();
       const cardId = newCard.getCardId();
-      popupWithConfirmation.changeHandleFormSubmit((event) => {
+      popupWithConfirmation.changeHandleFormSubmit(() => {
         api.removeCard(cardId).then(() => {
           cardElement.remove();
           popupWithConfirmation.close();
@@ -215,7 +237,6 @@ function createCard(cardData) {
           console.error(err);
         });
       });
-      popupWithConfirmation.open();
     }
   });
 
