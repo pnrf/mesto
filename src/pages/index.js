@@ -5,7 +5,6 @@
 import './index.css';
 
 /** Data Import */
-// import {initialCards} from '../utils/initialCards.js';
 import {token, cohort} from '../utils/authorizationData.js'
 
 /** Classes Import */
@@ -71,14 +70,9 @@ const api = new Api({
 /** Получить данные c сервера или вывести сообщение об ошибке*/
 api.getDataFromServer().then((responses) => {
   const [initialCards, userData] = responses;
-
-  console.log("Данные карточки", initialCards);
-  console.log("Данные пользователя", userData);
-
   userInfo.setUserInfo({userName: userData.name, userAbout: userData.about});
   userInfo.setUserAvatar({userAvatarLink: userData.avatar});
   userInfo.fixUserId(userData._id);
-
   renderCards.renderItems(initialCards);
 }).catch((err) => {
   console.error(err);
@@ -193,8 +187,7 @@ const popupWithImage = new PopupWithImage(popupImageSelector);
 popupWithImage.setEventListeners();
 
 
-
-
+/** создать карточку */
 function createCard(cardData) {
 
   const newCard = new Card({
