@@ -161,19 +161,16 @@ profileEditButtonElement.addEventListener('click', () => {
 
 /** Создание новой карточки */
 const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
-  const card = createCard({name: formData.name, link: formData.link});
   popupWithCardForm.isLoadingMessage(true);
-  api.addNewCard(formData).then((newCardItem) => {
-    const cardElm = createCard(newCardItem, card);
-    card.addNewItem(card);
+  api.addNewCard(formData).then((formData) => {
+    // const newCardElement = createCard(formData);
+    renderCards.addItemPrepend(createCard(formData));
     popupWithCardForm.close();
   }).catch((err) => {
     console.error(err);
   }).finally(() => {
     popupWithCardForm.isLoadingMessage(false);
   });
-  // renderCards.addItemPrepend(card);
-  // popupWithCardForm.close();
 });
 
 popupWithCardForm.setEventListeners();
