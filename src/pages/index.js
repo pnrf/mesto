@@ -124,8 +124,8 @@ avatarEditButtonElement.addEventListener('click', () => {
 /** Изменить имя и описание профиля */
 const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) => {
   popupWithProfileForm.renderLoading(true);
-  api.updateUserInfo({name: formData.userName, about: formData.userAbout}).then((formData) => {
-    userInfo.setUserInfo({userName: formData.userName, userAbout: formData.userAbout});
+  api.updateUserInfo({name: formData.userName, about: formData.userAbout}).then((data) => {
+    userInfo.setUserInfo({userName: data.name, userAbout: data.about});
     popupWithProfileForm.close();
   }).catch((err) => {
     console.error(err);
