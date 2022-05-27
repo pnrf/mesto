@@ -97,14 +97,14 @@ const userInfo = new UserInfo({profileNameSelector, profileAboutSelector, profil
 
 /** Сменить аватар профиля*/
 const popupUpdateAvatar = new PopupWithForm(popupAvatarSelector, (formData) => { // formData - это объект с данными полей input формы (мы его получаем в PopupWithForm - это _formValues)
-  popupUpdateAvatar.isLoadingMessage(true);
+  popupUpdateAvatar.renderLoading(true);
   api.updateProfileAvatar({avatar: formData.url}).then((data) => {
     userInfo.setUserAvatar({userAvatarLink: data.avatar});
     popupUpdateAvatar.close();
   }).catch((err) => {
     console.error(err);
   }).finally(() => {
-    popupUpdateAvatar.isLoadingMessage(false);
+    popupUpdateAvatar.renderLoading(false);
   });
 });
 
@@ -123,14 +123,14 @@ avatarEditButtonElement.addEventListener('click', () => {
 
 /** Изменить имя и описание профиля */
 const popupWithProfileForm = new PopupWithForm(popupProfileSelector, (formData) => {
-  popupWithProfileForm.isLoadingMessage(true);
+  popupWithProfileForm.renderLoading(true);
   api.updateUserInfo({name: formData.userName, about: formData.userAbout}).then((formData) => {
     userInfo.setUserInfo({userName: formData.userName, userAbout: formData.userAbout});
     popupWithProfileForm.close();
   }).catch((err) => {
     console.error(err);
   }).finally(() => {
-    popupWithProfileForm.isLoadingMessage(false);
+    popupWithProfileForm.renderLoading(false);
   });
 });
 
@@ -154,14 +154,14 @@ profileEditButtonElement.addEventListener('click', () => {
 
 /** Создание новой карточки */
 const popupWithCardForm = new PopupWithForm(popupCardSelector, (formData) => {
-  popupWithCardForm.isLoadingMessage(true);
+  popupWithCardForm.renderLoading(true);
   api.addNewCard(formData).then((formData) => {
     renderCards.addItemPrepend(createCard(formData));
     popupWithCardForm.close();
   }).catch((err) => {
     console.error(err);
   }).finally(() => {
-    popupWithCardForm.isLoadingMessage(false);
+    popupWithCardForm.renderLoading(false);
   });
 });
 
@@ -218,7 +218,7 @@ function createCard(cardData) {
       const cardElement = event.target.closest('.card');
       const cardId = newCard.getCardId();
       popupWithConfirmation.open();
-      popupWithConfirmation.submitCallback(() => {
+      popupWithConfirmation.updateSubmitHandler(() => {
         api.removeCard(cardId).then(() => {
           cardElement.remove();
           popupWithConfirmation.close();

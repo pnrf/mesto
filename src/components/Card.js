@@ -48,6 +48,8 @@ export default class Card {
     this._cardImageElement.src = this._cardLinkData;
     this._cardImageElement.alt = `${this._cardNameData}. Фотография`;
 
+    this._cardDelButton = this._cardElement.querySelector('.card__del-button');
+
     this._likeButtonElement = this._cardElement.querySelector('.card__like-button');
     this._likesCounter = this._cardElement.querySelector('.card__likes-counter');
     this._likesCounter.textContent = this._likes.length;
@@ -74,9 +76,8 @@ export default class Card {
 
     // слушатель на кнопке попапа для удаления карточки (корзинка)
     if (!this._isUserCard) {
-      this.cardDelButton = this._cardElement.querySelector('.card__del-button');
-      this.cardDelButton.remove();
-      this.cardDelButton = null;
+      this._cardDelButton.remove();
+      this._cardDelButton = null;
     } else {
       this._cardElement.querySelector('.card__del-button').addEventListener('click', (event) => {
         this._handleRemoveButton(event);

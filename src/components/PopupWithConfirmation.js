@@ -6,8 +6,8 @@ export default class PopupWithConfirmation extends Popup {
     this._formElement = this._popupElement.querySelector('.popup__input-list');
   }
 
-  submitCallback(event) {
-    this._handleSubmit = event;
+  updateSubmitHandler(action) {
+    this._handleSubmit = action;
   }
 
   setEventListeners() {

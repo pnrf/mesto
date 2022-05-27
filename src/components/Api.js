@@ -13,7 +13,7 @@ export default class Api {
   }
 
   getUserInfo() {
-    const requestUrl = this._baseUrl + '/users/me';
+    const requestUrl = this._baseUrl + `/users/me`;
     return fetch(requestUrl, {
       headers: this._headers,
     }).then(this._checkResponse);
@@ -31,7 +31,7 @@ export default class Api {
   }
 
   updateUserInfo(body) {
-    const requestUrl = this._baseUrl + '/users/me';
+    const requestUrl = this._baseUrl + `/users/me`;
     return fetch(requestUrl, {
       method: 'PATCH',
       headers: this._headers,

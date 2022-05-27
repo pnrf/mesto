@@ -37,10 +37,11 @@ export default class PopupWithForm extends Popup {
    /** перезаписать родительский метод close */
     close() {
       super.close();
-      this._popupForm.reset(); // сбросить значения полей формы.
+      this._popupForm.reset();
     }
 
-    isLoadingMessage(isLoading) {
+    /** изменить текст кнопки submit в процессе обмена данными с сервером */
+    renderLoading(isLoading) {
       if (isLoading === true) {
         this._submitButtonElement.textContent = 'Сохранение...';
       } else {
