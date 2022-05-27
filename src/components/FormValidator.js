@@ -16,7 +16,7 @@ export default class FormValidator {
     this._inputErrorUnderlineClass = formSelectors.inputErrorUnderlineClass;
     this._activeErrorClass = formSelectors.activeErrorClass;
     this._inactiveSubmitButtonClass = formSelectors.inactiveSubmitButtonClass;
-    this._inputElementsArr = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._popupSubmitButtonElement = this._formElement.querySelector(formSelectors.popupSubmitButtonSelector);
   }
 
@@ -47,8 +47,21 @@ export default class FormValidator {
 
 /** приватный метод: перебрать массив, чтобы найти невалидный input */
   _hasInvalidInput = () => {
-    return this._inputElementsArr.some(inputElement => {
+    return this._inputList.some(inputElement => {
       return !inputElement.validity.valid;
+    });
+  }
+
+/** resetValidation - публичный метод для очистки ошибок инпутов, выводимых браузером, и управления кнопкой submit.
+ * Без него ошибки в инпутах остаются. Если пользователь неверно заполнил поле формы (при этом браузер сразу выводит ошибку), а
+ * затем закроет попап, не заполнив корректно форму, (клик на крестик или оверлей, не нажимая submit), то при повторном открытии
+ * попапа поля очистятся, но! ранее показанные браузером ошибки останутся. Вот, чтобы такого не было, нужен этот метод.
+ */
+  resetValidation() {
+    this.toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
     });
   }
 
@@ -71,7 +84,7 @@ export default class FormValidator {
   _setEventListeners = () => {
     this.toggleButtonState(); // делает кнопку неактивной, если хотя бы одно поле формы невалидно
 
-    this._inputElementsArr.forEach(inputElement => {
+    this._inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this.toggleButtonState();

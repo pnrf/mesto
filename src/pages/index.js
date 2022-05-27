@@ -116,7 +116,8 @@ avatarValidation.enableValidation();
 
 /** Клик на кнопке редактирования аватара */
 avatarEditButtonElement.addEventListener('click', () => {
-  avatarValidation.toggleButtonState();
+  // avatarValidation.toggleButtonState();
+  avatarValidation.resetValidation();
   popupUpdateAvatar.open();
 });
 
@@ -143,8 +144,10 @@ profileValidation.enableValidation();
 /** Клик на кнопке редактирования профиля */
 profileEditButtonElement.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
-  popupProfileNameElement.value = userData.userName;
-  popupProfileAboutElement.value = userData.userAbout;
+  popupWithProfileForm.setInputValues(userData);
+  // popupProfileNameElement.value = userData.userName;
+  // popupProfileAboutElement.value = userData.userAbout;
+  profileValidation.resetValidation();
   popupWithProfileForm.open();
 });
 
@@ -173,7 +176,8 @@ newCardValidation.enableValidation();
 
 /** Клик на кнопке добавления новой карточки */
 cardAddButtonElement.addEventListener('click', () => {
-  newCardValidation.toggleButtonState();
+  // newCardValidation.toggleButtonState();
+  newCardValidation.resetValidation();
   popupWithCardForm.open();
 });
 
