@@ -21,17 +21,15 @@ export default class UserInfo {
   }
 
   /** setUserInfo -- принимает новые данные пользователя, добавляет их на страницу */
-  setUserInfo({userName, userAbout}) {
+  setUserInfo({userName, userAbout, userAvatar, userId}) {
     this._profileNameElement.textContent = userName;
     this._profileAboutElement.textContent = userAbout;
-  }
-
-  setUserAvatar({userAvatarLink}) {
-    this._profileAvatarElement.src = userAvatarLink;
-  }
-
-  fixUserId(userId) {
+    this._profileAvatarElement.src = userAvatar;
     this._userId = userId;
+  }
+
+  setUserAvatar({newUserAvatar}) {
+    this._profileAvatarElement.src = newUserAvatar;
   }
 
   getUserId() {

@@ -70,9 +70,7 @@ const api = new Api({
 /** Получить данные c сервера или вывести сообщение об ошибке*/
 api.getDataFromServer().then((responses) => {
   const [initialCards, userData] = responses;
-  userInfo.setUserInfo({userName: userData.name, userAbout: userData.about});
-  userInfo.setUserAvatar({userAvatarLink: userData.avatar});
-  userInfo.fixUserId(userData._id);
+  userInfo.setUserInfo({userName: userData.name, userAbout: userData.about, userAvatar: userData.avatar, userId: userData._id});
   renderCards.renderItems(initialCards);
 }).catch((err) => {
   console.error(err);
@@ -99,7 +97,7 @@ const userInfo = new UserInfo({profileNameSelector, profileAboutSelector, profil
 const popupUpdateAvatar = new PopupWithForm(popupAvatarSelector, (formData) => { // formData - это объект с данными полей input формы (мы его получаем в PopupWithForm - это _formValues)
   popupUpdateAvatar.renderLoading(true);
   api.updateProfileAvatar({avatar: formData.url}).then((data) => {
-    userInfo.setUserAvatar({userAvatarLink: data.avatar});
+    userInfo.setUserAvatar({newUserAvatar: data.avatar});
     popupUpdateAvatar.close();
   }).catch((err) => {
     console.error(err);
