@@ -20,12 +20,22 @@ export default class UserInfo {
     }
   }
 
-  /** setUserInfo -- принимает новые данные пользователя, добавляет их на страницу */
-  setUserInfo({userName, userAbout, userAvatar, userId}) {
+  /** setUserInfo -- принимает первоначальные данные пользователя, добавляет их на страницу */
+  setUserInfo(userData) {
+    const {userName, userAbout, userAvatar, userId} = userData;
     this._profileNameElement.textContent = userName;
     this._profileAboutElement.textContent = userAbout;
     this._profileAvatarElement.src = userAvatar;
     this._userId = userId;
+  }
+
+  /** changeUserInfo -- изменяет данные пользователя.
+   * Пришлось сделать это отдельным методом. Иначе при изменении данных автоматически удаляется аватарка.
+   * Я пытался задать в методе setUserInfo значения по умолчанию. Не получается.
+   */
+  changeUserInfo({userName, userAbout}) {
+    this._profileNameElement.textContent = userName;
+    this._profileAboutElement.textContent = userAbout;
   }
 
   setUserAvatar({newUserAvatar}) {
